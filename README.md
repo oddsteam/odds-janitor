@@ -21,4 +21,6 @@ Things you may want to cover:
 
 * Deployment instructions
 
-* ...
+* Use this command for run all e2e test "bundle exec cucumber --publish-quiet"
+
+* If you want to run some e2e test use this "bundle exec cucumber --publish-quiet your_e2e_file_name"
