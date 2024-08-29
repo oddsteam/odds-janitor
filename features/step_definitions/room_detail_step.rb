@@ -1,6 +1,6 @@
 When('ฉันกดที่ชื่อห้องประชุม') do
   sleep 1
-  @booking.click_global_room
+  @booking.click_room
 end
 
 Then('ปุ่มชื่อห้องประชุมนั้นจะเปลี่ยนสี') do
