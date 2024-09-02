@@ -28,6 +28,8 @@ gem "jbuilder"
 
 gem "rspec"
 
+gem "font-awesome-sass", "~> 6.5.2"
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 
@@ -71,3 +73,4 @@ group :test do
   gem 'cucumber-rails', require: false
   gem "rspec-rails"
 end
+
