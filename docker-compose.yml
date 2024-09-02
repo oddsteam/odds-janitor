@@ -41,10 +41,12 @@ services:
     restart: unless-stopped
     networks:
       - app-networks
+    volumes:
+      - .:/rails
       
 volumes:
-  local_pgdata:
-  pgadmin-data:
+  local_pgdata: {}
+  pgadmin-data: {} 
 
 networks:
   app-networks:
