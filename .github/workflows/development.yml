@@ -10,6 +10,10 @@ env:
   # github.repository as <account>/<repo>
   IMAGE_NAME: oddsteam/odds-janitor
   DEPLOY_PATH: ~/janitor-on-rails
+
+volumes:
+  local_pgdata: {}
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -25,9 +29,7 @@ jobs:
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
           POSTGRES_USER: ${{ secrets.POSTGRES_LOCAL_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_LOCAL_PASSWORD }}
-    volumes:
-      local_pgdata: {}
-      
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
