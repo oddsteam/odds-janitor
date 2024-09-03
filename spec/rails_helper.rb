@@ -1,3 +1,23 @@
+require 'simplecov'
+SimpleCov.start 'rails'
+
+at_exit do
+  SimpleCov.result.format!  # Ensure the result is formatted and finalized
+  coverage_percent = SimpleCov.result.covered_percent.round(2)
+  puts "Coverage report generated. Total coverage: #{coverage_percent}%"
+
+  # Define the path for the JSON file
+  coverage_json_path = Rails.root.join('coverage', 'coverage.json')
+
+  # Create the coverage directory if it doesn't exist
+  FileUtils.mkdir_p(File.dirname(coverage_json_path))
+
+  # Write the coverage percentage to the JSON file
+  File.open(coverage_json_path, 'w') do |file|
+    file.write({coverage_percent: coverage_percent}.to_json)
+  end
+end
+
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'

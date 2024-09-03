@@ -56,6 +56,7 @@ group :development, :test do
   gem "debug", platforms: %i[ mri windows ]
   gem 'rspec-rails', '~> 6.0.0'
   gem 'sqlite3'
+  gem "simplecov", require: false
 end
 
 group :development do
@@ -75,7 +76,6 @@ group :test do
   gem "selenium-webdriver"
   gem 'factory_bot_rails'
   gem 'cucumber-rails', require: false
-  gem 'rspec-rails', '~> 6.0.0'
 end
 
 
