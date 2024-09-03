@@ -5,7 +5,7 @@ class Booking
   @@tomorrow = Date.today + 1
   @@tomorrow_booking_formatted = @@tomorrow.strftime('%Y-%m-%d')
   @@tomorrow_calendar_formatted = @@tomorrow.strftime("%A, %B #{@@tomorrow.day.ordinalize}, %Y")
-  @@tomorrow_input_formatted = @@tomorrow.strftime("%a %d %B %Y")
+  @@tomorrow_input_formatted = @@tomorrow.strftime("%a %-d %B %Y")
   @@room_name_for_test = ('global')
 
   @@room_name_uppercase = @@room_name_for_test.upcase
