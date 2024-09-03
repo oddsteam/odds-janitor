@@ -17,6 +17,8 @@ services:
   web: 
     image: ghcr.io/oddsteam/odds-janitor:latest
     container_name: janitor_web_rails
+    depends_on:
+      - db
     command: bash -c "rm -f tmp/pids/server.pid && bundle install && bundle exec rails db:migrate && bundle exec rails s -b '0.0.0.0'"
     environment:
       - RAILS_ENV=${RAILS_ENV}
