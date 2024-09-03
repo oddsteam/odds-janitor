@@ -19,13 +19,11 @@ jobs:
         image: postgres:16-alpine
         ports:
           - "5432:5432"
-        volumes:
-          - local_pgdata:/var/lib/postgresql/data
-        env:
-          POSTGRES_HOST: localhost
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-          POSTGRES_USER: ${{ secrets.POSTGRES_LOCAL_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_LOCAL_PASSWORD }}
+        environtment:
+          - POSTGRES_HOST=localhost
+          - POSTGRES_DB=${{ secrets.POSTGRES_DB }}
+          - POSTGRES_USER=${{ secrets.POSTGRES_LOCAL_USER }}
+          - POSTGRES_PASSWORD=${{ secrets.POSTGRES_LOCAL_PASSWORD }}
 
     steps:
       - name: Checkout code
@@ -57,7 +55,7 @@ jobs:
         run: docker volume create local_pgdata
 
       - name: Set up database schema
-        run: bin/rails db:create && bin/rails db:migrate
+        run: bin/rails db:migrate
 
       - name: Run tests and generate coverage report
         run: |
