@@ -35,6 +35,8 @@ gem "dotenv-rails"
 gem 'bundler-audit'
 gem 'brakeman', require: false
 
+gem "webmock"
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 
