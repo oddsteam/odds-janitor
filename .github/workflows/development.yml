@@ -20,7 +20,6 @@ jobs:
         ports:
           - "5432:5432"
         env:
-          POSTGRES_HOST: localhost
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
           POSTGRES_USER: ${{ secrets.POSTGRES_LOCAL_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_LOCAL_PASSWORD }}
