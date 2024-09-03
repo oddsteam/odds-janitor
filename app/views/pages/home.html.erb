@@ -1,31 +1,46 @@
-<div className="w-full overflow-x-auto bg-nature-100 border">
-  <table class="w-full table text-gray-600">
+<div class="flex max-w-[1300px] m-auto w-[90%] mt-32">
+  <table class="w-max border-collapse text-gray-600">
     <thead>
       <tr class="bg-neutral-100 text-[1rem]">
-        <th class="sticky top-0 left-0 z-3 bg-neutral-100 border border-slate-300 w-1/12 text-center pr-2 h-[60px] min-w-[120px]">
+        <th class="top-0 left-0 z-3 bg-neutral-100 border border-slate-300 text-center h-[60px] min-w-[120px]">
           Room
         </th>
-        <% 22.times do |i| %>
-          <th class="bg-gray-100 z-1 border border-t-slate-300 <%= i.even? ? 'border-r-transparent border-l-transparent' : 'border-r-slate-300 border-l-slate-300' %> border-b-slate-300 w-1/12 min-w-[60px]" colspan="1">
-            <%= "#{i / 2 + 8}:00" if i.even? %>
-          </th>
-        <% end %>
       </tr>
-    </thead> 
+    </thead>
     <tbody>
       <% @rooms.each do |room| %>
         <tr>
-          <td class="sticky left-0 z-2 border-r-slate-300 border border-slate-300 w-1/12 text-right pr-3 h-[50px] font-medium bg-neutral-100 select-none">
+          <td class="left-0 z-2 border-r-slate-300 border border-slate-300 text-right pr-3 h-[60px] font-medium bg-neutral-100 select-none">
             <%= room[:room_name] %>
           </td>
-          <% 22.times do |i| %>
-            <td 
-              class="border border-slate-200 min-w-[60px] hover:bg-gray-200 text-center cursor-pointer p-0 transition duration-300"
-              colspan="1">
-            </td>
-          <% end %>
         </tr>
       <% end %>
     </tbody>
   </table>
+
+  <div class="w-full overflow-x-scroll border-r border-r-slate-300">
+    <table class="h-full border-collapse text-gray-600">
+      <thead>
+        <tr class="bg-neutral-100 text-[1rem]">
+          <% 22.times do |i| %>
+            <th class="bg-gray-100 z-1 h-[60px] border border-t-slate-300 <%= i.even? ? 'border-r-transparent border-l-transparent' : 'border-r-slate-300 border-l-slate-300' %> border-b-slate-300 min-w-[60px]" colspan="1">
+              <%= "#{i / 2 + 8}:00" if i.even? %>
+            </th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% @rooms.each do |room| %>
+          <tr>
+            <% 22.times do |i| %>
+              <td 
+                class="border border-slate-200 min-w-[60px] hover:bg-gray-200 text-center cursor-pointer p-0 transition duration-300"
+                colspan="1">
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
