@@ -11,9 +11,6 @@ env:
   IMAGE_NAME: oddsteam/odds-janitor
   DEPLOY_PATH: ~/janitor-on-rails
 
-volumes:
-  local_pgdata: {}
-
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -190,3 +187,5 @@ jobs:
       
       - name: clear docker image
         run: ssh -o StrictHostKeyChecking=no ${{secrets.HOST_IP_ODDS_CLOUD}} 'cd ${{ env.DEPLOY_PATH }} && docker image prune -f'
+volumes:
+  local_pgdata: {}
