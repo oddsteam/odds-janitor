@@ -1,9 +1,11 @@
 <h1>Pages#home</h1>
-<h2>Wisanu<h2>
-<i class="fa-brands fa-font-awesome" style="color: black;"></i>
-<i class="fa-solid fa-house"  style="color: black;"></i>
-
-<h1 class="text-3xl font-bold underline text-blue-600">
-    Hello world!
-</h1>
-
+<h2>Wisanu
+  <h2>
+    <i class="fa-brands fa-font-awesome" style="color: black;"></i>
+    <i class="fa-solid fa-house"  style="color: black;"></i>
+    <h1 class="text-3xl font-bold underline text-blue-600">
+      Hello world!
+    </h1>
+    <%= link_to logout_path, method: :get, class: "btn btn-secondary",style:"background-color: rgba(242,49,39,255); margin: 0px 0px 0px 10px; border:none" do %>
+      <i class="fa-solid fa-right-from-bracket pe-1"></i> Logout
+    <% end %>
