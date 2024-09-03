@@ -149,7 +149,7 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_ODDS_CLOUD_KEY }}
       - name: Login GitHub
-        run: ssh -o StrictHostKeyChecking=no ${{secrets.HOST_IP_ODDS_CLOUD}} 'echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin'
+        run: ssh -o StrictHostKeyChecking=no ubuntu@${{secrets.HOST_IP_ODDS_CLOUD}} 'echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin'
 
       - name: Copy Docker compose file to VM
         run: scp -o StrictHostKeyChecking=no docker-compose-dev.yml ${{secrets.HOST_IP_ODDS_CLOUD}}:${{ env.DEPLOY_PATH }}
