@@ -12,7 +12,7 @@ development:
   database: <%= ENV['POSTGRES_DB'] %>
   username: <%= ENV['POSTGRES_LOCAL_USER'] %>
   password: <%= ENV['POSTGRES_LOCAL_PASSWORD'] %>
-  host: localhost
+  host: <%= ENV['POSTGRES_HOST'] %>
   port: 5432
 
 test:
