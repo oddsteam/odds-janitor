@@ -14,29 +14,9 @@ env:
 jobs:
   test:
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:16-alpine
-        ports:
-          - "5432:5432"
-        env:
-          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-          POSTGRES_USER: ${{ secrets.POSTGRES_LOCAL_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_LOCAL_PASSWORD }}
-    env:
-      POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
-      POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-      POSTGRES_LOCAL_USER: ${{ secrets.POSTGRES_LOCAL_USER }}
-      POSTGRES_LOCAL_PASSWORD: ${{ secrets.POSTGRES_LOCAL_PASSWORD }}
-      
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-  
-      # - name: Run test-db container with volume
-      #   run: |
-      #     docker volume create local_pgdata
           
       - name: Cache Ruby gems
         uses: actions/cache@v3
@@ -60,8 +40,8 @@ jobs:
           bundle config path vendor/bundle
           bundle install --jobs 4 --retry 3
 
-      - name: Set up database schema
-        run: bin/rails db:migrate
+      # - name: Set up database schema
+      #   run: bin/rails db:migrate
 
       - name: Run tests and generate coverage report
         run: |
