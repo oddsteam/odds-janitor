@@ -1,6 +1,6 @@
-.PHONY: up down e2e-ci e2e migrate run test cov mt
+.PHONY: up down e2e-ci e2e migrate run test cov mt lint
 
-up: build
+up: 
 	docker-compose -f docker-compose.yml up -d
 
 down:
@@ -29,3 +29,6 @@ test:
 
 cov:
 	open coverage/index.html
+
+lint:
+	bundle exec brakeman
