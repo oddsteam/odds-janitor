@@ -22,7 +22,7 @@ jobs:
         volumes:
           - local_pgdata:/var/lib/postgresql/data
         env:
-          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+          POSTGRES_HOST: localhost
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
           POSTGRES_USER: ${{ secrets.POSTGRES_LOCAL_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_LOCAL_PASSWORD }}
@@ -187,5 +187,3 @@ jobs:
       
       - name: clear docker image
         run: ssh -o StrictHostKeyChecking=no ${{secrets.HOST_IP_ODDS_CLOUD}} 'cd ${{ env.DEPLOY_PATH }} && docker image prune -f'
-volumes:
-  local_pgdata: {}
