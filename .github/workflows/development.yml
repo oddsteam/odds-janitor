@@ -19,7 +19,7 @@ jobs:
         image: postgres:11-alpine
         ports:
           - "5432:5432"
-        environtment:
+        env:
           - POSTGRES_HOST=localhost
           - POSTGRES_DB=${{ secrets.POSTGRES_DB }}
           - POSTGRES_USER=${{ secrets.POSTGRES_LOCAL_USER }}
