@@ -19,8 +19,6 @@ jobs:
         image: postgres:16-alpine
         ports:
           - "5432:5432"
-        volumes:
-          - local_pgdata:/var/lib/postgresql/data
         env:
           POSTGRES_HOST: localhost
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
@@ -31,9 +29,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
   
-      - name: Run test-db container with volume
-        run: |
-          docker volume create local_pgdata
+      # - name: Run test-db container with volume
+      #   run: |
+      #     docker volume create local_pgdata
           
       - name: Cache Ruby gems
         uses: actions/cache@v3
