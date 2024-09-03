@@ -61,7 +61,6 @@ group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'database_cleaner-active_record'
   gem "debug", platforms: %i[ mri windows ]
-  gem 'rspec-rails', '~> 6.0.0'
   gem 'sqlite3'
   gem "simplecov", require: false
 end
