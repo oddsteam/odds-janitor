@@ -1,44 +1,35 @@
 {
   "RSpec": {
     "coverage": {
-      "/Users/odds/Documents/Friend_Worklog/odds-janitor/app/helpers/application_helper.rb": {
+      "/Users/care/coop2024/odds-janitor/app/helpers/application_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/Users/odds/Documents/Friend_Worklog/odds-janitor/app/helpers/pages_helper.rb": {
+      "/Users/care/coop2024/odds-janitor/app/helpers/pages_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/Users/odds/Documents/Friend_Worklog/odds-janitor/app/helpers/sessions_helper.rb": {
+      "/Users/care/coop2024/odds-janitor/app/helpers/sessions_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/Users/odds/Documents/Friend_Worklog/odds-janitor/app/helpers/users_helper.rb": {
+      "/Users/care/coop2024/odds-janitor/app/helpers/users_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/Users/odds/Documents/Friend_Worklog/odds-janitor/app/models/keycloak_service.rb": {
+      "/Users/care/coop2024/odds-janitor/app/controllers/sessions_controller.rb": {
         "lines": [
           1,
           1,
-          null,
-          null,
-          1,
-          1,
-          1,
-          1,
-          null,
-          null,
-          null,
-          null,
+          0,
           null,
           null,
           1,
@@ -46,40 +37,185 @@
           null,
           null,
           1,
-          1,
-          null,
-          null,
-          1,
+          2,
+          2,
           1,
           1,
           1,
-          1,
-          1,
-          null,
-          1,
-          null,
           0,
           0,
           null,
           1,
-          null,
-          null,
           1,
           1,
           1,
           1,
           null,
+          1,
           null,
           null,
           null,
           1,
+          1,
+          null,
+          1,
+          1,
+          1,
+          null,
           1,
           1,
           null,
           null
         ]
       },
-      "/Users/odds/Documents/Friend_Worklog/odds-janitor/app/channels/application_cable/channel.rb": {
+      "/Users/care/coop2024/odds-janitor/app/controllers/application_controller.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/Users/care/coop2024/odds-janitor/app/models/keycloak_service.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          null,
+          0,
+          0,
+          null,
+          1,
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null
+        ]
+      },
+      "/Users/care/coop2024/odds-janitor/app/models/user.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/Users/care/coop2024/odds-janitor/app/models/application_record.rb": {
+        "lines": [
+          1,
+          1,
+          null
+        ]
+      },
+      "/Users/care/coop2024/odds-janitor/app/controllers/users_controller.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          1,
+          1,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          1,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          1,
+          null,
+          1,
+          0,
+          null,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null
+        ]
+      },
+      "/Users/care/coop2024/odds-janitor/app/channels/application_cable/channel.rb": {
         "lines": [
           0,
           0,
@@ -89,7 +225,7 @@
         "branches": {
         }
       },
-      "/Users/odds/Documents/Friend_Worklog/odds-janitor/app/channels/application_cable/connection.rb": {
+      "/Users/care/coop2024/odds-janitor/app/channels/application_cable/connection.rb": {
         "lines": [
           0,
           0,
@@ -99,38 +235,12 @@
         "branches": {
         }
       },
-      "/Users/odds/Documents/Friend_Worklog/odds-janitor/app/controllers/application_controller.rb": {
-        "lines": [
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/Users/odds/Documents/Friend_Worklog/odds-janitor/app/controllers/pages_controller.rb": {
-        "lines": [
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/Users/odds/Documents/Friend_Worklog/odds-janitor/app/controllers/sessions_controller.rb": {
+      "/Users/care/coop2024/odds-janitor/app/controllers/pages_controller.rb": {
         "lines": [
           0,
           0,
           0,
           0,
-          null,
-          0,
-          0,
-          0,
-          null,
           0,
           0,
           0,
@@ -149,49 +259,6 @@
           0,
           0,
           0,
-          null,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/Users/odds/Documents/Friend_Worklog/odds-janitor/app/controllers/users_controller.rb": {
-        "lines": [
-          0,
-          0,
-          null,
-          null,
-          0,
-          0,
-          0,
-          null,
-          null,
-          0,
-          0,
-          null,
-          null,
-          0,
-          0,
-          0,
-          null,
-          null,
-          0,
-          0,
-          null,
-          null,
-          0,
-          0,
-          null,
           0,
           0,
           0,
@@ -202,8 +269,24 @@
           0,
           0,
           0,
-          null,
-          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
           0,
           0,
           0,
@@ -216,24 +299,6 @@
           0,
           0,
           null,
-          null,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          null,
-          0,
-          0,
-          0,
-          null,
-          null,
-          0,
           0,
           0,
           0
@@ -241,7 +306,7 @@
         "branches": {
         }
       },
-      "/Users/odds/Documents/Friend_Worklog/odds-janitor/app/jobs/application_job.rb": {
+      "/Users/care/coop2024/odds-janitor/app/jobs/application_job.rb": {
         "lines": [
           0,
           null,
@@ -254,27 +319,10 @@
         "branches": {
         }
       },
-      "/Users/odds/Documents/Friend_Worklog/odds-janitor/app/mailers/application_mailer.rb": {
+      "/Users/care/coop2024/odds-janitor/app/mailers/application_mailer.rb": {
         "lines": [
           0,
           0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/Users/odds/Documents/Friend_Worklog/odds-janitor/app/models/application_record.rb": {
-        "lines": [
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/Users/odds/Documents/Friend_Worklog/odds-janitor/app/models/user.rb": {
-        "lines": [
           0,
           0
         ],
@@ -282,6 +330,6 @@
         }
       }
     },
-    "timestamp": 1725357185
+    "timestamp": 1725380869
   }
 }
