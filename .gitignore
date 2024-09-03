@@ -43,3 +43,6 @@ master.key
 /db/test.sqlite3
 /db/test.sqlite3-shm
 /db/test.sqlite3-wal
+
+# Ignore coverage
+/coverage/
