@@ -17,7 +17,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-          
+
       - name: Cache Ruby gems
         uses: actions/cache@v3
         with:
@@ -74,7 +74,7 @@ jobs:
         run: |
           bundle config path vendor/bundle
           bundle install --jobs 4 --retry 3
-          
+
       - name: Check File Permissions
         run: ls -la
 
@@ -88,7 +88,7 @@ jobs:
     needs: lint
     runs-on: ubuntu-latest
     outputs:
-      image_tags: ${{ steps.meta.outputs.tags }}  
+      image_tags: ${{ steps.meta.outputs.tags }}
 
     steps:
       - name: Checkout
@@ -102,7 +102,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
 
-      
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -112,24 +111,24 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-    
+
       - name: Extract Docker metadata
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-              type=sha,prefix={{branch}}-,format=short
-          
+            type=sha,prefix={{branch}}-,format=short
+
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v3
         with:
-            context: .
-            push: true
-            tags: |
-              ${{ steps.meta.outputs.tags }}
-              ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-            labels: ${{ steps.meta.outputs.labels }}
+          context: .
+          push: true
+          tags: |
+            ${{ steps.meta.outputs.tags }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          labels: ${{ steps.meta.outputs.labels }}
 
   deploy:
     needs: build
@@ -149,25 +148,24 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_ODDS_CLOUD_KEY }}
       - name: Login GitHub
-        run: ssh -o StrictHostKeyChecking=no ubuntu@${{secrets.HOST_IP_ODDS_CLOUD}} 'echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin'
+        run: ssh -o StrictHostKeyChecking=no ${{ secrets.USER_NAME_ODDS_CLOUD }}@${{ secrets.HOST_IP_ODDS_CLOUD }} 'echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin'
 
       - name: Copy Docker compose file to VM
-        run: scp -o StrictHostKeyChecking=no docker-compose-dev.yml ubuntu@${{secrets.HOST_IP_ODDS_CLOUD}}:${{ env.DEPLOY_PATH }}
-      
-      
+        run: scp -o StrictHostKeyChecking=no docker-compose-dev.yml ubuntu@${{ secrets.HOST_IP_ODDS_CLOUD }}:${{ env.DEPLOY_PATH }}
+
       - name: Set up and copy env file
         env:
-          ENV: ${{secrets.ENV_DEV}}
+          ENV: ${{ secrets.ENV_DEV }}
         run: echo $ENV > .env
 
       - name: Copy env file
-        run: scp -o StrictHostKeyChecking=no .env ubuntu@${{secrets.HOST_IP_ODDS_CLOUD}}:${{ env.DEPLOY_PATH }}
-      
+        run: scp -o StrictHostKeyChecking=no .env ${{ secrets.USER_NAME_ODDS_CLOUD }}@${{ secrets.HOST_IP_ODDS_CLOUD }}:${{ env.DEPLOY_PATH }}
+
       - name: Build Docker compose
-        run: ssh -o StrictHostKeyChecking=no ubuntu@${{secrets.HOST_IP_ODDS_CLOUD}} 'cd ${{ env.DEPLOY_PATH }} && docker compose -f docker-compose-dev.yml pull'
+        run: ssh -o StrictHostKeyChecking=no ${{ secrets.USER_NAME_ODDS_CLOUD }}@${{ secrets.HOST_IP_ODDS_CLOUD }} 'cd ${{ env.DEPLOY_PATH }} && docker compose -f docker-compose-dev.yml pull'
 
       - name: Run Docker compose
-        run: ssh -o StrictHostKeyChecking=no ubuntu@${{secrets.HOST_IP_ODDS_CLOUD}} 'cd ${{ env.DEPLOY_PATH }} && docker compose -f docker-compose-dev.yml up -d'
-      
+        run: ssh -o StrictHostKeyChecking=no ${{ secrets.USER_NAME_ODDS_CLOUD }}@${{ secrets.HOST_IP_ODDS_CLOUD }} 'cd ${{ env.DEPLOY_PATH }} && docker compose -f docker-compose-dev.yml up -d'
+
       - name: clear docker image
-        run: ssh -o StrictHostKeyChecking=no ubuntu@${{secrets.HOST_IP_ODDS_CLOUD}} 'cd ${{ env.DEPLOY_PATH }} && docker image prune -f'
+        run: ssh -o StrictHostKeyChecking=no ${{ secrets.USER_NAME_ODDS_CLOUD }}@${{ secrets.HOST_IP_ODDS_CLOUD }} 'cd ${{ env.DEPLOY_PATH }} && docker image prune -f'
