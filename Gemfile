@@ -32,6 +32,9 @@ gem "font-awesome-sass", "~> 6.5.2"
 
 gem "dotenv-rails"
 
+gem 'bundler-audit'
+gem 'brakeman', require: false
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 
