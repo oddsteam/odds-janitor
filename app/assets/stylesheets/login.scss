@@ -1,0 +1,121 @@
+
+.container-big {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    gap: 50px;
+}
+
+.logo-odds {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.size-logo {
+    width: 50%;
+    height: 50%;
+    object-fit: contain;
+}
+
+.btn-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 35px;
+}
+
+
+.btn1,
+.btn2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 250px;
+    height: 60px;
+    padding: 15px;
+    text-transform: uppercase;
+    border-radius: 15px;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.btn1 {
+    background-color: var(--tertiary);
+    color:  var(--secondary);
+}
+
+.btn2 {
+    background-color:  var(--secondary);
+    color: var(--tertiary);
+}
+
+.btn1:hover {
+    background-color: var(--tertiary-hover);
+    cursor: pointer;
+}
+
+.btn2:hover {
+    background-color: var(--secondary-hover);
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+#btn-login,
+#btn-request {
+    color: inherit;
+    text-decoration: none;
+    
+}
+
+.btn-back {
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 40px;
+    padding: 10px;
+    text-transform: uppercase;
+    border-radius: 15px;
+    border: 1px solid #000;
+    font-weight: bold;
+    text-decoration: none;
+    background-color: var(--tertiary);
+    color:  var(--secondary);
+
+}
+
+/* Responsive styles */
+@media only screen and (max-width: 768px) {
+
+    .container-big {
+        gap: 10px;
+    }
+
+    .btn-container {
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+        gap: 2px;
+    }
+
+    .btn1,
+    .btn2 {
+        font-size: var(--fs-s);
+        margin-bottom: 15px;
+        max-width: 200px;
+        height: 50px;
+    }
+}
+
+
+
