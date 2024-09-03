@@ -145,14 +145,14 @@ jobs:
           profile-pin: ${{ secrets.PRITUNL_PROFILE_PIN }}
 
       - name: Set up SSH
-        uses: webfactory/ssh-agent@v0.5.3
+        uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_ODDS_CLOUD_KEY }}
       - name: Login GitHub
-        run: ssh -o StrictHostKeyChecking=no ${{secrets.HOST_IP_ODDS_CLOUD}} 'echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin'
+        run: ssh -o StrictHostKeyChecking=no ubuntu@${{secrets.HOST_IP_ODDS_CLOUD}} 'echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin'
 
       - name: Copy Docker compose file to VM
-        run: scp -o StrictHostKeyChecking=no docker-compose-dev.yml ${{secrets.HOST_IP_ODDS_CLOUD}}:${{ env.DEPLOY_PATH }}
+        run: scp -o StrictHostKeyChecking=no docker-compose-dev.yml ubuntu@${{secrets.HOST_IP_ODDS_CLOUD}}:${{ env.DEPLOY_PATH }}
       
       
       - name: Set up and copy env file
@@ -161,13 +161,13 @@ jobs:
         run: echo $ENV > .env
 
       - name: Copy env file
-        run: scp -o StrictHostKeyChecking=no .env ${{secrets.HOST_IP_ODDS_CLOUD}}:${{ env.DEPLOY_PATH }}
+        run: scp -o StrictHostKeyChecking=no .env ubuntu@${{secrets.HOST_IP_ODDS_CLOUD}}:${{ env.DEPLOY_PATH }}
       
       - name: Build Docker compose
-        run: ssh -o StrictHostKeyChecking=no ${{secrets.HOST_IP_ODDS_CLOUD}} 'cd ${{ env.DEPLOY_PATH }} && docker compose -f docker-compose-dev.yml pull'
+        run: ssh -o StrictHostKeyChecking=no ubuntu@${{secrets.HOST_IP_ODDS_CLOUD}} 'cd ${{ env.DEPLOY_PATH }} && docker compose -f docker-compose-dev.yml pull'
 
       - name: Run Docker compose
-        run: ssh -o StrictHostKeyChecking=no ${{secrets.HOST_IP_ODDS_CLOUD}} 'cd ${{ env.DEPLOY_PATH }} && docker compose -f docker-compose-dev.yml up -d'
+        run: ssh -o StrictHostKeyChecking=no ubuntu@${{secrets.HOST_IP_ODDS_CLOUD}} 'cd ${{ env.DEPLOY_PATH }} && docker compose -f docker-compose-dev.yml up -d'
       
       - name: clear docker image
-        run: ssh -o StrictHostKeyChecking=no ${{secrets.HOST_IP_ODDS_CLOUD}} 'cd ${{ env.DEPLOY_PATH }} && docker image prune -f'
+        run: ssh -o StrictHostKeyChecking=no ubuntu@${{secrets.HOST_IP_ODDS_CLOUD}} 'cd ${{ env.DEPLOY_PATH }} && docker image prune -f'
