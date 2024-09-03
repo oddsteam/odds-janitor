@@ -1,5 +1,4 @@
 services:
-
   db:
     image: postgres:16-alpine
     container_name: local_db
@@ -14,36 +13,11 @@ services:
       - local_pgdata:/var/lib/postgresql/data
     networks:
       - app-networks
-
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin4_container
-    restart: always
-    ports:
-      - "8888:80"
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
-      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
-    networks:
-      - app-networks
-
-  web: 
-    build: .
-    container_name: janitor_web_rails
-    command: bash -c "rm -f tmp/pids/server.pid && bundle install && bundle exec rails db:migrate && bundle exec rails s -b '0.0.0.0'"
-    environment:
-      - RAILS_ENV=${RAILS_ENV}
-    ports:
-      - "3000:3000"
-    env_file:
-      - .env
-    restart: unless-stopped
-    networks:
-      - app-networks
-    volumes:
-      - .:/rails
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_LOCAL_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
       
 volumes:
   local_pgdata: {}
