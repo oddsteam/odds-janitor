@@ -5,7 +5,7 @@ services:
     container_name: local_db
     restart: always
     ports:
-      - "5432:5432"
+      - "5433:5432"
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_LOCAL_USER}

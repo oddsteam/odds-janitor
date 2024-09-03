@@ -4,7 +4,7 @@ services:
     container_name: janitor_pg_db
     restart: always
     ports:
-      - "5432:5432"
+      - "5433:5432"
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_LOCAL_USER}
@@ -21,7 +21,7 @@ services:
     environment:
       - RAILS_ENV=${RAILS_ENV}
     ports:
-      - "89:3000"
+      - "84:3000"
     env_file:
       - .env
     restart: unless-stopped

@@ -10,13 +10,11 @@ development:
   username: <%= ENV['POSTGRES_LOCAL_USER'] %>
   password: <%= ENV['POSTGRES_LOCAL_PASSWORD'] %>
   host: <%= ENV['POSTGRES_HOST'] %>
-  port: 5432
+  port: 5433
 
 test:
   database: db/test.sqlite3
   adapter: sqlite3
-
-
 
 production:
   <<: *default
