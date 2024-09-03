@@ -37,6 +37,8 @@ gem 'brakeman', require: false
 
 gem "webmock"
 
+gem "tailwindcss-rails", "~> 2.7"
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 
@@ -82,6 +84,3 @@ group :test do
   gem 'factory_bot_rails'
   gem 'cucumber-rails', require: false
 end
-
-
-gem "tailwindcss-rails", "~> 2.7"
