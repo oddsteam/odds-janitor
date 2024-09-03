@@ -3,7 +3,7 @@
     <thead>
       <tr class="bg-neutral-100 text-[1rem]">
         <th class="top-0 left-0 z-3 bg-neutral-100 border border-slate-300 text-center h-[60px] min-w-[120px]">
-          Room
+          <i class="fa-solid fa-door-open mr-2"></i> Room
         </th>
       </tr>
     </thead>
@@ -18,29 +18,34 @@
     </tbody>
   </table>
 
-  <div class="w-full overflow-x-scroll border-r border-r-slate-300">
-    <table class="h-full border-collapse text-gray-600">
-      <thead>
-        <tr class="bg-neutral-100 text-[1rem]">
+  <div class="w-full overflow-x-scroll border-r border-r-slate-300 hidden-scroll hide-scrollbar">
+  <table class="h-full text-gray-600">
+    <thead>
+      <tr class="bg-neutral-100 text-[1rem]">
+        <% 22.times do |i| %>
+          <th 
+            class="bg-gray-100 z-1 h-[60px] border border-t-slate-300 <%= i.even? ? 'border-r-transparent border-l-transparent' : 'border-r-slate-300 border-l-slate-300' %> border-b-slate-300 min-w-[60px] <%= i == 21 ? 'border-r-transparent' : '' %>" 
+            colspan="1">
+            <%= "#{i / 2 + 8}:00" if i.even? %>
+          </th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @rooms.each do |room| %>
+        <tr>
           <% 22.times do |i| %>
-            <th class="bg-gray-100 z-1 h-[60px] border border-t-slate-300 <%= i.even? ? 'border-r-transparent border-l-transparent' : 'border-r-slate-300 border-l-slate-300' %> border-b-slate-300 min-w-[60px]" colspan="1">
-              <%= "#{i / 2 + 8}:00" if i.even? %>
-            </th>
+            <td 
+              class="border border-slate-200 min-w-[60px] hover:bg-gray-200 text-center cursor-pointer p-0 transition duration-300 
+              <%= i == 0 ? 'border-l-transparent' : '' %> 
+              <%= i == 21 ? 'border-r-transparent' : '' %>" 
+              colspan="1">
+            </td>
           <% end %>
         </tr>
-      </thead>
-      <tbody>
-        <% @rooms.each do |room| %>
-          <tr>
-            <% 22.times do |i| %>
-              <td 
-                class="border border-slate-200 min-w-[60px] hover:bg-gray-200 text-center cursor-pointer p-0 transition duration-300"
-                colspan="1">
-              </td>
-            <% end %>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
 </div>
