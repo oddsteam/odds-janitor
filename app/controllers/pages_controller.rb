@@ -1,10 +1,6 @@
 class PagesController < ApplicationController
   def home
     @user = Page.get_user_form_session(session)
-    puts "============"
-    puts @user
-    puts session[:user_email]
-    puts "============"
 
     @rooms = [
       {
