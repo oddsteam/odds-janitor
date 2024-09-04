@@ -20,8 +20,6 @@
   </div>
 </div>
 
-<%= render CalendarComponent.new(selected_date: Date.today) %>
-
 <div>
   <h1>Email: <%= @user %></h1>
   <%= link_to logout_path, method: :get, class: "btn btn-secondary",style:"background-color: rgba(242,49,39,255); margin: 0px 0px 0px 10px; border:none" do %>
@@ -29,8 +27,10 @@
   <% end %>
 </div>
 
-
-<div class="flex max-w-[1300px] m-auto w-[90%] mt-32">
+<div class="flex max-w-[1300px] m-auto w-[90%] bg-slate-100 border-t border-s border-r border-slate-300 rounded-t-lg overflow-hidden">
+  <%= render CalendarComponent.new(selected_date: Date.today) %>
+</div>
+<div class="flex max-w-[1300px] m-auto w-[90%] mb-6">
   <table class="w-max border-collapse text-gray-600">
     <thead>
       <tr class="bg-neutral-100 text-[1rem]">

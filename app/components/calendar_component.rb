@@ -15,7 +15,7 @@ class CalendarComponent < ViewComponent::Base
 
   def date_class(day)
     if selected_date.day == day
-      'bg-blue-500 text-white'
+      'bg-blue-500 text-white hover:bg-blue-500'
     else
       'text-gray-800'
     end
