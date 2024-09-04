@@ -32,8 +32,8 @@ gem "font-awesome-sass", "~> 6.5.2"
 
 gem "dotenv-rails"
 
-gem 'bundler-audit'
-gem 'brakeman', require: false
+gem "bundler-audit"
+gem "brakeman", require: false
 
 gem "webmock"
 
@@ -61,10 +61,12 @@ gem "bootsnap", require: false
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem 'database_cleaner-active_record'
+  gem "database_cleaner-active_record"
   gem "debug", platforms: %i[ mri windows ]
-  gem 'sqlite3'
+  gem "sqlite3"
   gem "simplecov", require: false
+  gem "rspec-rails"
+  gem "rails-controller-testing"
 end
 
 group :development do
@@ -82,6 +84,6 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
-  gem 'factory_bot_rails'
-  gem 'cucumber-rails', require: false
+  gem "factory_bot_rails"
+  gem "cucumber-rails", require: false
 end
