@@ -22,15 +22,13 @@
   <div class="min-[320px]:hidden sm:flex xl:flex flex-col w-1/3 justify-between items-start ps-5">
     <div>
       <% @mock_data_room.each_with_index do |room, index| %>
-        <div data-testid="room-<%= room[:name] %>" class="flex w-full rounded-lg cursor-pointer transition duration-200 <%= @selected_room == room[:name] ? 'bg-blue-400 text-white' : 'bg-white hover:scale-[.95] hover:bg-blue-200' %>" onclick="location.href='<%= roomdetails_path(selected_room: room[:name]) %>'">
+        <div data-testid="room-name-mobile" room[:name]  class="flex w-full rounded-lg cursor-pointer transition duration-200 <%= @selected_room == room[:name] ? 'bg-blue-400 text-white' : 'bg-white hover:scale-[.95] hover:bg-blue-200' %>" onclick="location.href='<%= roomdetails_path(selected_room: room[:name]) %>'">
           <%= room[:name] %>
         </div>
       <% end %>
     </div>
-    <div class="xl:w-full bg-white p-4 mt-3 rounded-lg overflow-hidden">
-      <%# แผนผัง %>
-      <%# <%= render partial: 'blueprint', locals: { selected_room_id: @selected_room_id } %> 
+    <div class="xl:w-full bg-white p-3 mt-6 rounded-lg overflow-hidden">
+      <%= render partial: "roomdetails/blueprint", locals: { selected_room_id: @selected_index, selected_room: @selected_room } %>
     </div>
   </div>
-
 </div>
