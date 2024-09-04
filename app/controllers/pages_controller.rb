@@ -1,5 +1,11 @@
 class PagesController < ApplicationController
   def home
+    @user = Page.get_user_form_session(session)
+    puts "============"
+    puts @user
+    puts session[:user_email]
+    puts "============"
+
     @rooms = [
       {
         id: 1,
@@ -57,9 +63,6 @@ class PagesController < ApplicationController
         seat: 32,
         room_description: "LeSSex Area",
       },
-    ];
-  end
-
-  def test
+    ]
   end
 end
