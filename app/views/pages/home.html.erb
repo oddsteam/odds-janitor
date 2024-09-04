@@ -1,3 +1,9 @@
+<div>
+  <h1>Email: <%= @user %></h1>
+  <%= link_to logout_path, method: :get, class: "btn btn-secondary",style:"background-color: rgba(242,49,39,255); margin: 0px 0px 0px 10px; border:none" do %>
+    <i class="fa-solid fa-right-from-bracket pe-1"></i> Logout
+  <% end %>
+</div>
 <div class="flex max-w-[1300px] m-auto w-[90%] mt-32">
   <table class="w-max border-collapse text-gray-600">
     <thead>
@@ -17,35 +23,33 @@
       <% end %>
     </tbody>
   </table>
-
   <div class="w-full overflow-x-scroll border-r border-r-slate-300 hidden-scroll hide-scrollbar">
-  <table class="h-full text-gray-600">
-    <thead>
-      <tr class="bg-neutral-100 text-[1rem]">
-        <% 22.times do |i| %>
-          <th 
+    <table class="h-full text-gray-600">
+      <thead>
+        <tr class="bg-neutral-100 text-[1rem]">
+          <% 22.times do |i| %>
+            <th 
             class="bg-gray-100 z-1 h-[60px] border border-t-slate-300 <%= i.even? ? 'border-r-transparent border-l-transparent' : 'border-r-slate-300 border-l-slate-300' %> border-b-slate-300 min-w-[60px] <%= i == 21 ? 'border-r-transparent' : '' %>" 
             colspan="1">
-            <%= "#{i / 2 + 8}:00" if i.even? %>
-          </th>
-        <% end %>
-      </tr>
-    </thead>
-    <tbody>
-      <% @rooms.each do |room| %>
-        <tr>
-          <% 22.times do |i| %>
-            <td 
+              <%= "#{i / 2 + 8}:00" if i.even? %>
+            </th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% @rooms.each do |room| %>
+          <tr>
+            <% 22.times do |i| %>
+              <td 
               class="border border-slate-200 min-w-[60px] hover:bg-gray-200 text-center cursor-pointer p-0 transition duration-300 
               <%= i == 0 ? 'border-l-transparent' : '' %> 
               <%= i == 21 ? 'border-r-transparent' : '' %>" 
               colspan="1">
-            </td>
-          <% end %>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
-
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
