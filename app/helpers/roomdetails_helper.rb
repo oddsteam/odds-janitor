@@ -1,0 +1,2 @@
+module RoomdetailsHelper
+end
