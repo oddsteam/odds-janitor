@@ -1,15 +1,18 @@
-<div class="calendar max-w-md mx-auto bg-white rounded-lg shadow overflow-hidden">
+<div class="calendar max-w-md mx-auto bg-white rounded-lg shadow overflow-hidden" data-controller="calendar" data-calendar-selected-value="<%= selected_date %>">
   <div class="calendar-header text-center py-2">
     <h2 class="text-lg font-semibold text-gray-700">
       <%= selected_date.strftime("%B %Y") %>
     </h2>
   </div>
+  <div class="calendar-selected-date text-center py-2 text-blue-500 font-semibold">
+    Selected Date: <span data-calendar-target="selectedDate"><%= selected_date %></span>
+  </div>
   <div class="calendar-grid grid grid-cols-7 gap-2 p-4">
     <% (1..days_in_month).each do |day| %>
-      <div class="calendar-day text-center p-2 cursor-pointer rounded 
-                  hover:bg-blue-100 <%= date_class(day) %>">
-        <%= link_to day, "#", data: { action: "calendar#select", date: selected_date.change(day: day) }, 
-                    class: "block w-full h-full" %>
+      <div class="calendar-day text-center p-2 cursor-pointer rounded hover:bg-blue-100 <%= date_class(day) %>"
+           data-action="click->calendar#select"
+           data-date="<%= selected_date.change(day: day).to_s %>">
+        <%= day %>
       </div>
     <% end %>
   </div>

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class CalendarComponent < ViewComponent::Base
   attr_reader :selected_date
 
@@ -15,7 +13,11 @@ class CalendarComponent < ViewComponent::Base
     selected_date.beginning_of_month.wday
   end
 
-  def date_class(date)
-    date == selected_date.day ? 'bg-blue-500 text-white' : 'text-gray-800'
+  def date_class(day)
+    if selected_date.day == day
+      'bg-blue-500 text-white'
+    else
+      'text-gray-800'
+    end
   end
 end
