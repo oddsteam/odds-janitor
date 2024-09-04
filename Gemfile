@@ -39,6 +39,8 @@ gem "webmock"
 
 gem "tailwindcss-rails", "~> 2.7"
 
+gem "view_component"
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 
