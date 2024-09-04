@@ -1,4 +1,24 @@
-<%= render CalendarComponent.new(selected_date: Date.today) %>
+<div class="w-full">
+  <% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+  <% end %>
+
+  <% content_for :title, "Reserves" %>
+
+  <div class="flex justify-between items-center">
+    <h1 class="font-bold text-4xl">Reserves</h1>
+    <%= link_to "New reserve", new_reserf_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+  </div>
+
+  <div id="reserves" class="min-w-full">
+    <% @reserves.each do |reserf| %>
+      <%= render reserf %>
+      <p>
+        <%= link_to "Show this reserve", reserf, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+      </p>
+    <% end %>
+  </div>
+</div>
 
 <div>
   <h1>Email: <%= @user %></h1>
@@ -7,8 +27,10 @@
   <% end %>
 </div>
 
-
-<div class="flex max-w-[1300px] m-auto w-[90%] mt-32">
+<div class="flex max-w-[1300px] m-auto w-[90%] bg-slate-100 border-t border-s border-r border-slate-300 rounded-t-lg overflow-hidden">
+  <%= render CalendarComponent.new(selected_date: Date.today) %>
+</div>
+<div class="flex max-w-[1300px] m-auto w-[90%] mb-6">
   <table class="w-max border-collapse text-gray-600">
     <thead>
       <tr class="bg-neutral-100 text-[1rem]">
@@ -57,3 +79,4 @@
     </table>
   </div>
 </div>
+

@@ -1,12 +1,14 @@
+require "rails_helper"
 
 RSpec.describe SessionsController, type: :controller do
   before do
-    ENV['REALM_ID'] = 'test_realm'
-    ENV['CLIENT_ID'] = 'test_client_id'
-    ENV['REDIRECT_URI'] = 'http://localhost:3000/callback'
+    ENV["REALM_ID"] = "test_realm"
+    ENV["CLIENT_ID"] = "test_client_id"
+    ENV["REDIRECT_URI"] = "http://localhost:3000/callback"
+    @mock_keycloak_url = "http://test/test"
   end
-  describe 'GET function lobby' do
-    it 'get lobby page' do
+  describe "GET function lobby" do
+    it "get lobby page" do
       get :lobby
       expect(response).to have_http_status(:ok)
     end
@@ -25,34 +27,34 @@ RSpec.describe SessionsController, type: :controller do
     # end
   end
 
-  describe 'GET function callback' do
-    context 'when there is a code' do
+  describe "GET function callback" do
+    context "when there is a code" do
       before do
-        allow(KeycloakService).to receive(:get_token).and_return({'access_token' => 'accessdaratest', 'refresh_token' => 'refreshdaratest'})
-        allow(KeycloakService).to receive(:get_user_info).and_return({'email' => 'piangchamas@net.com', 'sub' => 'net'})
+        allow(KeycloakService).to receive(:get_token).and_return({ "access_token" => "accessdaratest", "refresh_token" => "refreshdaratest" })
+        allow(KeycloakService).to receive(:get_user_info).and_return({ "email" => "piangchamas@net.com", "sub" => "net" })
       end
 
-      it 'sets session variables and redirects to root path' do
-        get :callback, params: { code: 'valid_code' }
-        expect(session[:user_email]).to eq 'piangchamas@net.com'
-        expect(session[:user_id]).to eq 'net'
-        expect(session[:refresh_token]).to eq 'refreshdaratest'
+      it "sets session variables and redirects to root path" do
+        get :callback, params: { code: "valid_code" }
+        expect(session[:user_email]).to eq "piangchamas@net.com"
+        expect(session[:user_id]).to eq "net"
+        expect(session[:refresh_token]).to eq "refreshdaratest"
         expect(response).to redirect_to(root_path)
       end
     end
 
-    context 'when there is no code' do
-      it 'redirects to login path' do
+    context "when there is no code" do
+      it "redirects to login path" do
         get :callback
         expect(response).to redirect_to(lobby_path)
       end
     end
   end
 
-  describe 'GET function logout' do
-    it 'clears session and redirects to login path' do
-      session[:refresh_token] = 'refreshdaratest'
-      expect(KeycloakService).to receive(:keycloak_logout).with('refreshdaratest')
+  describe "GET function logout" do
+    it "clears session and redirects to login path" do
+      session[:refresh_token] = "refreshdaratest"
+      expect(KeycloakService).to receive(:keycloak_logout).with("refreshdaratest")
       get :logout
       expect(session[:refresh_token]).to be_nil
       expect(response).to redirect_to(lobby_path)
@@ -98,4 +100,3 @@ RSpec.describe SessionsController, type: :controller do
   #   end
   # end
 end
-
