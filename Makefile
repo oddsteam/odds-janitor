@@ -1,4 +1,4 @@
-.PHONY: up down e2e-ci e2e migrate run test cov mt lint
+.PHONY: up down e2e-ci e2e migrate run test cov mt lint dblog
 
 up: 
 	docker-compose -f docker-compose.yml up -d
@@ -32,3 +32,6 @@ cov:
 
 lint:
 	bundle exec brakeman
+
+dblog:
+	docker-compose -f docker-compose.yml logs -f db
