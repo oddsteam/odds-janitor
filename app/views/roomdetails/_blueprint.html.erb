@@ -1,41 +1,45 @@
-<!-- app/views/roomdetails/_blueprint.html.erb -->
-<% if selected_room_id.present? %>
-  <div>
-    <!-- Blueprint Image and SVG Map -->
-    <div class="relative w-auto h-auto">
-    <%= image_tag 'blueprint.svg', alt: 'Blueprint', class: 'relative top-0 left-0 w-full h-full object-cover z-10 cursor-pointer', onclick: 'openModal()' %>
-      
-    </div>
+<!-- app/views/rooms/_blueprint.html.erb -->
+<div>
+  <div class="relative w-auto h-auto">
+    <%= image_tag "blueprint.svg", alt: "Blueprint", width: 2500, height: 1500, class: "cursor-pointer relative top-0 left-0 w-full h-full object-cover z-10", onclick: "handleImageClick()" %>
 
-    <!-- Modal -->
-    <div id="blueprint-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black bg-opacity-75" onclick="closeModal()">
-      <div class="relative bg-white p-16 rounded-3xl cursor-zoom-in transition-transform duration-300">
-        <%= image_tag 'blueprint.svg', width: 1000, height: 500, alt: 'map', class: 'relative object-contain z-10', onclick: 'toggleZoom()' %>
-        <svg
-          viewBox="0 0 2500 1500"
-          class="absolute top-0 left-0 w-full h-full object-contain z-0">
-          <!-- Same SVG elements as above -->
-        </svg>
-        <button class="absolute top-2 right-2 text-black text-4xl pe-5" onclick="closeModal()">
-          &times;
-        </button>
-      </div>
-    </div>
+    <svg viewBox="0 0 2500 1500" class="absolute top-0 left-0 w-full h-full object-cover z-0" onclick="handleImageClick()">
+      <rect name="meeting1" x="1270" y="767.5" width="200" height="125" fill="<%= @selected_room_id == 1 ? 'rgb(96 165 250)' : 'rgb(245 245 245)' %>" />
+      <text x="1370" y="827.5" fill="<%= @selected_room_id == 1 ? '#FFFFFF' : '#000000' %>" text-anchor="middle" alignment-baseline="middle" font-size="28" font-weight="bold">
+        MEETING 1
+      </text>
 
-    <!-- JavaScript for modal functionality -->
-    <script type="text/javascript">
-      function openModal() {
-        document.getElementById('blueprint-modal').classList.remove('hidden');
-      }
+      <rect name="meeting2" x="548.9" y="757" width="185.5" height="149" fill="<%= @selected_room_id == 2 ? 'rgb(96 165 250)' : 'rgb(245 245 245)' %>" />
+      <text x="643.9" y="827" fill="<%= @selected_room_id == 2 ? '#FFFFFF' : '#000000' %>" text-anchor="middle" alignment-baseline="middle" font-size="28" font-weight="bold">
+        MEETING 2
+      </text>
 
-      function closeModal() {
-        document.getElementById('blueprint-modal').classList.add('hidden');
-      }
-
-      function toggleZoom() {
-        const modalImage = document.querySelector('#blueprint-modal .relative img');
-        modalImage.classList.toggle('scale-125');
-      }
-    </script>
+    </svg>
   </div>
-<% end %>
+
+  <div id="modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 hidden">
+    <div class="relative bg-white p-16 items-center rounded-3xl cursor-zoom-in transition-transform duration-300" id="modal-content">
+      <%= image_tag "blueprint.svg", width: 1000, height: 500, alt: "Blueprint", class: "relative object-contain z-10" %>
+      <svg viewBox="0 0 2500 1500" class="absolute top-0 left-0 w-full h-full object-contain z-0">
+        <!-- Repeat SVG here for modal content -->
+      </svg>
+      <button class="absolute top-2 right-2 text-black text-4xl" onclick="handleClose()">&times;</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  var isOpen = false;
+  var isZoomed = false;
+
+  function handleImageClick() {
+    isOpen = true;
+    isZoomed = !isZoomed;
+    document.getElementById('modal').classList.remove('hidden');
+  }
+
+  function handleClose() {
+    isOpen = false;
+    document.getElementById('modal').classList.add('hidden');
+  }
+</script>

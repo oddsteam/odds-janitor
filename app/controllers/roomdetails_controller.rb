@@ -3,15 +3,15 @@ class RoomdetailsController < ApplicationController
 
   def index
     @mock_data_room = mock_data_room
-    @selected_room = params[:selected_room] || "MEETING 1"
+    @selected_room = set_default_room 
     @selected_index = @mock_data_room.find_index { |room| room[:name] == @selected_room }
-    @selected_room_id = params[:selected_room_id].to_i
+    @selected_room_id = @mock_data_room.find { |room| room[:name] == @selected_room }&.dig(:id)
   end
 
   private
 
   def set_default_room
-    params[:selected_room] ||= "MEETING 1"
+    params[:selected_room] || "MEETING 1"
   end
 
   def mock_data_room
