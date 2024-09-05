@@ -33,7 +33,6 @@
       <%= render partial: 'calendar', locals: { selected_date: @selected_date, days_in_month: @days_in_month, rooms: @rooms } %>
     </turbo-frame>
     
-    <h1><%= @selected_date.strftime("%B %d, %Y") %></h1>
   </div>
   
   <div class="flex max-w-[1300px] m-auto w-[90%] mb-6">
