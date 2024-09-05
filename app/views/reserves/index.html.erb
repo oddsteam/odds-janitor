@@ -1,96 +1,96 @@
-<div class="w-full">
-  <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-  <% end %>
-  <% content_for :title, "Reserves" %>
-  
-  <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl">Reserves</h1>
-    <%= link_to "New reserve", new_reserf_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
-  </div>
-  
-  <div id="reserves" class="min-w-full">
-    <% @reserves.each do |reserf| %>
-      <%= render reserf %>
-      <p>
-        <%= link_to "Show this reserve", reserf, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-      </p>
+<div class="w-90% pt-6 max-w-[1300px] m-auto">
+  <div class="w-full">
+    <% if notice.present? %>
+      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
     <% end %>
-  </div>
-</div>
-
-<div>
-  <h1>Email: <%= @user %></h1>
-  <%= link_to logout_path, method: :get, class: "btn btn-secondary", style: "background-color: rgba(242,49,39,255); margin: 0px 0px 0px 10px; border:none" do %>
-    <i class="fa-solid fa-right-from-bracket pe-1"></i> Logout
-  <% end %>
-</div>
-
-<div>
-  <div class="flex max-w-[1300px] m-auto w-[90%] bg-slate-100 border-t border-s border-r border-slate-300 rounded-t-lg overflow-hidden">
-
-    <turbo-frame id="calendar">
-      <%= render partial: 'calendar', locals: { selected_date: @selected_date, days_in_month: @days_in_month, rooms: @rooms } %>
-    </turbo-frame>
-    <div>
-      <h2 class="p-4 font-medium">
-        <%= @alert_message%>
-      </h2>
+    <% content_for :title, "Reserves" %>
+    
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="font-bold text-4xl">Reserves</h1>
+        <div class="flex flex-row gap-2 items-center">
+          <h1>Email: <%= @user %></h1>
+          <%= link_to logout_path, method: :get, class: "btn btn-secondary border p-2 rounded-md" do %>
+            <i class="fa-solid fa-right-from-bracket pe-1"></i> Logout
+          <% end %>
+        </div>
+    </div>
+    
+    <div id="reserves" class="min-w-full">
+      <% @reserves.each do |reserf| %>
+        <%= render reserf %>
+        <p>
+          <%= link_to "Show this reserve", reserf, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+        </p>
+      <% end %>
     </div>
   </div>
-  
-  <div class="flex max-w-[1300px] m-auto w-[90%] mb-6">
-    <table class="w-max border-collapse text-gray-600">
-      <thead>
-        <tr class="bg-neutral-100 text-[1rem]">
-          <th class="top-0 left-0 z-3 bg-neutral-100 border border-slate-300 text-center h-[60px] min-w-[120px]">
-            <i class="fa-solid fa-door-open mr-2"></i> Room
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @rooms.each do |room| %>
-          <tr>
-            <td class="left-0 z-2 border-r-slate-300 border border-slate-300 text-right pr-3 h-[60px] font-medium bg-neutral-100 select-none">
-              <%= room[:room_name] %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+
+  <div>
+    <div class="flex max-w-[1300px] m-auto w-full bg-slate-100 border-t border-s border-r border-slate-300 rounded-t-lg overflow-hidden">
+
+      <turbo-frame id="calendar">
+        <%= render partial: 'calendar', locals: { selected_date: @selected_date, days_in_month: @days_in_month, rooms: @rooms } %>
+      </turbo-frame>
+      <div>
+        <h2 class="p-4 font-medium">
+          <%= @alert_message%>
+        </h2>
+      </div>
+    </div>
     
-    <div class="w-full overflow-x-scroll border-r border-r-slate-300 hidden-scroll hide-scrollbar">
-      <table class="h-full text-gray-600" data-controller="booking-table">
+    <div class="flex max-w-[1300px] m-auto w-full mb-6">
+      <table class="w-max border-collapse text-gray-600">
         <thead>
           <tr class="bg-neutral-100 text-[1rem]">
-            <% 22.times do |i| %>
-              <th 
-                class="bg-gray-100 z-1 h-[60px] border border-t-slate-300 <%= i.even? ? 'border-r-transparent border-l-transparent' : 'border-r-slate-300 border-l-slate-300' %> border-b-slate-300 min-w-[60px] <%= i == 21 ? 'border-r-transparent' : '' %>" 
-                colspan="1">
-                <%= "#{i / 2 + 8}:00" if i.even? %>
-              </th>
-            <% end %>
+            <th class="top-0 left-0 z-3 bg-neutral-100 border border-slate-300 text-center h-[60px] min-w-[120px]">
+              <i class="fa-solid fa-door-open mr-2"></i> Room
+            </th>
           </tr>
         </thead>
         <tbody>
-          <% @rooms.each_with_index do |room, room_index| %>
+          <% @rooms.each do |room| %>
             <tr>
-              <% 22.times do |i| %>
-                <td 
-                  class="border border-slate-200 min-w-[60px] hover:bg-gray-200 text-center cursor-pointer p-0 transition duration-300 
-                  <%= i == 0 ? 'border-l-transparent' : '' %> 
-                  <%= i == 21 ? 'border-r-transparent' : '' %>" 
-                  data-action="mousedown->booking-table#handleStart mousemove->booking-table#handleMove mouseup->booking-table#handleEnd touchmove->booking-table#handleTouchMove"
-                  data-room="<%= room_index %>" 
-                  data-hour="<%= i / 2 %>" 
-                  data-half="<%= i % 2 %>" 
-                  data-booking-table-target="cell">
-                </td>
-              <% end %>
+              <td class="left-0 z-2 border-r-slate-300 border border-slate-300 text-right pr-3 h-[60px] font-medium bg-neutral-100 select-none">
+                <%= room[:room_name] %>
+              </td>
             </tr>
           <% end %>
         </tbody>
       </table>
+      
+      <div class="w-full overflow-x-scroll border-r border-r-slate-300 hidden-scroll hide-scrollbar">
+        <table class="h-full text-gray-600" data-controller="booking-table">
+          <thead>
+            <tr class="bg-neutral-100 text-[1rem]">
+              <% 22.times do |i| %>
+                <th 
+                  class="bg-gray-100 z-1 h-[60px] border border-t-slate-300 <%= i.even? ? 'border-r-transparent border-l-transparent' : 'border-r-slate-300 border-l-slate-300' %> border-b-slate-300 min-w-[60px] <%= i == 21 ? 'border-r-transparent' : '' %>" 
+                  colspan="1">
+                  <%= "#{i / 2 + 8}:00" if i.even? %>
+                </th>
+              <% end %>
+            </tr>
+          </thead>
+          <tbody>
+            <% @rooms.each_with_index do |room, room_index| %>
+              <tr>
+                <% 22.times do |i| %>
+                  <td 
+                    class="border border-slate-200 min-w-[60px] hover:bg-gray-200 text-center cursor-pointer p-0 transition duration-300 
+                    <%= i == 0 ? 'border-l-transparent' : '' %> 
+                    <%= i == 21 ? 'border-r-transparent' : '' %>" 
+                    data-action="mousedown->booking-table#handleStart mousemove->booking-table#handleMove mouseup->booking-table#handleEnd touchmove->booking-table#handleTouchMove"
+                    data-room="<%= room_index %>" 
+                    data-hour="<%= i / 2 %>" 
+                    data-half="<%= i % 2 %>" 
+                    data-booking-table-target="cell">
+                  </td>
+                <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
