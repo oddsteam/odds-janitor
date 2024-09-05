@@ -72,11 +72,10 @@ class ReservesController < ApplicationController
     ]
   end
 
-  def date_class(day)
-    if selected_date.day == day
-      'bg-blue-500 text-white hover:bg-blue-500'
-    else
-      'text-gray-800'
+  def update_selected_date
+    @selected_date = Date.parse(params[:date])
+    respond_to do |format|
+      format.js 
     end
   end
 
