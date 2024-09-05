@@ -1,0 +1,4 @@
+<!-- app/views/reserves/update_selected_date.turbo_stream.erb -->
+<%= turbo_stream.replace "calendar" do %>
+  <%= render partial: "calendar", locals: { selected_date: @selected_date, days_in_month: @days_in_month, rooms: @rooms } %>
+<% end %>
