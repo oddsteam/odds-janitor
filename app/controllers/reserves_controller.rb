@@ -7,6 +7,16 @@ class ReservesController < ApplicationController
     @reserves = Reserve.all
     @user = Page.get_user_form_session(session)
     @selected_date = params[:date] ? Date.parse(params[:date]) : Date.today
+    dateNext3Month = Date.today + 3.month
+    @alert_message = ""
+
+    if @selected_date > dateNext3Month
+      @selected_date = dateNext3Month
+      @alert_message = "You can't select the date more than 3 months"
+    elsif @selected_date < Date.today
+      @selected_date = Date.today
+      @alert_message = "You can't select the past date"
+    end
 
     @days_in_month = Date.new(@selected_date.year, @selected_date.month, -1).day
     @start_of_month = @selected_date.beginning_of_month.wday

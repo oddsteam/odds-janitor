@@ -32,7 +32,11 @@
     <turbo-frame id="calendar">
       <%= render partial: 'calendar', locals: { selected_date: @selected_date, days_in_month: @days_in_month, rooms: @rooms } %>
     </turbo-frame>
-    
+    <div>
+      <h2 class="p-4 font-medium">
+        <%= @alert_message%>
+      </h2>
+    </div>
   </div>
   
   <div class="flex max-w-[1300px] m-auto w-[90%] mb-6">
@@ -87,12 +91,6 @@
           <% end %>
         </tbody>
       </table>
-    </div>
-    
-    <!-- แสดงเวลาเริ่มต้นและสิ้นสุด -->
-    <div class="time-display">
-      <p>Start Time: <span data-booking-table-target="startTime">--:--</span></p>
-      <p>End Time: <span data-booking-table-target="endTime">--:--</span></p>
     </div>
   </div>
 </div>
