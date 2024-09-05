@@ -6,3 +6,6 @@ eagerLoadControllersFrom("controllers", application)
 
 import CalendarController from "./calendar_controller"
 application.register("calendar", CalendarController)
+
+import ReservationController from "./reservation_controller"
+application.register("reservation", ReservationController)

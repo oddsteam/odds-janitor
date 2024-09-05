@@ -1,10 +1,16 @@
 class ReservesController < ApplicationController
   before_action :set_reserf, only: %i[ show edit update destroy ]
+  attr_reader :selected_date
 
   # GET /reserves or /reserves.json
   def index
     @reserves = Reserve.all
     @user = Page.get_user_form_session(session)
+    @selected_date = @elected_date || Date.today
+
+    @days_in_month = Date.new(selected_date.year, selected_date.month, -1).day
+
+    @start_of_month = selected_date.beginning_of_month.wday
 
     @rooms = [
       {
@@ -64,6 +70,14 @@ class ReservesController < ApplicationController
         room_description: "LeSSex Area",
       },
     ]
+  end
+
+  def date_class(day)
+    if selected_date.day == day
+      'bg-blue-500 text-white hover:bg-blue-500'
+    else
+      'text-gray-800'
+    end
   end
 
   # GET /reserves/1 or /reserves/1.json
