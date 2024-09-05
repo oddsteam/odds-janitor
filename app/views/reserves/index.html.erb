@@ -31,8 +31,29 @@
       <turbo-frame id="calendar">
         <%= render partial: 'calendar', locals: { selected_date: @selected_date, days_in_month: @days_in_month, rooms: @rooms, alert: @alert_message } %>
       </turbo-frame>
-      <div>
-        <h2 class="p-4 font-medium">Selected Day: <span class="text-gray-500 font-normal"> <%= @selected_date.strftime("%d %A") %> </span></h2>
+      <div class="w-full p-4">
+        <h2 class="font-medium">Your booking on <span class="text-gray-500 font-normal"> <%= @selected_date.strftime("%B %d, %Y") %> </span></h2>
+        <div class="bg-white border p-2 w-full rounded-md mt-2 flex flex-row justify-between">
+          <h2 class="text-sm">Agile Testing Class</h2>
+          <div class="flex flex-row items-center gap-4">
+            <h3 class="text-sm">13:00-14:30</h3>
+            <i class="fa-solid fa-circle-xmark text-gray-400"></i>
+          </div>
+        </div>
+        <div class="bg-white border p-2 w-full rounded-md mt-2 flex flex-row justify-between">
+          <h2 class="text-sm">Learn Flutter</h2>
+          <div class="flex flex-row items-center gap-4">
+            <h3 class="text-sm">13:00-14:30</h3>
+            <i class="fa-solid fa-circle-xmark text-gray-400"></i>
+          </div>
+        </div>
+        <div class="bg-white border p-2 w-full rounded-md mt-2 flex flex-row justify-between">
+          <h2 class="text-sm">E2E Flutter </h2>
+          <div class="flex flex-row items-center gap-4">
+            <h3 class="text-sm">13:00-14:30</h3>
+            <i class="fa-solid fa-circle-xmark text-gray-400"></i>
+          </div>
+        </div>
       </div>
     </div>
     

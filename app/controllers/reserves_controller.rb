@@ -12,7 +12,7 @@ class ReservesController < ApplicationController
 
     if @selected_date > dateNext3Month
       @selected_date = dateNext3Month
-      @alert_message = "You can't select the date more than 3 months"
+      @alert_message = "Maximum date is 3 months from now"
     elsif @selected_date < Date.today
       @selected_date = Date.today
       @alert_message = "You can't select the past date"

@@ -1,4 +1,4 @@
-<div class="reservation max-w-md bg-white border-r border-slate-300 overflow-hidden p-2">
+<div class="reservation max-w-md min-w-[290px] bg-white border-r border-slate-300 overflow-hidden p-2">
   <div class="reservation-header flex justify-between items-center">
     <%= button_to update_selected_date_reserves_path(date: (@selected_date - 1.month).strftime("%Y-%m-%d")), method: :patch, form: { data: { turbo_frame: "calendar" } }, class: "p-3 text-gray-600 hover:bg-gray-100 rounded" do %>
       <i class="fa-solid fa-angle-left"></i>
