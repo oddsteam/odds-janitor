@@ -1,4 +1,4 @@
-<div class="reservation max-w-md bg-white border-r border-slate-300 overflow-hidden p-3">
+<div class="reservation max-w-md bg-white border-r border-slate-300 overflow-hidden p-2">
   <div class="reservation-header flex justify-between items-center">
     <%= button_to update_selected_date_reserves_path(date: (@selected_date - 1.month).strftime("%Y-%m-%d")), method: :patch, form: { data: { turbo_frame: "calendar" } }, class: "p-3 text-gray-600 hover:bg-gray-100 rounded" do %>
       <i class="fa-solid fa-angle-left"></i>
@@ -13,11 +13,11 @@
     <% end %>
   </div>
 
-  <div class="reservation-grid grid grid-cols-7 gap-2 pt-2">
+  <div class="reservation-grid grid grid-cols-7 gap-1">
     <% (1..days_in_month).each do |day| %>
       <%= form_with url: update_selected_date_reserves_path, method: :patch, local: false, data: { turbo_frame: "calendar" } do %>
         <input type="hidden" name="date" value="<%= @selected_date.change(day: day).to_s %>">
-        <button type="submit" class="reservation-day text-center w-10 h-11 p-2 cursor-pointer rounded transition-all hover:bg-blue-100 <%= day == @selected_date.day ? 'border bg-blue-400 text-white hover:bg-blue-400' : 'text-gray-600' %> <%= day == Date.today.day && 'border' %>">
+        <button type="submit" class="reservation-day text-center w-9 h-8 cursor-pointer rounded transition-all hover:bg-blue-100 <%= day == @selected_date.day ? 'border bg-blue-400 text-white hover:bg-blue-400' : 'text-gray-600' %> <%= Date.today == @selected_date.change(day: day) && 'border'%>">
           <%= day %>
         </button>
       <% end %>
