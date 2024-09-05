@@ -22,80 +22,69 @@
     <i class="fa-solid fa-right-from-bracket pe-1"></i> Logout
   <% end %>
 </div>
-<div data-controller="reservation">
-  <div class="flex max-w-[1300px] m-auto w-[90%] bg-slate-100 border-t border-s border-r border-slate-300 rounded-t-lg overflow-hidden">
-    <div class="calendar max-w-md bg-white border-r border-slate-300 overflow-hidden p-3" data-controller="calendar" data-calendar-selected-value="<%= @selected_date %>">
-      <div class="calendar-header flex justify-between items-center">
-        <button class="p-3 text-gray-600 hover:bg-gray-100 rounded"
-            data-action="click->calendar#previousMonth">
-          <i class="fa-solid fa-angle-left"></i>
-        </button>
-        <h2 class="text-lg font-semibold text-gray-700" data-calendar-target="selectedDate">
-          <%= @selected_date.strftime("%B %d, %Y") %>
-        </h2>
-        <button class="p-3 text-gray-600 hover:bg-gray-100 rounded"
-            data-action="click->calendar#nextMonth">
-          <i class="fa-solid fa-angle-right"></i>
-        </button>
-      </div>
-      <div class="calendar-grid grid grid-cols-7 gap-2 pt-2">
-        <% (1..@days_in_month).each do |day| %>
-          <button class="calendar-day text-center p-2 cursor-pointer rounded hover:bg-blue-100 <%= date_class(day) %>"
-              data-action="click->calendar#select"
-            data-date="<%= @selected_date.change(day: day).to_s %>">
-            <%= day %>
-          </button>
-        <% end %>
-      </div>
-    </div>
-  </div>
-  <div class="flex max-w-[1300px] m-auto w-[90%] mb-6">
-    <table class="w-max border-collapse text-gray-600">
+
+<div class="flex max-w-[1300px] m-auto w-[90%] bg-slate-100 border-t border-s border-r border-slate-300 rounded-t-lg overflow-hidden">
+  <%= render CalendarComponent.new(selected_date: Date.today) %>
+</div>
+<div class="flex max-w-[1300px] m-auto w-[90%] mb-6">
+  <table class="w-max border-collapse text-gray-600">
+    <thead>
+      <tr class="bg-neutral-100 text-[1rem]">
+        <th class="top-0 left-0 z-3 bg-neutral-100 border border-slate-300 text-center h-[60px] min-w-[120px]">
+          <i class="fa-solid fa-door-open mr-2"></i> Room
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @rooms.each do |room| %>
+        <tr>
+          <td class="left-0 z-2 border-r-slate-300 border border-slate-300 text-right pr-3 h-[60px] font-medium bg-neutral-100 select-none">
+            <%= room[:room_name] %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <div class="w-full overflow-x-scroll border-r border-r-slate-300 hidden-scroll hide-scrollbar">
+    <table class="h-full text-gray-600" data-controller="booking-table">
       <thead>
         <tr class="bg-neutral-100 text-[1rem]">
-          <th class="top-0 left-0 z-3 bg-neutral-100 border border-slate-300 text-center h-[60px] min-w-[120px]">
-            <i class="fa-solid fa-door-open mr-2"></i> Room
-          </th>
+          <% 22.times do |i| %>
+            <th 
+              class="bg-gray-100 z-1 h-[60px] border border-t-slate-300 <%= i.even? ? 'border-r-transparent border-l-transparent' : 'border-r-slate-300 border-l-slate-300' %> border-b-slate-300 min-w-[60px] <%= i == 21 ? 'border-r-transparent' : '' %>" 
+              colspan="1">
+              <%= "#{i / 2 + 8}:00" if i.even? %>
+            </th>
+          <% end %>
         </tr>
       </thead>
       <tbody>
-        <% @rooms.each do |room| %>
+        <% @rooms.each_with_index do |room, room_index| %>
           <tr>
-            <td class="left-0 z-2 border-r-slate-300 border border-slate-300 text-right pr-3 h-[60px] font-medium bg-neutral-100 select-none">
-              <%= room[:room_name] %>
-            </td>
+            <% 22.times do |i| %>
+              <td 
+                class="border border-slate-200 min-w-[60px] hover:bg-gray-200 text-center cursor-pointer p-0 transition duration-300 
+                <%= i == 0 ? 'border-l-transparent' : '' %> 
+                <%= i == 21 ? 'border-r-transparent' : '' %>" 
+                data-action="mousedown->booking-table#handleStart mousemove->booking-table#handleMove mouseup->booking-table#handleEnd touchmove->booking-table#handleTouchMove"
+                data-room="<%= room_index %>" 
+                data-hour="<%= i / 2 %>" 
+                data-half="<%= i % 2 %>" 
+                data-booking-table-target="cell">
+              </td>
+            <% end %>
           </tr>
         <% end %>
       </tbody>
     </table>
-    <div class="w-full overflow-x-scroll border-r border-r-slate-300 hidden-scroll hide-scrollbar">
-      <table class="h-full text-gray-600">
-        <thead>
-          <tr class="bg-neutral-100 text-[1rem]">
-            <% 22.times do |i| %>
-              <th 
-            class="bg-gray-100 z-1 h-[60px] border border-t-slate-300 <%= i.even? ? 'border-r-transparent border-l-transparent' : 'border-r-slate-300 border-l-slate-300' %> border-b-slate-300 min-w-[60px] <%= i == 21 ? 'border-r-transparent' : '' %>" 
-            colspan="1">
-                <%= "#{i / 2 + 8}:00" if i.even? %>
-              </th>
-            <% end %>
-          </tr>
-        </thead>
-        <tbody>
-          <% @rooms.each do |room| %>
-            <tr>
-              <% 22.times do |i| %>
-                <td 
-              class="border border-slate-200 min-w-[60px] hover:bg-gray-200 text-center cursor-pointer p-0 transition duration-300 
-              <%= i == 0 ? 'border-l-transparent' : '' %> 
-              <%= i == 21 ? 'border-r-transparent' : '' %>" 
-              colspan="1">
-                </td>
-              <% end %>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
   </div>
+  <!-- Time display elements -->
+  <div class="time-display">
+    <p>Start Time: <span data-booking-table-target="startTime">--:--</span></p>
+    <p>End Time: <span data-booking-table-target="endTime">--:--</span></p>
+  </div>
+
 </div>
+
+</div>
+

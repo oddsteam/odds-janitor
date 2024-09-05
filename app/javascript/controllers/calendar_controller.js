@@ -1,8 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["selectedDate"]
-
   connect() {
     this.selectedDateValue = new Date(this.selectedDateTarget.textContent)
   }
