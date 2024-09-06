@@ -10,10 +10,12 @@ class ReservesController < ApplicationController
 
     @reserves = Reserve.all
     @selected_date = params[:date] ? Date.parse(params[:date]) : Date.today
-    dateNext3Month = Date.today + 3.month
     @alert_message = ""
     @booking_data = Reserve.where(date: @selected_date).order(:start_timer)
+    @this_user_bookings = Reserve.where(userId: @uId).order(:date)
 
+
+    dateNext3Month = Date.today + 3.month
     if @selected_date > dateNext3Month
       @selected_date = dateNext3Month
       @alert_message = "Maximum date is 3 months from now"
