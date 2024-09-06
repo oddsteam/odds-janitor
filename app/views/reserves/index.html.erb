@@ -12,6 +12,9 @@
         <%= link_to logout_path, method: :get, class: "btn btn-secondary border ml-4 p-2 rounded-md" do %>
           <i class="fa-solid fa-right-from-bracket pe-1"></i> Logout
         <% end %>
+        <button data-modal-open class="btn btn-primary ml-4 p-2 rounded-md">
+          Open Modal
+        </button>
       </div>
     </div>
     <div id="reserves" class="min-w-full">
@@ -96,3 +99,4 @@
     </div>
   </div>
 </div>
+<%= render 'reserves/modalform' %>
