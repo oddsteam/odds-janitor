@@ -12,9 +12,9 @@ export default class extends Controller {
   handleStart(event) {
     event.preventDefault();
     this.dragging = true;
-    this.clearSelection(); // ลบ row ที่เลือกไว้ก่อนหน้า ก่อนลากใหม่
+    this.removeHighlightCell(); // ลบ row ที่เลือกไว้ก่อนหน้า ก่อนลากใหม่
     this.startRow = this.getRowIndex(event.currentTarget); // ลาก row เปลี่ยนสี
-    this.selectCell(event.currentTarget); // ตัวเปลี่ยนสี
+    this.highLightCell(event.currentTarget); // ตัวเปลี่ยนสี
 
     this.st = event.currentTarget.dataset.hour;
     console.log('startTime: ' + this.st);
@@ -30,7 +30,7 @@ export default class extends Controller {
       
       // Check if the current row is the same as the start row
       if (currentRow === this.startRow) {
-        this.selectCell(element);
+        this.highLightCell(element);
       } else {
         // If dragging across a different row, stop and end the drag
         console.log("Dragged across rows, stopping the selection.");
@@ -47,14 +47,14 @@ export default class extends Controller {
     console.log('endTime: ' + this.et);
   }
 
-  selectCell(cell) {
+  highLightCell(cell) {
     if (!this.selectedCells.includes(cell)) {
       this.selectedCells.push(cell);
       cell.classList.add("bg-blue-300");
     }
   }
-
-  clearSelection() {
+  
+  removeHighlightCell() {
     this.selectedCells.forEach(cell => cell.classList.remove("bg-blue-300"));
     this.selectedCells = [];
   }
