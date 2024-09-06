@@ -5,8 +5,8 @@ eagerLoadControllersFrom("controllers", application)
 import ReservesController from "./reserves_controller"
 application.register("reserves", ReservesController)
 
-// import CalendarController from "./calendar_controller"
-// application.register("calendar", CalendarController)
+import ModalDetailController from "./modal_detail_controller"
+application.register("modal-detail", ModalDetailController)
 
 // import ReservationController from "./reservation_controller"
 // application.register("reservation", ReservationController)

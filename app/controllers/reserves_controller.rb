@@ -18,9 +18,13 @@ class ReservesController < ApplicationController
       @selected_date = Date.today
       @alert_message = "You can't select the past date"
     end
+    
+    if params[:id].present?
+      @reserve = Reserve.find(params[:id])
+    end
 
     @reserves = Reserve.where(date: @selected_date).order(:start_timer)
-    @this_user_bookings = Reserve.where(userId: @getUserId).order(:date)
+    @this_user_bookings = Reserve.where(userId: @getUserId).where(date: @selected_date).order(:start_timer)
     @days_in_month = Date.new(@selected_date.year, @selected_date.month, -1).day
     @start_of_month = @selected_date.beginning_of_month.wday
 

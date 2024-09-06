@@ -75,18 +75,20 @@
                 <% current_hour_index = 0 %>
                 <% while current_hour_index < 22 %>
                   <% current_time = (current_hour_index / 2 + 8).to_s.rjust(2, '0') + (current_hour_index.even? ? ":00" : ":30") %>
-                  <% reserve = @reserves.find { |r| r.roomId.to_i == room_index + 1 && r.date == Date.today.to_s && r.start_timer == current_time } %>
+                  <% reserve = @reserves.find { |r| r.roomId.to_i == room_index + 1 && r.date == @selected_date.to_s && r.start_timer == current_time } %>
                   <% if reserve %>
                     <% start_time = Time.parse(reserve.start_timer) %>
                     <% end_time = Time.parse(reserve.end_timer) %>
                     <% duration = ((end_time - start_time) / 1800).to_i %> <!-- duration in 30-minute slots -->
                     <td 
-                        class="bg-blue-400 hover:bg-blue-300 text-white border border-slate-200 min-w-[60px] text-center p-0 transition duration-300"
+                        class="text-white border min-w-[60px] text-center p-0 transition duration-300"
                         colspan="<%= duration %>"
                         data-room="<%= room_index %>" 
                         data-hour="<%= start_time.strftime('%H:%M') %>"
-                        data-reserves-target="cell">
-                        <%= reserve.note %>
+                        data-booking-table-target="cell">
+                        <button class="w-full bg-blue-300 hover:bg-blue-400 h-full" data-controller="modal-detail" data-action="click->modal-detail#navigate" data-reserve-id="<%= reserve.id %>" data-selected-date="<%= @selected_date %>">
+                          <%= reserve.note %>
+                        </button>
                     </td>
                     <% current_hour_index += duration %>
                   <% else %>
@@ -110,4 +112,8 @@
   </div>
   <%= render 'reserves/modalform' %>
 </div>
+<%= render 'reserves/modalform' %>
 
+<% if @reserve.present? %>
+  <%= render 'reserves/modal_detail', reserve: @reserve %>
+<% end %>
