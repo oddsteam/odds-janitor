@@ -11,6 +11,8 @@ export default class extends Controller {
   endTime = null;
 
   option() {
+    this.optionsTarget.innerHTML = '';
+
     console.log('option');
     let option1 = document.createElement("option");
     option1.value = "10:00";
@@ -60,7 +62,8 @@ export default class extends Controller {
     event.preventDefault();
     if (!this.dragging) return;
     this.dragging = false;
-    this.endTime = event.currentTarget.dataset.half;
+
+    this.endTime = event.currentTarget.dataset.endTime;
     console.log('endTime: ' + this.endTime);
   }
 

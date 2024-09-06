@@ -95,6 +95,7 @@
                       data-action="mousedown->reserves#handleStart mousemove->reserves#handleMove mouseup->reserves#handleEnd touchmove->reserves#handleTouchMove"
                       data-room="<%= room_index %>" 
                       data-hour="<%= (current_hour_index / 2 + 8).to_s.rjust(2, '0') + (current_hour_index.even? ? ":00" : ":30") %>" 
+                      data-end-time="<%= ((current_hour_index + 1) / 2 + 8).to_s.rjust(2, '0') + (current_hour_index.even? ? ":30" : ":00") %>"
                       data-reserves-target="cell">
                     </td>
                     <% current_hour_index += 1 %>
