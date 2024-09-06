@@ -5,7 +5,7 @@ class ReservesController < ApplicationController
 
   # GET /reserves or /reserves.json
   def index
-    @getEmail = Reserve.get_eamil_form_session(session)
+    @getEmail = Reserve.get_email_form_session(session)
     @getUserId = Reserve.get_userId_form_session(session)
 
     @reserves = Reserve.all
@@ -115,8 +115,8 @@ class ReservesController < ApplicationController
     @reserf = Reserve.find(params[:id])
   end
 
-    # Only allow a list of trusted parameters through.
-    def reserf_params
-      params.require(:reserve).permit(:date, :start_timer, :end_timer, :note, :roomId)
-    end
+  # Only allow a list of trusted parameters through.
+  def reserf_params
+    params.require(:reserve).permit(:date, :start_timer, :end_timer, :note, :roomId)
+  end
 end
