@@ -23,7 +23,7 @@ services:
     environment:
       - RAILS_ENV=${RAILS_ENV}
     ports:
-      - "84:3000"
+      - "82:3000"
     env_file:
       - .env
     restart: unless-stopped
