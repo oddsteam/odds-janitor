@@ -7,6 +7,7 @@ class ReservesController < ApplicationController
   def index
     @reserves = Reserve.all
     @user = Page.get_user_form_session(session)
+    @uId = Page.get_userId_form_session(session)
     @selected_date = params[:date] ? Date.parse(params[:date]) : Date.today
     dateNext3Month = Date.today + 3.month
     @alert_message = ""
@@ -111,8 +112,8 @@ class ReservesController < ApplicationController
     @reserf = Reserve.find(params[:id])
   end
 
-    # Only allow a list of trusted parameters through.
-    def reserf_params
-      params.require(:reserve).permit(:date, :start_timer, :end_timer, :note)
-    end
+  # Only allow a list of trusted parameters through.
+  def reserf_params
+    params.require(:reserve).permit(:date, :start_timer, :end_timer, :note)
+  end
 end
