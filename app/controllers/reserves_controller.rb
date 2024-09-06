@@ -20,7 +20,11 @@ class ReservesController < ApplicationController
     end
     
     if params[:id].present?
-      @reserve = Reserve.find(params[:id])
+      begin
+        @reserve = Reserve.find(params[:id])
+      rescue ActiveRecord::RecordNotFound
+        redirect_to reserves_path
+      end
     end
 
     @reserves = Reserve.where(date: @selected_date).order(:start_timer)

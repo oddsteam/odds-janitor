@@ -19,7 +19,20 @@ export default class extends Controller {
   }
 
   changePath() {
-    window.history.pushState({}, '', '/reserves');
+    // Get the current URL
+    const currentUrl = new URL(window.location.href);
+
+    // Get the search parameters
+    const searchParams = currentUrl.searchParams;
+
+    // Remove the 'id' parameter
+    searchParams.delete('id');
+
+    // Construct the new path
+    const newPath = `${currentUrl.pathname}?${searchParams.toString()}`;
+
+    // Update the browser's URL
+    window.history.pushState({}, '', newPath);
   }
   
 }
