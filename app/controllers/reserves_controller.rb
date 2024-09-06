@@ -7,12 +7,8 @@ class ReservesController < ApplicationController
   def index
     @getEmail = Reserve.get_email_form_session(session)
     @getUserId = Reserve.get_userId_form_session(session)
-    @reserves = Reserve.all
     @selected_date = params[:date] ? Date.parse(params[:date]) : Date.today
     @alert_message = ""
-    @booking_data = Reserve.where(date: @selected_date).order(:start_timer)
-    @this_user_bookings = Reserve.where(userId: @getUserId).order(:date)
-
 
     dateNext3Month = Date.today + 3.month
     if @selected_date > dateNext3Month
@@ -23,6 +19,8 @@ class ReservesController < ApplicationController
       @alert_message = "You can't select the past date"
     end
 
+    @reserves = Reserve.where(date: @selected_date).order(:start_timer)
+    @this_user_bookings = Reserve.where(userId: @getUserId).order(:date)
     @days_in_month = Date.new(@selected_date.year, @selected_date.month, -1).day
     @start_of_month = @selected_date.beginning_of_month.wday
 

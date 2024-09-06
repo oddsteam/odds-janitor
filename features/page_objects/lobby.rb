@@ -3,7 +3,7 @@ class Lobby
   include RSpec::Matchers
 
   def visit_homepage
-    visit 'https://janitor-dev.odds.team/'
+    visit "https://sso-dev.odd.works/realms/janitor-dev/protocol/openid-connect/auth?client_id=janitor-dev&redirect_uri=http://localhost:3000/callback&response_type=code&scope=openid"
   end
 
   def fill_email(email)
@@ -19,7 +19,7 @@ class Lobby
   end
 
   def saw_booking_page
-    expect(page).to have_selector('h1', text: 'Bookings')
+    expect(page).to have_selector('h1', text: 'Rooms Reserves')
   end
 
   def login

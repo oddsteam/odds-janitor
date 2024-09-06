@@ -5,6 +5,8 @@ class Booking
   @@tomorrow = Date.today + 1
   @@tomorrow_booking_formatted = @@tomorrow.strftime('%Y-%m-%d')
   @@tomorrow_calendar_formatted = @@tomorrow.strftime("%A, %B #{@@tomorrow.day.ordinalize}, %Y")
+  @@daynum_tomorrow = (Date.today + 1).day
+  @@day_tomorrow = (Date.today + 1).strftime("%B %d, %Y")
   @@tomorrow_input_formatted = @@tomorrow.strftime("%a %-d %B %Y")
   @@room_name_for_test = ('global')
 
@@ -33,18 +35,12 @@ class Booking
     expect(page).to have_selector("h1[data-testid='room-name-desktop']", text: @@room_name_uppercase)
   end
 
-  def click_calendar
-    # กดไอคอมปฏิทิน
-    find('[data-icon="calendar-days"]').click
-  end
-
   def click_tomorrow
-    # เลือกวันที่
-    find("[aria-label='Choose #{@@tomorrow_calendar_formatted}']").click
+    find("button[data-date='#{(Date.today + 1).to_s}']").click
   end
 
   def saw_selected_date
-    expect(page).to have_content(@@tomorrow_input_formatted)
+    expect(page).to have_content("Your booking on #{@@day_tomorrow}")
   end
 
   def choose_date_for_booking

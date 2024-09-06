@@ -1,9 +1,5 @@
-When('ฉันกดที่รูปปฏิทิน') do
-  sleep 1
-  @booking.click_calendar
-end
-
 And('ฉันเลือกวันที่ที่ต้องการจองห้องประชุม') do
+  sleep 1
   @booking.click_tomorrow
 end
 

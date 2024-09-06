@@ -5,10 +5,9 @@
     <% end %>
     <% content_for :title, "Reserves" %>
     <div class="flex justify-between items-center mb-6">
-      <h1 class="font-bold text-4xl">Reserves</h1>
+      <h1 class="font-bold text-4xl">Rooms Reserves</h1>
       <div class="flex flex-row gap-2 items-center">
         <h1><%= @getEmail %></h1>
-        <h1><%= @getUserId%></h1>
         <%= link_to logout_path, method: :get, class: "btn btn-secondary border ml-4 p-2 rounded-md" do %>
           <i class="fa-solid fa-right-from-bracket pe-1"></i> Logout
         <% end %>
@@ -16,11 +15,6 @@
           Open Modal
         </button>
       </div>
-    </div>
-    <div id="reserves" class="min-w-full">
-      <% @reserves.each do |reserf| %>
-        <%= render reserf %>
-      <% end %>
     </div>
   </div>
   <div>
@@ -42,7 +36,6 @@
       </div>
     </div>
     <h1>
-      <%= @booking_data.inspect%>
     </h1>
     <div class="flex max-w-[1300px] m-auto w-full mb-6">
       <table class="w-max border-collapse text-gray-600">
@@ -69,8 +62,8 @@
             <tr class="bg-neutral-100 text-[1rem]">
               <% 22.times do |i| %>
                 <th 
-                  class="bg-gray-100 z-1 h-[60px] border border-t-slate-300 <%= i.even? ? 'border-r-transparent border-l-transparent' : 'border-r-slate-300 border-l-slate-300' %> border-b-slate-300 min-w-[60px] <%= i == 21 ? 'border-r-transparent' : '' %>" 
-                  colspan="1">
+          class="bg-gray-100 z-1 h-[60px] border border-t-slate-300 <%= i.even? ? 'border-r-transparent border-l-transparent' : 'border-r-slate-300 border-l-slate-300' %> border-b-slate-300 min-w-[60px] <%= i == 21 ? 'border-r-transparent' : '' %>" 
+          colspan="1">
                   <%= "#{i / 2 + 8}:00" if i.even? %>
                 </th>
               <% end %>
@@ -78,18 +71,34 @@
           </thead>
           <tbody>
             <% @rooms.each_with_index do |room, room_index| %>
-              <tr>
-                <% 22.times do |i| %>
-                  <td 
-                    class="border border-slate-200 min-w-[60px] text-center cursor-pointer p-0 transition duration-300 
-                    <%= i == 0 ? 'border-l-transparent' : '' %> 
-                    <%= i == 21 ? 'border-r-transparent' : '' %>" 
-                    data-action="mousedown->booking-table#handleStart mousemove->booking-table#handleMove mouseup->booking-table#handleEnd touchmove->booking-table#handleTouchMove"
-                    data-room="<%= room_index %>" 
-                    data-hour="<%= "#{i / 2 + 8}:00" %>" 
-                    data-half="<%= "#{i / 2 + 8}:30" %>" 
-                    data-booking-table-target="cell">
-                  </td>
+              <tr class="h-[50px]">
+                <% current_hour_index = 0 %>
+                <% while current_hour_index < 22 %>
+                  <% current_time = (current_hour_index / 2 + 8).to_s.rjust(2, '0') + (current_hour_index.even? ? ":00" : ":30") %>
+                  <% reserve = @reserves.find { |r| r.roomId.to_i == room_index + 1 && r.date == Date.today.to_s && r.start_timer == current_time } %>
+                  <% if reserve %>
+                    <% start_time = Time.parse(reserve.start_timer) %>
+                    <% end_time = Time.parse(reserve.end_timer) %>
+                    <% duration = ((end_time - start_time) / 1800).to_i %> <!-- duration in 30-minute slots -->
+                    <td 
+              class="bg-blue-400 hover:bg-blue-300 text-white border border-slate-200 min-w-[60px] text-center p-0 transition duration-300"
+              colspan="<%= duration %>"
+              data-room="<%= room_index %>" 
+              data-hour="<%= start_time.strftime('%H:%M') %>"
+              data-booking-table-target="cell">
+                      <%= reserve.note %>
+                    </td>
+                    <% current_hour_index += duration %>
+                  <% else %>
+                    <td 
+              class="border border-slate-200 min-w-[60px] text-center cursor-pointer p-0 transition duration-300"
+              data-action="mousedown->booking-table#handleStart mousemove->booking-table#handleMove mouseup->booking-table#handleEnd touchmove->booking-table#handleTouchMove"
+                      data-room="<%= room_index %>" 
+                      data-hour="<%= (current_hour_index / 2 + 8).to_s.rjust(2, '0') + (current_hour_index.even? ? ":00" : ":30") %>" 
+                      data-booking-table-target="cell">
+                    </td>
+                    <% current_hour_index += 1 %>
+                  <% end %>
                 <% end %>
               </tr>
             <% end %>

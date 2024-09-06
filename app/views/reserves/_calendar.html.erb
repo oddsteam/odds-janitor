@@ -17,7 +17,7 @@
     <% (1..days_in_month).each do |day| %>
       <%= form_with url: update_selected_date_reserves_path, method: :patch, local: false, data: { turbo_frame: "calendar" } do %>
         <input type="hidden" name="date" value="<%= @selected_date.change(day: day).to_s %>">
-        <button type="submit" class="reservation-day text-center w-9 h-8 cursor-pointer rounded transition-all hover:bg-blue-100 <%= day == @selected_date.day ? 'border bg-blue-400 text-white hover:bg-blue-400' : 'text-gray-600' %> <%= Date.today == @selected_date.change(day: day) && 'border'%>">
+        <button type="submit" data-date="<%= @selected_date.change(day: day).to_s %>" class="reservation-day text-center w-9 h-8 cursor-pointer rounded transition-all hover:bg-blue-100 <%= day == @selected_date.day ? 'border bg-blue-400 text-white hover:bg-blue-400' : 'text-gray-600' %> <%= Date.today == @selected_date.change(day: day) && 'border'%>">
           <%= day %>
         </button>
       <% end %>
