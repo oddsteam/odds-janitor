@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
+import {openModal} from "../modal";
 
 export default class extends Controller {
   static targets = ["cell"];
