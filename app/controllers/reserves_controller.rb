@@ -1,4 +1,5 @@
 class ReservesController < ApplicationController
+  before_action :isLogin
   before_action :set_reserf, only: %i[ show edit update destroy ]
   attr_reader :selected_date
 
@@ -103,13 +104,14 @@ class ReservesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_reserf
-      @reserf = Reserve.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def reserf_params
-      params.require(:reserf).permit(:date, :start_timer, :end_timer, :note)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_reserf
+    @reserf = Reserve.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def reserf_params
+    params.require(:reserf).permit(:date, :start_timer, :end_timer, :note)
+  end
 end
