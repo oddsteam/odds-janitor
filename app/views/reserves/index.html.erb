@@ -57,7 +57,7 @@
         </tbody>
       </table>
       <div class="w-full overflow-x-scroll border-r border-r-slate-300 hidden-scroll hide-scrollbar">
-        <table class="h-full text-gray-600" data-controller="booking-table">
+        <table class="h-full text-gray-600" data-controller="reserves">
           <thead>
             <tr class="bg-neutral-100 text-[1rem]">
               <% 22.times do |i| %>
@@ -85,17 +85,17 @@
                         colspan="<%= duration %>"
                         data-room="<%= room_index %>" 
                         data-hour="<%= start_time.strftime('%H:%M') %>"
-                        data-booking-table-target="cell">
+                        data-reserves-target="cell">
                         <%= reserve.note %>
                     </td>
                     <% current_hour_index += duration %>
                   <% else %>
                     <td 
                       class="border border-slate-200 min-w-[60px] text-center cursor-pointer p-0 transition duration-300"
-                      data-action="mousedown->booking-table#handleStart mousemove->booking-table#handleMove mouseup->booking-table#handleEnd touchmove->booking-table#handleTouchMove"
+                      data-action="mousedown->reserves#handleStart mousemove->reserves#handleMove mouseup->reserves#handleEnd touchmove->reserves#handleTouchMove"
                       data-room="<%= room_index %>" 
                       data-hour="<%= (current_hour_index / 2 + 8).to_s.rjust(2, '0') + (current_hour_index.even? ? ":00" : ":30") %>" 
-                      data-booking-table-target="cell">
+                      data-reserves-target="cell">
                     </td>
                     <% current_hour_index += 1 %>
                   <% end %>
