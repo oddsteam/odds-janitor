@@ -2,13 +2,29 @@ import { Controller } from "@hotwired/stimulus";
 import {openModal} from "../modal";
 
 export default class extends Controller {
-  static targets = ["cell"];
+  static targets = ["cell", "options"];
   dragging = false;
   selectedCells = [];
   startRow = null;
 
-  st = null;
-  et = null;
+  startTime = null;
+  endTime = null;
+
+  option() {
+    console.log('option');
+    let option1 = document.createElement("option");
+    option1.value = "10:00";
+    option1.text = "10:00";
+
+    // สร้าง <option> element สำหรับ 11:00
+    let option2 = document.createElement("option");
+    option2.value = "11:00";
+    option2.text = "11:00";
+
+    // เพิ่ม <option> elements เข้าไปใน optionTarget
+    this.optionsTarget.appendChild(option1);
+    this.optionsTarget.appendChild(option2);
+  }
 
   handleStart(event) {
     event.preventDefault();
@@ -17,8 +33,8 @@ export default class extends Controller {
     this.startRow = this.getRowIndex(event.currentTarget); // ลาก row เปลี่ยนสี
     this.highLightCell(event.currentTarget); // ตัวเปลี่ยนสี
 
-    this.st = event.currentTarget.dataset.hour;
-    console.log('startTime: ' + this.st);
+    this.startTime = event.currentTarget.dataset.hour;
+    console.log('startTime: ' + this.startTime);
   }
   
   handleMove(event) {
@@ -44,8 +60,8 @@ export default class extends Controller {
     event.preventDefault();
     if (!this.dragging) return;
     this.dragging = false;
-    this.et = event.currentTarget.dataset.half;
-    console.log('endTime: ' + this.et);
+    this.endTime = event.currentTarget.dataset.half;
+    console.log('endTime: ' + this.endTime);
   }
 
   highLightCell(cell) {
