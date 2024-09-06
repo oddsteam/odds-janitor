@@ -112,8 +112,8 @@ class ReservesController < ApplicationController
     @reserf = Reserve.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
-  def reserf_params
-    params.require(:reserve).permit(:date, :start_timer, :end_timer, :note)
-  end
+    # Only allow a list of trusted parameters through.
+    def reserf_params
+      params.require(:reserve).permit(:date, :start_timer, :end_timer, :note, :userId)
+    end
 end
