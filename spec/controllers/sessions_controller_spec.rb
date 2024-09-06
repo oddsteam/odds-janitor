@@ -46,7 +46,7 @@ RSpec.describe SessionsController, type: :controller do
     context "when there is no code" do
       it "redirects to login path" do
         get :callback
-        expect(response).to redirect_to(lobby_path)
+        expect(response).to redirect_to(root_path)
       end
     end
   end
@@ -57,7 +57,7 @@ RSpec.describe SessionsController, type: :controller do
       expect(KeycloakService).to receive(:keycloak_logout).with("refreshdaratest")
       get :logout
       expect(session[:refresh_token]).to be_nil
-      expect(response).to redirect_to(lobby_path)
+      expect(response).to redirect_to(root_path)
     end
   end
 

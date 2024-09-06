@@ -22,7 +22,7 @@ class SessionsController < ApplicationController
       session[:refresh_token] = refresh_token
       redirect_to root_path
     else
-      redirect_to lobby_path
+      redirect_to root_path
     end
   end
 
@@ -34,6 +34,6 @@ class SessionsController < ApplicationController
     session[:user_id] = nil
 
     KeycloakService.keycloak_logout(refresh_token)
-    redirect_to lobby_path
+    redirect_to root_path
   end
 end
