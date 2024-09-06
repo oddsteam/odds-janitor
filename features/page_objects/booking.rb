@@ -5,11 +5,10 @@ class Booking
   @@tomorrow = Date.today + 1
   @@tomorrow_booking_formatted = @@tomorrow.strftime('%Y-%m-%d')
   @@tomorrow_calendar_formatted = @@tomorrow.strftime("%A, %B #{@@tomorrow.day.ordinalize}, %Y")
-  @@daynum_tomorrow = (Date.today + 1).day
   @@day_tomorrow = (Date.today + 1).strftime("%B %d, %Y")
   @@tomorrow_input_formatted = @@tomorrow.strftime("%a %-d %B %Y")
-  @@room_name_for_test = ('global')
-
+  @@room_name_for_test = ('Global')
+  @@room_index = 5
   @@room_name_uppercase = @@room_name_for_test.upcase
   @@room_name_capitalize = @@room_name_for_test.capitalize
 
@@ -39,18 +38,25 @@ class Booking
     find("button[data-date='#{(Date.today + 1).to_s}']").click
   end
 
+  def click_yesterday
+    find("button[data-date='#{(Date.today - 1).to_s}']").click
+  end
+
   def saw_selected_date
     expect(page).to have_content("Your booking on #{@@day_tomorrow}")
   end
 
+  def don_saw_selected_date
+    expect(page).not_to have_content("Your booking on #{@@day_tomorrow}")
+  end
+
   def choose_date_for_booking
-    click_calendar
     click_tomorrow
   end
 
   def choose_room_for_booking
     # เลือก <td> ที่มี data-hour="9" และ data-half="0"
-    find(:xpath, "//tr[td[contains(text(), '#{@@room_name_capitalize}')]]/td[@data-hour='9' and @data-half='0']", wait:7).click
+    find(:xpath, "//tr/td[@data-room='#{@@room_index}' and @data-hour='09:00']", wait: 7).click
     # ตรวจสอบว่าหน้า modal ของห้อง Global แสดงขึ้นมา
     expect(page).to have_content("Reservation for #{@@room_name_capitalize}")
   end
