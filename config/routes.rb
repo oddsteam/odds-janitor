@@ -15,6 +15,6 @@ Rails.application.routes.draw do
   get "/callback", to: "sessions#callback"
   get "logout", to: "sessions#logout"
   get "/new", to: "reserves#new"
-
+  post "reserves/modal", to: "reserves#modal"
   root "reserves#index"
 end

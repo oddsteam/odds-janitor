@@ -1,12 +1,15 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["cell", "startTime", "endTime"];
+  static targets = ["cell", "startTime", "endTime" , "st", "et"];
   dragging = false;
   selectedCells = [];
   startRow = null;
   startTime = null;
   endTime = null;
+
+  st = null;
+  et = null;
 
   connect() {
     console.log("Booking table controller connected");
@@ -22,20 +25,20 @@ export default class extends Controller {
     this.dragging = true;
     this.clearSelection();
     this.startRow = this.getRowIndex(event.currentTarget); // Track the starting row
-    this.startTime = this.getTimeFromCell(event.currentTarget);
+    this.startTime = this.getTimeFromCell(event.currentTarget)
+
     this.selectCell(event.currentTarget);
     this.updateTimeDisplays(); // Update time displays
 
      // Log data-hour and data-half from the cell
-    const startTime = event.currentTarget.dataset.hour;
-    console.log('startTime: ' + startTime);
+    this.st = event.currentTarget.dataset.hour;
+    console.log('startTime: ' + this.st);
   }
   
   handleMove(event) {
     if (!this.dragging) return;
     event.preventDefault();
     const element = event.currentTarget;
-    const endTime = event.currentTarget.dataset.half;
     
     if (element && element.matches("[data-booking-table-target='cell']")) {
       const currentRow = this.getRowIndex(element);
@@ -58,19 +61,34 @@ export default class extends Controller {
     if (!this.dragging) return;
     const element = event.currentTarget;
     const currentRow = this.getRowIndex(element);
-    const endTime = event.currentTarget.dataset.half;
+    this.et = event.currentTarget.dataset.half;
     
     // If we're still in the same row, update endTime
     if (currentRow === this.startRow) {
       this.endTime = this.getTimeFromCell(element); // Update end time
       this.updateTimeDisplays(); // Update time displays
       // Log data-hour and data-half from the cell
-      console.log('endTime: ' + endTime);
     }
-    console.log('endTime: ' + endTime);
+    console.log('endTime: ' + this.et);
     
     // End dragging and clear state regardless of the row
     this.dragging = false;
+
+    fetch('/reserves/modal', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+      },
+      body: JSON.stringify({ start_time: this.st, end_time: this.et })
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Success:', data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
   }
   
 

@@ -109,6 +109,17 @@ class ReservesController < ApplicationController
     end
   end
 
+  def modal 
+    start_time = params[:start_time]
+    end_time = params[:end_time]
+
+    puts "Start time received: #{start_time}"
+    puts "End time received: #{end_time}"
+    # ส่ง response กลับไปให้ JavaScript
+    render json: { message: "Start time received", start_time: start_time }
+
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
