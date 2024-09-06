@@ -25,30 +25,52 @@ export default class extends Controller {
     this.startTime = this.getTimeFromCell(event.currentTarget);
     this.selectCell(event.currentTarget);
     this.updateTimeDisplays(); // Update time displays
+
+     // Log data-hour and data-half from the cell
+    const startTime = event.currentTarget.dataset.hour;
+    console.log('startTime: ' + startTime);
   }
   
   handleMove(event) {
     if (!this.dragging) return;
     event.preventDefault();
     const element = event.currentTarget;
+    const endTime = event.currentTarget.dataset.half;
+    
     if (element && element.matches("[data-booking-table-target='cell']")) {
       const currentRow = this.getRowIndex(element);
       
+      // Check if the current row is the same as the start row
       if (currentRow === this.startRow) {
         this.selectCell(element);
-      } else {
-        this.handleRowBoundary(element);
         this.endTime = this.getTimeFromCell(element); // Update end time
         this.updateTimeDisplays(); // Update time displays
+      } else {
+        // If dragging across a different row, stop and end the drag
+        console.log("Dragged across rows, stopping the selection.");
+        this.handleEnd(event); // Call handleEnd to finish the selection process
       }
     }
   }
   
   handleEnd(event) {
     event.preventDefault();
+    if (!this.dragging) return;
+    const element = event.currentTarget;
+    const currentRow = this.getRowIndex(element);
+    const endTime = event.currentTarget.dataset.half;
+    
+    // If we're still in the same row, update endTime
+    if (currentRow === this.startRow) {
+      this.endTime = this.getTimeFromCell(element); // Update end time
+      this.updateTimeDisplays(); // Update time displays
+      // Log data-hour and data-half from the cell
+      console.log('endTime: ' + endTime);
+    }
+    console.log('endTime: ' + endTime);
+    
+    // End dragging and clear state regardless of the row
     this.dragging = false;
-    this.endTime = this.getTimeFromCell(event.currentTarget); // Update end time
-    this.updateTimeDisplays(); // Update time displays
   }
   
 
