@@ -18,9 +18,6 @@
     <div id="reserves" class="min-w-full">
       <% @reserves.each do |reserf| %>
         <%= render reserf %>
-        <p>
-          <%= link_to "Show this reserve", reserf, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-        </p>
       <% end %>
     </div>
   </div>
@@ -55,7 +52,7 @@
       </div>
     </div>
     <h1>
-      <%= @booking_data.inspect%>
+
     </h1>
     <div class="flex max-w-[1300px] m-auto w-full mb-6">
       <table class="w-max border-collapse text-gray-600">

@@ -1,22 +1,32 @@
-<div id="<%= dom_id reserve %>">
-  <p class="my-5">
+<div id="<%= dom_id reserve %>" class="flex flex-row gap-8">
+  <p class="my-1">
     <strong class="block font-medium mb-1">Date:</strong>
     <%= reserve.date %>
   </p>
 
-  <p class="my-5">
+  <p class="my-1">
     <strong class="block font-medium mb-1">Start timer:</strong>
     <%= reserve.start_timer %>
   </p>
 
-  <p class="my-5">
+  <p class="my-1">
     <strong class="block font-medium mb-1">End timer:</strong>
     <%= reserve.end_timer %>
   </p>
 
-  <p class="my-5">
+  <p class="my-1">
     <strong class="block font-medium mb-1">Note:</strong>
     <%= reserve.note %>
+  </p>
+
+  <p class="my-1">
+      <strong class="block font-medium mb-1">roomId:</strong>
+      <%= reserve.roomId %>
+  </p>
+
+    <p class="my-1">
+      <strong class="block font-medium mb-1">userId:</strong>
+      <%= reserve.userId %>
   </p>
 
 </div>

@@ -69,7 +69,8 @@ class ReservesController < ApplicationController
 
   # POST /reserves or /reserves.json
   def create
-    @reserf = Reserve.new(reserf_params)
+    uid = Page.get_userId_form_session(session)
+    @reserf = Reserve.new(reserf_params.merge(userId: uid))
 
     respond_to do |format|
       if @reserf.save
@@ -84,8 +85,9 @@ class ReservesController < ApplicationController
 
   # PATCH/PUT /reserves/1 or /reserves/1.json
   def update
+    uid = Page.get_userId_form_session(session)
     respond_to do |format|
-      if @reserf.update(reserf_params)
+      if @reserf.update(reserf_params.merge(userId: uid))
         format.html { redirect_to reserf_url(@reserf), notice: "Reserve was successfully updated." }
         format.json { render :show, status: :ok, location: @reserf }
       else
@@ -114,6 +116,6 @@ class ReservesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def reserf_params
-      params.require(:reserve).permit(:date, :start_timer, :end_timer, :note, :userId)
+      params.require(:reserve).permit(:date, :start_timer, :end_timer, :note, :roomId)
     end
 end
