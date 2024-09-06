@@ -10,6 +10,7 @@ class ReservesController < ApplicationController
     @selected_date = params[:date] ? Date.parse(params[:date]) : Date.today
     dateNext3Month = Date.today + 3.month
     @alert_message = ""
+    @booking_data = Reserve.where(date: @selected_date).order(:start_timer)
 
     if @selected_date > dateNext3Month
       @selected_date = dateNext3Month
@@ -110,8 +111,8 @@ class ReservesController < ApplicationController
     @reserf = Reserve.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
-  def reserf_params
-    params.require(:reserf).permit(:date, :start_timer, :end_timer, :note)
-  end
+    # Only allow a list of trusted parameters through.
+    def reserf_params
+      params.require(:reserve).permit(:date, :start_timer, :end_timer, :note)
+    end
 end

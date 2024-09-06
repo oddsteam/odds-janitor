@@ -56,6 +56,9 @@
         </div>
       </div>
     </div>
+    <h1>
+      <%= @booking_data.inspect%>
+    </h1>
     
     <div class="flex max-w-[1300px] m-auto w-full mb-6">
       <table class="w-max border-collapse text-gray-600">
@@ -98,11 +101,7 @@
                     class="border border-slate-200 min-w-[60px] hover:bg-gray-200 text-center cursor-pointer p-0 transition duration-300 
                     <%= i == 0 ? 'border-l-transparent' : '' %> 
                     <%= i == 21 ? 'border-r-transparent' : '' %>" 
-                    data-action="mousedown->booking-table#handleStart mousemove->booking-table#handleMove mouseup->booking-table#handleEnd touchmove->booking-table#handleTouchMove"
-                    data-room="<%= room_index %>" 
-                    data-hour="<%= i / 2 %>" 
-                    data-half="<%= i % 2 %>" 
-                    data-booking-table-target="cell">
+                  >
                   </td>
                 <% end %>
               </tr>

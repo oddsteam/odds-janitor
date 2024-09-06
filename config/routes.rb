@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get "/lobby", to: "sessions#lobby"
   get "/callback", to: "sessions#callback"
   get "logout", to: "sessions#logout"
+  get "/new", to: "reserves#new"
 
   root "reserves#index"
 end
