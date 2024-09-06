@@ -7,8 +7,8 @@
     <div class="flex justify-between items-center mb-6">
       <h1 class="font-bold text-4xl">Reserves</h1>
       <div class="flex flex-row gap-2 items-center">
-        <h1><%= @user %></h1>
-        <h1><%= @uId%></h1>
+        <h1><%= @getEmail %></h1>
+        <h1><%= @getUserId%></h1>
         <%= link_to logout_path, method: :get, class: "btn btn-secondary border ml-4 p-2 rounded-md" do %>
           <i class="fa-solid fa-right-from-bracket pe-1"></i> Logout
         <% end %>

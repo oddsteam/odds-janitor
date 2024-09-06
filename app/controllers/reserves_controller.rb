@@ -5,9 +5,10 @@ class ReservesController < ApplicationController
 
   # GET /reserves or /reserves.json
   def index
+    @getEmail = Reserve.get_eamil_form_session(session)
+    @getUserId = Reserve.get_userId_form_session(session)
+
     @reserves = Reserve.all
-    @user = Page.get_user_form_session(session)
-    @uId = Page.get_userId_form_session(session)
     @selected_date = params[:date] ? Date.parse(params[:date]) : Date.today
     dateNext3Month = Date.today + 3.month
     @alert_message = ""
