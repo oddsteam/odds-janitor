@@ -13,6 +13,8 @@ services:
       - local_pgdata:/var/lib/postgresql/data
     networks:
       - app-networks
+    env_file:
+      - .env
 
   web: 
     image: ghcr.io/oddsteam/odds-janitor:latest
