@@ -13,18 +13,15 @@
         <!-- Time Start -->
         <div class="flex items-center space-x-5 justify-center">
           <div class="w-full max-w-md">
-            <select data-reserves-target="options" id="startTime" class="border border-gray-300 text-gray-600 text-xl font-medium rounded-lg block w-full p-3">
-             
+            <select data-reserves-target="optionsStart" id="startTime" class="border border-gray-300 text-gray-600 text-xl font-medium rounded-lg block w-full p-3">
+                <%# stimulus will replaced this with <option> tag %>
             </select>
 
           </div>
           <div class="text-gray-500">To</div>
           <div class="w-full max-w-md">
-            <select id="endTime" class="border border-gray-300 text-gray-600 text-xl font-medium rounded-lg block w-full p-3">
-              <!-- Options for end time -->
-              <option value="10:00">10:00</option>
-              <option value="11:00">11:00</option>
-              <!-- Add more options as needed -->
+            <select data-reserves-target="optionsEnd" id="endTime" class="border border-gray-300 text-gray-600 text-xl font-medium rounded-lg block w-full p-3">
+                <%# stimulus will replaced this with <option> tag %>
             </select>
           </div>
         </div>
