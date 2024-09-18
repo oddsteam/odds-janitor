@@ -1,60 +1,42 @@
 import { Controller } from "@hotwired/stimulus";
-import {openModal} from "../modal";
 
 export default class extends Controller {
   static targets = ["cell", "options"];
   dragging = false;
   selectedCells = [];
   startRow = null;
-
   startTime = null;
   endTime = null;
-
-  option() {
-    this.optionsTarget.innerHTML = '';
-
-    console.log('option');
-    let option1 = document.createElement("option");
-    option1.value = "10:00";
-    option1.text = "10:00";
-
-    // สร้าง <option> element สำหรับ 11:00
-    let option2 = document.createElement("option");
-    option2.value = "11:00";
-    option2.text = "11:00";
-
-    // เพิ่ม <option> elements เข้าไปใน optionTarget
-    this.optionsTarget.appendChild(option1);
-    this.optionsTarget.appendChild(option2);
-  }
 
   handleStart(event) {
     event.preventDefault();
     this.dragging = true;
-    this.removeHighlightCell(); // ลบ row ที่เลือกไว้ก่อนหน้า ก่อนลากใหม่
-    this.startRow = this.getRowIndex(event.currentTarget); // ลาก row เปลี่ยนสี
-    this.highLightCell(event.currentTarget); // ตัวเปลี่ยนสี
+    this.removeHighlightCell();
 
-    this.startTime = event.currentTarget.dataset.hour;
-    console.log('startTime: ' + this.startTime);
+    const cell = event.currentTarget;
+    this.startRow = this.getRowIndex(cell);
+    this.highlightCell(cell);
+
+    this.startTime = cell.dataset.hour;
+    this.endTime = this.calculateEndTime(this.startTime, 30);
   }
-  
+
   handleMove(event) {
     if (!this.dragging) return;
     event.preventDefault();
-    const element = event.currentTarget;
-    
-    if (element && element.matches("[data-reserves-target='cell']")) {
-      const currentRow = this.getRowIndex(element);
-      
-      // Check if the current row is the same as the start row
-      if (currentRow === this.startRow) {
-        this.highLightCell(element);
-      } else {
-        // If dragging across a different row, stop and end the drag
-        console.log("Dragged across rows, stopping the selection.");
-        this.handleEnd(event); // Call handleEnd to finish the selection process
+
+    const cell = event.currentTarget;
+
+    if (cell && cell.matches("[data-reserves-target='cell']")) {
+      const currentRow = this.getRowIndex(cell);
+      if (currentRow !== this.startRow) {
+        return;
       }
+
+      this.highlightCell(cell);
+
+      const cellsDragged = this.selectedCells.length;
+      this.endTime = this.calculateEndTime(this.startTime, cellsDragged * 30);
     }
   }
 
@@ -63,17 +45,16 @@ export default class extends Controller {
     if (!this.dragging) return;
     this.dragging = false;
 
-    this.endTime = event.currentTarget.dataset.endTime;
-    console.log('endTime: ' + this.endTime);
+    this.openModalWithTimes(this.startTime, this.endTime);
   }
 
-  highLightCell(cell) {
+  highlightCell(cell) {
     if (!this.selectedCells.includes(cell)) {
       this.selectedCells.push(cell);
       cell.classList.add("bg-blue-300");
     }
   }
-  
+
   removeHighlightCell() {
     this.selectedCells.forEach(cell => cell.classList.remove("bg-blue-300"));
     this.selectedCells = [];
@@ -81,5 +62,99 @@ export default class extends Controller {
 
   getRowIndex(cell) {
     return cell.closest('tr').rowIndex;
+  }
+
+  calculateEndTime(startTime, duration) {
+    const [startHours, startMinutes] = startTime.split(':').map(Number);
+    let totalMinutes = startHours * 60 + startMinutes + duration;
+
+    const endHours = Math.floor(totalMinutes / 60).toString().padStart(2, '0');
+    const endMinutes = (totalMinutes % 60).toString().padStart(2, '0');
+
+    return `${endHours}:${endMinutes}`;
+  }
+
+  generateTimeOptions() {
+    const options = [];
+    let start = 8 * 60; 
+    let end = 19 * 60; 
+
+    while (start <= end) {
+      const hours = Math.floor(start / 60).toString().padStart(2, '0');
+      const minutes = (start % 60).toString().padStart(2, '0');
+      options.push(`${hours}:${minutes}`);
+      start += 30;
+    }
+    return options;
+  }
+
+  openModalWithTimes(startTime, endTime) {
+    const modal = document.getElementById('myModal');
+    const startTimeSelect = document.getElementById('startTime');
+    const endTimeSelect = document.getElementById('endTime');
+
+    startTimeSelect.innerHTML = '';
+    endTimeSelect.innerHTML = '';
+
+    const timeOptions = this.generateTimeOptions();
+    timeOptions.forEach(time => {
+      const startOption = document.createElement("option");
+      startOption.value = time;
+      startOption.text = time;
+      startTimeSelect.appendChild(startOption);
+
+      const endOption = document.createElement("option");
+      endOption.value = time;
+      endOption.text = time;
+      endTimeSelect.appendChild(endOption);
+    });
+
+    startTimeSelect.value = startTime;
+    endTimeSelect.value = endTime;
+
+    modal.classList.remove('hidden');
+  }
+
+  closeModal() {
+    const modal = document.getElementById('myModal');
+    modal.classList.add("hidden");
+    this.removeHighlightCell();
+  }
+
+  submitForm(event) {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    fetch('/reserves', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+        'Accept': 'text/vnd.turbo-stream.html, application/json'
+      }
+    })
+    .then(response => {
+      const contentType = response.headers.get("Content-Type");
+      if (contentType && contentType.includes("text/vnd.turbo-stream.html")) {
+        return response.text();
+      }
+      return response.json();
+    })
+    .then(data => {
+      if (typeof data === 'string') {
+        Turbo.renderStreamMessage(data);
+        this.closeModal();
+      } else if (data.status === 'success') {
+        this.closeModal();
+        // Optionally handle JSON response
+      } else {
+        console.error('Error:', data.errors);
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
   }
 }

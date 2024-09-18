@@ -1,47 +1,43 @@
 <!-- Modal -->
-<div id="myModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+<div id="myModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden" data-controller="reservation">
   <div class="bg-white p-6 rounded-lg w-1/3">
     <div class="flex justify-between items-center">
-      <h5 class="text-lg font-bold">Modal title</h5>
-      <button id="closeModal" class="text-gray-500 hover:text-gray-800">&times;</button>
+      <h5 class="text-lg font-bold">Reserve Time</h5>
+      <button id="closeModal" data-action="click->reserves#closeModal" class="text-gray-500 hover:text-gray-800">&times;</button>
     </div>
     <div class="mt-4">
-      <!-- Modal body content -->
-      <p>Your content goes here.</p>
-      <!-- Example form -->
-      <form class="mt-4">
-        <!-- Time Start -->
+      <!-- Form for selecting start and end time -->
+      <form id="reservationForm" class="mt-4" data-action="submit->reserves#submitForm">
+        <!-- Start Time -->
         <div class="flex items-center space-x-5 justify-center">
           <div class="w-full max-w-md">
-            <select data-reserves-target="options" id="startTime" class="border border-gray-300 text-gray-600 text-xl font-medium rounded-lg block w-full p-3">
-             
+            <label for="startTime" class="block mb-2">Start Time</label>
+            <select id="startTime" name="startTime" class="border border-gray-300 text-gray-600 text-xl font-medium rounded-lg block w-full p-3">
+              <!-- Start time options will be dynamically generated -->
             </select>
-
           </div>
           <div class="text-gray-500">To</div>
           <div class="w-full max-w-md">
-            <select id="endTime" class="border border-gray-300 text-gray-600 text-xl font-medium rounded-lg block w-full p-3">
-              <!-- Options for end time -->
-              <option value="10:00">10:00</option>
-              <option value="11:00">11:00</option>
-              <!-- Add more options as needed -->
+            <label for="endTime" class="block mb-2">End Time</label>
+            <select id="endTime" name="endTime" class="border border-gray-300 text-gray-600 text-xl font-medium rounded-lg block w-full p-3">
+              <!-- End time options will be dynamically generated -->
             </select>
           </div>
         </div>
-        <!-- Note -->
+        <!-- Reservation Note -->
         <div class="mt-6">
           <label for="reservation" class="block mb-2 text-normal font-medium text-gray-500">Reservation Note</label>
-          <textarea id="reservation" class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3" placeholder="Type your reservation note..."></textarea>
+          <textarea id="reservation" name="reservation" class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3" placeholder="Type your reservation note..."></textarea>
+        </div>
+        <div class="mt-6 flex justify-between space-x-4">
+          <button id="cancelButton" type="button" data-action="click->reserves#closeModal" class="inline-flex justify-center rounded-md border border-transparent bg-gray-100 px-5 py-3 text-sm font-medium text-gray-600 hover:bg-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">
+            Cancel
+          </button>
+          <button id="confirmButton" type="submit" class="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-5 py-3 text-sm font-medium text-gray-600 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">
+  Confirm
+</button>
         </div>
       </form>
-    </div>
-    <div class="mt-6 flex justify-between space-x-4">
-      <button id="cancelButton" type="button" class="inline-flex justify-center rounded-md border border-transparent bg-gray-100 px-5 py-3 text-sm font-medium text-gray-600 hover:bg-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">
-        Cancel
-      </button>
-      <button id="confirmButton" type="button" class="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-5 py-3 text-sm font-medium text-gray-600 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">
-        Confirm
-      </button>
     </div>
   </div>
 </div>

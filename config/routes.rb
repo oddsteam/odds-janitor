@@ -7,13 +7,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :reserves
   get "pages/home"
 
   get "up" => "rails/health#show", as: :rails_health_check
   get "/callback", to: "sessions#callback"
   get "logout", to: "sessions#logout"
   get "/new", to: "reserves#new"
-  # post "reserves/modal", to: "reserves#modal"
   root "reserves#index"
 end

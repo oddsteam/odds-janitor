@@ -23,16 +23,12 @@
         <%= render partial: 'calendar', locals: { selected_date: @selected_date, days_in_month: @days_in_month, rooms: @rooms, alert: @alert_message } %>
       </turbo-frame>
       <div class="w-full p-4 overflow-auto">
-        <h2 class="font-medium">Your booking on <span class="text-gray-500 font-normal"> <%= @selected_date.strftime("%B %d, %Y") %> </span></h2>
-        <% @this_user_bookings.each do |booking| %>
-          <div class="bg-white border p-2 w-full rounded-md mt-2 flex flex-row justify-between">
-            <h2 class="text-sm"><span class="font-semibold mr-2"><%= @rooms[booking.roomId.to_i][:room_name] %></span><%= booking.note%></h2>
-            <div class="flex flex-row items-center gap-4">
-              <h3 class="text-sm"><%= booking.start_timer %> - <%= booking.end_timer %></h3>
-              <%# <i class="fa-solid fa-circle-xmark text-gray-400"></i> %>
-            </div>
-          </div>
-        <%end%>
+        <turbo-frame id="user_bookings">
+          <h2 class="font-medium">Your booking on <span class="text-gray-500 font-normal"> <%= @selected_date.strftime("%B %d, %Y") %> </span></h2>
+          <% @this_user_bookings.each do |booking| %>
+            <%= render partial: 'booking', locals: { booking: booking, rooms: @rooms } %>
+          <% end %>
+        </turbo-frame>
       </div>
     </div>
     <h1>
