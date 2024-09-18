@@ -1,12 +1,22 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["cell", "options"];
+  static targets = ["cell", "optionsStart", "optionsEnd"];
   dragging = false;
   selectedCells = [];
   startRow = null;
   startTime = null;
   endTime = null;
+
+  option() {
+    this.startTime 
+    this.optionsStartTarget.innerHTML = '';
+    this.optionsEndTarget.innerHTML = '';
+    // create array of options to be added
+    // เพิ่ม <option> elements เข้าไปใน optionTarget
+    this.optionsStartTarget.appendChild(option1);
+    this.optionsEndTarget.appendChild(option2);
+  }
 
   handleStart(event) {
     event.preventDefault();
