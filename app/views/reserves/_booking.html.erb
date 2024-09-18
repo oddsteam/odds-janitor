@@ -1,9 +1,0 @@
-<div class="bg-white border p-2 w-full rounded-md mt-2 flex flex-row justify-between">
-  <h2 class="text-sm">
-    <span class="font-semibold mr-2"><%= rooms.find { |r| r[:id] == booking.roomId }[:room_name] %></span>
-    <%= booking.note %>
-  </h2>
-  <div class="flex flex-row items-center gap-4">
-    <h3 class="text-sm"><%= booking.start_timer %> - <%= booking.end_timer %></h3>
-  </div>
-</div>

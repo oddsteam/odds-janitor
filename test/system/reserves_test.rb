@@ -2,7 +2,7 @@ require "application_system_test_case"
 
 class ReservesTest < ApplicationSystemTestCase
   setup do
-    @reserf = reserves(:one)
+    @reserve = reserves(:one)
   end
 
   test "visiting the index" do
@@ -14,10 +14,10 @@ class ReservesTest < ApplicationSystemTestCase
     visit reserves_url
     click_on "New reserve"
 
-    fill_in "Date", with: @reserf.date
-    fill_in "End timer", with: @reserf.end_timer
-    fill_in "Note", with: @reserf.note
-    fill_in "Start timer", with: @reserf.start_timer
+    fill_in "Date", with: @reserve.date
+    fill_in "End timer", with: @reserve.end_timer
+    fill_in "Note", with: @reserve.note
+    fill_in "Start timer", with: @reserve.start_timer
     click_on "Create Reserve"
 
     assert_text "Reserve was successfully created"
@@ -25,13 +25,13 @@ class ReservesTest < ApplicationSystemTestCase
   end
 
   test "should update Reserve" do
-    visit reserf_url(@reserf)
+    visit reserve_url(@reserve)
     click_on "Edit this reserve", match: :first
 
-    fill_in "Date", with: @reserf.date
-    fill_in "End timer", with: @reserf.end_timer
-    fill_in "Note", with: @reserf.note
-    fill_in "Start timer", with: @reserf.start_timer
+    fill_in "Date", with: @reserve.date
+    fill_in "End timer", with: @reserve.end_timer
+    fill_in "Note", with: @reserve.note
+    fill_in "Start timer", with: @reserve.start_timer
     click_on "Update Reserve"
 
     assert_text "Reserve was successfully updated"
@@ -39,7 +39,7 @@ class ReservesTest < ApplicationSystemTestCase
   end
 
   test "should destroy Reserve" do
-    visit reserf_url(@reserf)
+    visit reserve_url(@reserve)
     click_on "Destroy this reserve", match: :first
 
     assert_text "Reserve was successfully destroyed"
