@@ -136,7 +136,9 @@ export default class extends Controller {
 
     const form = event.currentTarget;
     const formData = new FormData(form);
-
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+    }
     fetch('/reserves', {
       method: 'POST',
       body: formData,
