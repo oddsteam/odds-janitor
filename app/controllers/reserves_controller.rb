@@ -3,11 +3,14 @@ class ReservesController < ApplicationController
   before_action :set_reserve, only: %i[ show edit update destroy ]
   attr_reader :selected_date
 
+  AVAILABLE_TIME = (8..18).to_a
+
   # GET /reserves or /reserves.json
   def index
     @getEmail = Reserve.get_email_form_session(session)
     @getUserId = Reserve.get_userId_form_session(session)
     @selected_date = params[:date] ? Date.parse(params[:date]) : Date.today
+    @reserve = Reserve.new(date: @selected_date)
     @alert_message = ""
 
     dateNext3Month = Date.today + 3.month
@@ -33,14 +36,14 @@ class ReservesController < ApplicationController
     @start_of_month = @selected_date.beginning_of_month.wday
 
     @rooms = [
-      { id: 1, room_name: "Meeting 1", room_address: "Binary Base", seat: 3, room_description: "Small meeting room" },
-      { id: 2, room_name: "Meeting 2", room_address: "Binary Base", seat: 6, room_description: "Medium meeting room" },
-      { id: 3, room_name: "Territory 1", room_address: "Binary Base", seat: 5, room_description: "Large meeting room" },
-      { id: 4, room_name: "Territory 2", room_address: "Binary Base", seat: 5, room_description: "Extra large meeting room" },
-      { id: 5, room_name: "Territory 3", room_address: "Binary Base", seat: 5, room_description: "Extra large meeting room" },
-      { id: 6, room_name: "Global", room_address: "Binary Base", seat: 30, room_description: "Extra large meeting room" },
-      { id: 7, room_name: "All Nighter 1", room_address: "Binary Base", seat: 36, room_description: "LeSSex Area" },
-      { id: 8, room_name: "All Nighter 2", room_address: "Binary Base", seat: 32, room_description: "LeSSex Area" },
+      { id: 1, name: "Meeting 1", address: "Binary Base", seat: 3, description: "Small meeting room" },
+      { id: 2, name: "Meeting 2", address: "Binary Base", seat: 6, description: "Medium meeting room" },
+      { id: 3, name: "Territory 1", address: "Binary Base", seat: 5, description: "Large meeting room" },
+      { id: 4, name: "Territory 2", address: "Binary Base", seat: 5, description: "Extra large meeting room" },
+      { id: 5, name: "Territory 3", address: "Binary Base", seat: 5, description: "Extra large meeting room" },
+      { id: 6, name: "Global", address: "Binary Base", seat: 30, description: "Extra large meeting room" },
+      { id: 7, name: "All Nighter 1", address: "Binary Base", seat: 36, description: "LeSSex Area" },
+      { id: 8, name: "All Nighter 2", address: "Binary Base", seat: 32, description: "LeSSex Area" },
     ]
   end
 
@@ -77,8 +80,8 @@ class ReservesController < ApplicationController
 
   # POST /reserves or /reserves.json
   def create
-    uid = Reserve.get_userId_form_session(session)
-    @reserve = Reserve.new(reserve_params.merge(userId: uid))
+    user_id = Reserve.get_userId_form_session(session)
+    @reserve = Reserve.new(reserve_params.merge(userId: user_id))
 
     respond_to do |format|
       if @reserve.save
@@ -96,7 +99,7 @@ class ReservesController < ApplicationController
     uid = Page.get_userId_form_session(session)
     respond_to do |format|
       if @reserve.update(reserve_params.merge(userId: uid))
-        format.html { redirect_to reserve_url(@reserve), notice: "Reserve was successfully updated." }
+        format.html { redirect_to reserves_path, notice: "Reserve was successfully updated." }
         format.json { render :show, status: :ok, location: @reserve }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -115,16 +118,7 @@ class ReservesController < ApplicationController
     end
   end
 
-  # def modal 
-  #   start_time = params[:start_time]
-  #   end_time = params[:end_time]
-
-  #   puts "Start time received: #{start_time}"
-  #   puts "End time received: #{end_time}"
-  #   # ส่ง response กลับไปให้ JavaScript
-  #   render json: { message: "Start time received", start_time: start_time }
-
-  # end
+  
 
   private
 

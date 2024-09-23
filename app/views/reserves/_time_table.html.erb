@@ -1,0 +1,19 @@
+<% @rooms.each do |room| %>
+    <div class="flex flex-row">
+        <% ReservesController::AVAILABLE_TIME.each do |hour|%>
+        <div class="timeCell border border-slate-300 w-14 h-14" data-action="mousedown->reservations#mouseDown mousemove->reservations#mouseMove mouseup@window->reservations#mouseUp
+        mouseup->time-table-modal#openModal" data-start-time=<%="#{hour.to_s.rjust(2,"0")}:00"%> data-end-time=<%="#{hour.to_s.rjust(2,"0")}:30"%>
+        data-room-id=<%="#{room[:id]}"%>>
+        </div>
+        <div class="timeCell border border-slate-300 w-14 h-14" data-action="mousedown->reservations#mouseDown mousemove->reservations#mouseMove mouseup@window->reservations#mouseUp
+        mouseup->time-table-modal#openModal" data-start-time=<%="#{hour.to_s.rjust(2,"0")}:30"%> data-end-time=<%="#{(hour + 1).to_s.rjust(2,"0")}:00"%>
+        data-room-id=<%="#{room[:id]}"%>>
+        </div>
+        <% end %>
+    </div>
+<% end %>
+<% @reserves.each do |reserve|%>
+    <div data-room-id=<%="#{reserve.roomId}"%> data-start-time=<%="#{reserve.start_timer}"%> data-end-time=<%="#{reserve.end_timer}"%>
+    data-show-reservations-target="reservationBar" class="absolute bg-blue-300"></div>
+<%end%>
+<div class="reservation absolute bg-blue-300" data-reservations-target="newBooking"></div>

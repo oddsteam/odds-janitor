@@ -15,17 +15,32 @@
     <%= form.label :date %>
     <%= form.date_field :date, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
-
-  <div class="my-5">
-    <%= form.label :start_timer %>
-    <%= form.text_field :start_timer, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+    <%= form.label :start_timer, class: "block mb-2 font-medium text-gray-700" %>
+    <%= form.select :start_timer, 
+        options_for_select((8..20).map { |hour| 
+          (0..1).map { |mins| 
+            time = Time.new(2000, 1, 1, hour, mins*30)
+            [time.strftime("%I:%M %p"), time.strftime("%H:%M")]
+          }
+        }.flatten(1)),
+        { include_blank: "Select Start Time" },
+        { class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" }
+    %>
   </div>
 
   <div class="my-5">
-    <%= form.label :end_timer %>
-    <%= form.text_field :end_timer, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+    <%= form.label :end_timer, class: "block mb-2 font-medium text-gray-700" %>
+    <%= form.select :end_timer, 
+        options_for_select((8..20).map { |hour| 
+          (0..1).map { |mins| 
+            time = Time.new(2000, 1, 1, hour, mins*30)
+            [time.strftime("%I:%M %p"), time.strftime("%H:%M")]
+          }
+        }.flatten(1)),
+        { include_blank: "Select End Time" },
+        { class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" }
+    %>
   </div>
-
   <div class="my-5">
     <%= form.label :note %>
     <%= form.text_field :note, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>

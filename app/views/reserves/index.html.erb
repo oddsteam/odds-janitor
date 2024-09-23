@@ -1,8 +1,8 @@
-<div data-controller="reserves" class="w-[90%] pt-6 max-w-[1300px] m-auto">
+<div data-controller="reserves" class="w-[95%] pt-6 max-w-[1300px] m-auto">
   <div class="w-full">
-    <% if notice.present? %>
+    <!--- <% if notice.present? %>
       <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-    <% end %>
+    <% end %> --->
     <% content_for :title, "Reserves" %>
     <div class="flex justify-between items-center mb-6">
       <h1 class="font-bold text-4xl">Rooms Reserves</h1>
@@ -17,7 +17,6 @@
       </div>
     </div>
   </div>
-  <div>
     <div class="flex max-w-[1300px] max-h-64 m-auto w-full bg-slate-100 border border-slate-300 overflow-hidden mb-5 rounded-lg">
       <turbo-frame id="calendar">
         <%= render partial: 'calendar', locals: { selected_date: @selected_date, days_in_month: @days_in_month, rooms: @rooms, alert: @alert_message } %>
@@ -31,86 +30,43 @@
         </turbo-frame>
       </div>
     </div>
-    <h1>
-    </h1>
-    <div class="flex max-w-[1300px] m-auto w-full mb-6">
-      <table class="w-max border-collapse text-gray-600">
-        <thead>
-          <tr class="bg-neutral-100 text-[1rem]">
-            <th class="top-0 left-0 z-3 bg-neutral-100 border border-slate-300 text-center h-[60px] min-w-[120px]">
-              <i class="fa-solid fa-door-open mr-2"></i> Room
-            </th>
+  <div data-controller="reservations time-table-modal show-reservations" class="flex justify-center">
+    <table>
+      <tr>
+          <th class= "top-0 left-0 z-3 bg-neutral-100 border border-slate-300 text-center h-[60px] min-w-[120px]"> 
+          <i class="fa-solid fa-door-open mr-2"></i>Room</th>
+        <% ReservesController::AVAILABLE_TIME.each do |hour| %>
+          <th colspan="2" class= "border h-14 w-28 p-2 text-left"> 
+          <%= "#{hour.to_s.rjust(2,"0")}:00"%> 
+          </th>
+        <%end%>
+      </tr>
+      <% @rooms.each_with_index do |room, room_index| %>
+        <% if room_index == 0 %>
+          <tr>
+            <td class="border h-12 p-0 text-nowrap pl-2">
+              <%= room[:name]%>
+            </td>
+            <td rowspan="8" colspan="22" class="p-0 relative" data-reservations-target="table" data-show-reservations-target="table">
+              <%= render "time_table"%>
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          <% @rooms.each do |room| %>
-            <tr>
-              <td class="left-0 z-2 border-r-slate-300 border border-slate-300 text-right pr-3 h-[60px] font-medium bg-neutral-100 select-none">
-                <%= room[:room_name] %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-      <div class="w-full overflow-x-scroll border-r border-r-slate-300 hidden-scroll hide-scrollbar">
-        <table class="h-full text-gray-600" data-controller="reserves">
-          <thead>
-            <tr class="bg-neutral-100 text-[1rem]">
-              <% 22.times do |i| %>
-                <th 
-          class="bg-gray-100 z-1 h-[60px] border border-t-slate-300 <%= i.even? ? 'border-r-transparent border-l-transparent' : 'border-r-slate-300 border-l-slate-300' %> border-b-slate-300 min-w-[60px] <%= i == 21 ? 'border-r-transparent' : '' %>" 
-          colspan="1">
-                  <%= "#{i / 2 + 8}:00" if i.even? %>
-                </th>
-              <% end %>
-            </tr>
-          </thead>
-          <tbody>
-            <% @rooms.each_with_index do |room, room_index| %>
-              <tr class="h-[50px]">
-                <% current_hour_index = 0 %>
-                <% while current_hour_index < 22 %>
-                  <% current_time = (current_hour_index / 2 + 8).to_s.rjust(2, '0') + (current_hour_index.even? ? ":00" : ":30") %>
-                  <% reserve = @reserves.find { |r| r.roomId.to_i == room_index + 1 && r.date == @selected_date.to_s && r.start_timer == current_time } %>
-                  <% if reserve %>
-                    <% start_time = Time.parse(reserve.start_timer) %>
-                    <% end_time = Time.parse(reserve.end_timer) %>
-                    <% duration = ((end_time - start_time) / 1800).to_i %> <!-- duration in 30-minute slots -->
-                    <td 
-                        class="text-white border min-w-[60px] text-center p-0 transition duration-300"
-                        colspan="<%= duration %>"
-                        data-room="<%= room_index %>" 
-                        data-hour="<%= start_time.strftime('%H:%M') %>"
-                        data-booking-table-target="cell">
-                        <button class="w-full bg-blue-300 hover:bg-blue-400 h-full" data-controller="modal-detail" data-action="click->modal-detail#navigate" data-reserve-id="<%= reserve.id %>" data-selected-date="<%= @selected_date %>">
-                          <%= reserve.note %>
-                        </button>
-                    </td>
-                    <% current_hour_index += duration %>
-                  <% else %>
-                    <td 
-                      class="border border-slate-200 min-w-[60px] text-center cursor-pointer p-0 transition duration-300"
-                      data-action="mousedown->reserves#handleStart mousemove->reserves#handleMove mouseup->reserves#handleEnd touchmove->reserves#handleTouchMove"
-                      data-room="<%= room_index %>" 
-                      data-hour="<%= (current_hour_index / 2 + 8).to_s.rjust(2, '0') + (current_hour_index.even? ? ":00" : ":30") %>" 
-                      data-start-time="<%= (current_hour_index / 2 + 8).to_s.rjust(2, '0')%>"
-                      data-end-time="<%= ((current_hour_index + 1) / 2 + 8).to_s.rjust(2, '0')%>"
-                      data-reserves-target="cell">
-                    </td>
-                    <% current_hour_index += 1 %>
-                  <% end %>
-                <% end %>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
+        <% else %>
+          <tr>
+            <td class=" border h-12 text-nowrap p-0 transition duration-300 pl-2">
+              <%= room[:name]%>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+      <%= render partial: "time_table_modal",locals: {reserve: @reserve                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         } %>
     </div>
   </div>
-  <%= render 'reserves/modalform' %>
 </div>
-<%= render 'reserves/modalform' %>
 
+<!--
 <% if @reserve.present? %>
   <%= render 'reserves/modal_detail', reserve: @reserve %>
 <% end %>
+-->
+
