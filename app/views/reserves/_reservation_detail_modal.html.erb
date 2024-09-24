@@ -1,0 +1,23 @@
+<div id="reservationDetailModal" class="fixed inset-0 hidden bg-black/30 flex items-center justify-center z-30" data-reservation-detail-modal-target="reservationDetail">
+  <div class="w-full max-w-md rounded-xl bg-white p-6 duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0">
+    <div class="text-xl text-start font-medium text-gray-600">
+        <span id="modalRoomInfo" class="font-medium"></span> ·
+        <span id="modalStartTime" class="font-medium"></span> -
+        <span id="modalEndTime" class="font-medium"></span>
+    </div>
+    <div class="mt-5">
+        <div class="px-2 mb-4 text-gray-500">
+            <h3>Booked by:</h3>
+            <p>Date:</p>
+            <p>Location: Binary Base</p>
+            <p>Seats: 3</p>
+        </div>
+        <p class="text-gray-500 px-2">Note:</p>
+    </div>
+    <div class="mt-6 flex justify-end space-x-4">
+    <button 
+    class="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-5 py-3 text-sm font-medium text-gray-600 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+    >OK</button>
+    </div>
+  </div>
+</div>
