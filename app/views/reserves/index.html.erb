@@ -69,3 +69,15 @@
     <p>End Time: <span id="modalEndTime"></span></p>
   </div>
 </div>
+
+<div data-controller="preview-rooms">
+  <%= link_to "Preview", "#", data: { action: "click->preview-rooms#open" } %>
+  <%= render partial: "roomdetails/modal_rooms_preview" %> 
+</div>
+
+<!--
+<% if @reserve.present? %>
+  <%= render 'reserves/modal_detail', reserve: @reserve %>
+<% end %>
+-->
+

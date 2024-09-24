@@ -1,0 +1,33 @@
+<!-- Modal Overlay -->
+<div id="roomModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden" data-preview-rooms-target="modal">
+  
+  <!-- Modal Content -->
+  <div class="modal-content bg-white m-auto p-6 rounded-lg border shadow-lg w-4/5 max-w-2xl relative top-1/4">
+    <!-- Close Button -->
+    <button class="absolute top-2 right-2 text-gray-600 hover:text-black" data-action="click->preview-rooms#close">
+      ✖
+    </button>
+
+    <!-- Modal Body -->
+    <div class="flex flex-col space-y-4">
+      <!-- LEFT -->
+      <div class="flex flex-row space-x-4">
+        <%= image_tag "#{@selected_room.downcase.gsub(' ', '')}-1.jpg", alt: @selected_room, class: "rounded-lg object-cover", style: "width: 500px; height: 458px;" %>
+        <div class="flex flex-col space-y-2">
+          <%= image_tag "#{@selected_room.downcase.gsub(' ', '')}-2.jpg", alt: @selected_room, class: "rounded-lg hidden lg:block", style: "width: 275px; height: 225px;" %>
+          <%= image_tag "#{@selected_room.downcase.gsub(' ', '')}-3.jpg", alt: @selected_room, class: "rounded-lg hidden lg:block", style: "width: 275px; height: 225px;" %>
+        </div>
+      </div>
+
+      <!-- Room Details -->
+      <div class="bg-white p-5 rounded-lg">
+        <h1 data-testid="room-name-desktop" class="text-gray-800 text-3xl font-bold">
+          <%= @mock_data_room[@selected_index][:name] %>
+        </h1>
+        <p class="text-gray-400 text-lg">
+          Max capacity: <%= @mock_data_room[@selected_index][:max_seat] %>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :roomdetails, only: [:index]
+  resources :roomdetails
 
   resources :reserves do
     collection do
