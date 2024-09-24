@@ -11,9 +11,6 @@
         <%= link_to logout_path, method: :get, class: "btn btn-secondary border ml-4 p-2 rounded-md" do %>
           <i class="fa-solid fa-right-from-bracket pe-1"></i> Logout
         <% end %>
-        <button data-modal-open data-action="click->reserves#option" class="btn btn-primary ml-4 p-2 rounded-md">
-          Open Modal
-        </button>
       </div>
     </div>
   </div>
@@ -30,7 +27,7 @@
         </turbo-frame>
       </div>
     </div>
-  <div data-controller="reservations time-table-modal show-reservations" class="flex justify-center">
+  <div data-controller="reservations time-table-modal show-reservations reservation-detail-modal" class="flex justify-center">
     <table>
       <tr>
           <th class= "top-0 left-0 z-3 bg-neutral-100 border border-slate-300 text-center h-[60px] min-w-[120px]"> 
@@ -59,14 +56,16 @@
           </tr>
         <% end %>
       <% end %>
-      <%= render partial: "time_table_modal",locals: {reserve: @reserve                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         } %>
+      <%= render partial: "time_table_modal",locals: { reserve: @reserve } %>
     </div>
   </div>
 </div>
 
-<!--
-<% if @reserve.present? %>
-  <%= render 'reserves/modal_detail', reserve: @reserve %>
-<% end %>
--->
-
+<div id="reservationDetailModal" class="modal hidden" data-reservation-detail-modal-target="reservationDetail">
+  <div class="modal-content">
+    <h2>Reservation Details</h2>
+    <p>Room: <span id="modalRoomInfo"></span></p>
+    <p>Start Time: <span id="modalStartTime"></span></p>
+    <p>End Time: <span id="modalEndTime"></span></p>
+  </div>
+</div>

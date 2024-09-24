@@ -8,6 +8,16 @@ export default class extends Controller {
     this.isTracking = false
   }
 
+  reservationDetailModal(e) {
+    const startTimer = e.target.dataset.startTime
+    const endTimer = e.target.dataset.endTime
+    const roomId = e.target.dataset.roomId
+
+    document.getElementById("modalRoomInfo").textContent = roomId;
+    document.getElementById("modalStartTime").textContent = startTimer;
+    document.getElementById("modalEndTime").textContent = endTimer;
+  }
+
   mouseDown(e) {
 
     const tableRect = this.tableTarget.getBoundingClientRect();
