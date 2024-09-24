@@ -59,23 +59,4 @@
   </div>
 </div>
 
-<div id="reservationDetailModal" class="modal hidden" data-reservation-detail-modal-target="reservationDetail">
-  <div class="modal-content">
-    <h2>Reservation Details</h2>
-    <p>Room: <span id="modalRoomName"></span></p>
-    <p>Start Time: <span id="modalStartTime"></span></p>
-    <p>End Time: <span id="modalEndTime"></span></p>
-  </div>
-</div>
-
-<div data-controller="preview-rooms">
-  <%= link_to "Preview", "#", data: { action: "click->preview-rooms#open" } %>
-  <%= render partial: "roomdetails/modal_rooms_preview" %> 
-</div>
-
-<!--
-<% if @reserve.present? %>
-  <%= render 'reserves/modal_detail', reserve: @reserve %>
-<% end %>
--->
-
+<%= render partial: "reservation_detail_modal" %>

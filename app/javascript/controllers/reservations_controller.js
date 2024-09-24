@@ -9,27 +9,37 @@ export default class extends Controller {
   }
 
   reservationDetailModal(e) {
-    const startTimer = e.target.dataset.startTime
-    const endTimer = e.target.dataset.endTime
+    const startTimer = e.target.dataset.startTime;
+    const endTimer = e.target.dataset.endTime;
     const roomId = parseInt(e.target.dataset.roomId);
-
+    const bookedBy = e.target.dataset.bookedBy;
+    const date = e.target.dataset.date;
+    const note = e.target.dataset.note;
+  
     const rooms = [
-      { id: 1, name: "Meeting 1" },
-      { id: 2, name: "Meeting 2" },
-      { id: 3, name: "Territory 1" },
-      { id: 4, name: "Territory 2" },
-      { id: 5, name: "Territory 3" },
-      { id: 6, name: "Global" },
-      { id: 7, name: "All Nighter 1" },
-      { id: 8, name: "All Nighter 2" },
-    ]
-
+      { id: 1, name: "Meeting 1", address: "Binary Base", seat: 3 },
+      { id: 2, name: "Meeting 2", address: "Binary Base", seat: 6 },
+      { id: 3, name: "Territory 1", address: "Binary Base", seat: 5 },
+      { id: 4, name: "Territory 2", address: "Binary Base", seat: 5 },
+      { id: 5, name: "Territory 3", address: "Binary Base", seat: 5 },
+      { id: 6, name: "Global", address: "Binary Base", seat: 30 },
+      { id: 7, name: "All Nighter 1", address: "Binary Base", seat: 36 },
+      { id: 8, name: "All Nighter 2", address: "Binary Base", seat: 32 },
+    ];
+  
     const room = rooms.find(r => r.id === roomId);
     const roomName = room ? room.name : "Unknown Room";
-
+    const roomAddress = room ? room.address : "Unknown Address";
+    const roomSeat = room ? room.seat : "Unknown Seat";
+  
     document.getElementById("modalRoomName").textContent = roomName;
     document.getElementById("modalStartTime").textContent = startTimer;
     document.getElementById("modalEndTime").textContent = endTimer;
+    document.getElementById("modalBookedBy").textContent = bookedBy;
+    document.getElementById("modalDate").textContent = date;
+    document.getElementById("modalLocation").textContent = roomAddress;
+    document.getElementById("modalSeats").textContent = roomSeat;
+    document.getElementById("modalNote").textContent = note;
   }
 
   mouseDown(e) {
@@ -68,7 +78,5 @@ export default class extends Controller {
       this.endTimer = e.target.dataset.endTime
       this.endTimerTarget.value = this.endTimer
     }
-    
-
   }
 }
