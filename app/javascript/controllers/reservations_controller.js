@@ -11,9 +11,23 @@ export default class extends Controller {
   reservationDetailModal(e) {
     const startTimer = e.target.dataset.startTime
     const endTimer = e.target.dataset.endTime
-    const roomId = e.target.dataset.roomId
+    const roomId = parseInt(e.target.dataset.roomId);
 
-    document.getElementById("modalRoomInfo").textContent = roomId;
+    const rooms = [
+      { id: 1, name: "Meeting 1" },
+      { id: 2, name: "Meeting 2" },
+      { id: 3, name: "Territory 1" },
+      { id: 4, name: "Territory 2" },
+      { id: 5, name: "Territory 3" },
+      { id: 6, name: "Global" },
+      { id: 7, name: "All Nighter 1" },
+      { id: 8, name: "All Nighter 2" },
+    ]
+
+    const room = rooms.find(r => r.id === roomId);
+    const roomName = room ? room.name : "Unknown Room";
+
+    document.getElementById("modalRoomName").textContent = roomName;
     document.getElementById("modalStartTime").textContent = startTimer;
     document.getElementById("modalEndTime").textContent = endTimer;
   }
