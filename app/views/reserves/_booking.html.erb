@@ -1,0 +1,23 @@
+<% room_mapping = {
+  '1' => "Meeting 1",
+  '2' => "Meeting 2",
+  '3' => "Territory 1",
+  '4' => "Territory 2",
+  '5' => "Territory 3",
+  '6' => "Global",
+  '7' => "All Nighter 1",
+  '8' => "All Nighter 2"
+} %>
+
+<div class="p-6 bg-gray-100">
+  <% @reserves_with_rooms.each do |reserve| %>
+    <div class="bg-white shadow-md rounded-lg p-4 mb-4">
+      <div class="text-lg font-semibold text-gray-800">
+        <%= reserve['start_timer'] %> - <%= reserve['end_timer'] %>
+      </div>
+      <div class="text-sm text-gray-600">
+        Room: <%= room_mapping[reserve['roomId']] %>
+      </div>
+    </div>
+  <% end %>
+</div>

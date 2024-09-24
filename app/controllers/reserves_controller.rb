@@ -46,10 +46,18 @@ class ReservesController < ApplicationController
       { id: 8, name: "All Nighter 2", address: "Binary Base", seat: 32, description: "LeSSex Area" },
     ]
 
+    @room_map = @rooms.each_with_object({}) { |room, hash| hash[room[:id].to_s] = room }
+
+    @reserves_with_rooms = @reserves.map do |reserve|
+      room = @room_map[reserve.roomId.to_s] || { name: "Unknown Room" }
+      reserve.attributes.merge(room_name: room[:name])
+    end
+
     @mock_data_room = mock_data_room
     @selected_room = set_default_room
     @selected_index = @mock_data_room.find_index { |room| room[:name] == @selected_room }
     @selected_room_id = @mock_data_room.find { |room| room[:name] == @selected_room }&.dig(:id)
+    
   end
 
   # PATCH /reserves/update_selected_date

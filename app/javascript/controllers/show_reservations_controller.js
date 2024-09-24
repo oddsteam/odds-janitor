@@ -26,7 +26,7 @@ export default class extends Controller {
       const endTimeCellRect = endTimeCell.getBoundingClientRect();
       const width = endTimeCellRect.right - startTimeCellRect.left
       element.style.width = `${width}px`
-      console.log("reserveBar", endTimeCell, width)
+      console.log("reserveBar")
     })
   }
 }
