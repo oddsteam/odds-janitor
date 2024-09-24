@@ -1,4 +1,4 @@
-<div data-controller="reserves" class="w-[95%] pt-6 max-w-[1300px] m-auto">
+<div data-controller="reserves preview-rooms" class="w-[95%] pt-6 max-w-[1300px] m-auto">
   <div class="w-full">
     <!--- <% if notice.present? %>
       <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
@@ -42,7 +42,12 @@
         <% if room_index == 0 %>
           <tr>
             <td class="border h-12 p-0 text-nowrap pl-2">
-              <%= room[:name]%>
+              <button data-action="click->preview-rooms#open"
+                data-room-name="<%= room[:name] %>"
+                data-room-image1="<%= image_path("#{room[:name].downcase.gsub(' ', '')}-1.jpg") %>"
+                data-room-image2="<%= image_path("#{room[:name].downcase.gsub(' ', '')}-2.jpg") %>"
+                data-room-image3="<%= image_path("#{room[:name].downcase.gsub(' ', '')}-3.jpg") %>"
+              ><%= room[:name] %></button>
             </td>
             <td rowspan="8" colspan="22" class="p-0 relative" data-reservations-target="table" data-show-reservations-target="table">
               <%= render "time_table"%>
@@ -50,11 +55,17 @@
           </tr>
         <% else %>
           <tr>
-            <td class=" border h-12 text-nowrap p-0 transition duration-300 pl-2">
-              <%= room[:name]%>
+            <td class="border h-12 text-nowrap p-0 transition duration-300 pl-2">
+              <button data-action="click->preview-rooms#open"
+                data-room-name="<%= room[:name] %>"
+                data-room-image1="<%= image_path("#{room[:name].downcase.gsub(' ', '')}-1.jpg") %>"
+                data-room-image2="<%= image_path("#{room[:name].downcase.gsub(' ', '')}-2.jpg") %>"
+                data-room-image3="<%= image_path("#{room[:name].downcase.gsub(' ', '')}-3.jpg") %>"
+              ><%= room[:name] %></button>
             </td>
           </tr>
         <% end %>
+        <%= render partial: "roomdetails/modal_rooms_preview", locals: { room: room } %>
       <% end %>
       <%= render partial: "time_table_modal",locals: { reserve: @reserve } %>
     </div>
@@ -68,11 +79,6 @@
     <p>Start Time: <span id="modalStartTime"></span></p>
     <p>End Time: <span id="modalEndTime"></span></p>
   </div>
-</div>
-
-<div data-controller="preview-rooms">
-  <%= link_to "Preview", "#", data: { action: "click->preview-rooms#open" } %>
-  <%= render partial: "roomdetails/modal_rooms_preview" %> 
 </div>
 
 <!--

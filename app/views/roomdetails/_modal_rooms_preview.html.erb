@@ -1,6 +1,4 @@
-<!-- Modal Overlay -->
 <div id="roomModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden" data-preview-rooms-target="modal">
-  
   <!-- Modal Content -->
   <div class="modal-content bg-white m-auto p-6 rounded-lg border shadow-lg w-4/5 max-w-2xl relative top-1/4">
     <!-- Close Button -->
@@ -12,20 +10,18 @@
     <div class="flex flex-col space-y-4">
       <!-- LEFT -->
       <div class="flex flex-row space-x-4">
-        <%= image_tag "#{@selected_room.downcase.gsub(' ', '')}-1.jpg", alt: @selected_room, class: "rounded-lg object-cover", style: "width: 500px; height: 458px;" %>
+        <img data-preview-rooms-target="roomImage1" alt="Room Image" class="rounded-lg object-cover" style="width: 500px; height: 458px;">
         <div class="flex flex-col space-y-2">
-          <%= image_tag "#{@selected_room.downcase.gsub(' ', '')}-2.jpg", alt: @selected_room, class: "rounded-lg hidden lg:block", style: "width: 275px; height: 225px;" %>
-          <%= image_tag "#{@selected_room.downcase.gsub(' ', '')}-3.jpg", alt: @selected_room, class: "rounded-lg hidden lg:block", style: "width: 275px; height: 225px;" %>
+          <img data-preview-rooms-target="roomImage2" alt="Room Image" class="rounded-lg hidden lg:block" style="width: 275px; height: 225px;">
+          <img data-preview-rooms-target="roomImage3" alt="Room Image" class="rounded-lg hidden lg:block" style="width: 275px; height: 225px;">
         </div>
       </div>
 
       <!-- Room Details -->
       <div class="bg-white p-5 rounded-lg">
-        <h1 data-testid="room-name-desktop" class="text-gray-800 text-3xl font-bold">
-          <%= @mock_data_room[@selected_index][:name] %>
-        </h1>
+        <h1 data-preview-rooms-target="roomName" class="text-gray-800 text-3xl font-bold"></h1>
         <p class="text-gray-400 text-lg">
-          Max capacity: <%= @mock_data_room[@selected_index][:max_seat] %>
+          Max capacity: <%= @rooms[@selected_index][:seat] %>
         </p>
       </div>
     </div>
