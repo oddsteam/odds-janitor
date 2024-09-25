@@ -10,12 +10,8 @@ export default class extends Controller {
   }
 
   reservationDetailModal(e) {
-    const startTimer = e.target.dataset.startTime;
-    const endTimer = e.target.dataset.endTime;
-    const roomId = parseInt(e.target.dataset.roomId);
-    const bookedBy = e.target.dataset.bookedBy;
-    const date = e.target.dataset.date;
-    const note = e.target.dataset.note;
+    const reservationDetail = JSON.parse(e.target.dataset.reservationDetail);
+    const roomId = parseInt(reservationDetail.roomId);
   
     const rooms = [
       { id: 1, name: "Meeting 1", address: "Binary Base", seat: 3 },
@@ -32,15 +28,15 @@ export default class extends Controller {
     const roomName = room ? room.name : "Unknown Room";
     const roomAddress = room ? room.address : "Unknown Address";
     const roomSeat = room ? room.seat : "Unknown Seat";
-  
+
     document.getElementById("modalRoomName").textContent = roomName;
-    document.getElementById("modalStartTime").textContent = startTimer;
-    document.getElementById("modalEndTime").textContent = endTimer;
-    document.getElementById("modalBookedBy").textContent = bookedBy;
-    document.getElementById("modalDate").textContent = date;
+    document.getElementById("modalStartTime").textContent = reservationDetail.start_timer;
+    document.getElementById("modalEndTime").textContent = reservationDetail.end_timer;
+    document.getElementById("modalBookedBy").textContent = reservationDetail.userId;
+    document.getElementById("modalDate").textContent = reservationDetail.date;
     document.getElementById("modalLocation").textContent = roomAddress;
     document.getElementById("modalSeats").textContent = roomSeat;
-    document.getElementById("modalNote").textContent = note;
+    document.getElementById("modalNote").textContent = reservationDetail.note;
   }
 
   mouseDown(e) {
