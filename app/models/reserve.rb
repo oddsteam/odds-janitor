@@ -13,8 +13,6 @@ class Reserve < ApplicationRecord
   private
 
   def end_time_after_start_time
-    return if end_timer.blank? || start_timer.blank?
-
     if end_timer <= start_timer
       errors.add(:end_timer, "must be after the start time")
     end

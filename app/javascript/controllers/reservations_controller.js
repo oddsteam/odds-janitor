@@ -84,6 +84,7 @@ export default class extends Controller {
   }
 
   mouseUp() {
+    const availableTimes = Array.from(this.endTimerTarget.options)
     if (this.isTracking) {
       console.log("Drag Ended")
 
@@ -95,8 +96,33 @@ export default class extends Controller {
       this.startTimerTarget.value = this.startTimer
       this.endTimerTarget.value = this.endTimer
       this.roomIdTarget.value = this.roomId
-
+    
+      availableTimes.forEach((option) => {
+        if (option.value <= this.startTimerTarget.value) {
+          option.disabled = true
+        } else {
+          option.disabled = false
+        }
+      })
       console.log("Final Selection - Start:", this.startTimer, "End:", this.endTimer)
     }
+  }
+  
+  updateEndTimeOptions() {
+    const startTime = this.startTimerTarget.value
+    const availableTimes = Array.from(this.endTimerTarget.options)
+  
+    // Reset end time selection if it's invalid
+    if (this.endTimerTarget.value <= startTime) {
+      this.endTimerTarget.value = "" // Reset end time if it conflicts with new start time
+    }
+  
+    availableTimes.forEach((option) => {
+      if (option.value <= startTime) {
+        option.disabled = true
+      } else {
+        option.disabled = false
+      }
+    })
   }
 }

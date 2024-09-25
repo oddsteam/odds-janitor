@@ -15,28 +15,37 @@
                             <%= form.select :start_timer,
                                 ReservesController::AVAILABLE_TIME.flat_map { |hour|
                                     [
-                                        ["#{sprintf('%02d', hour)}:00", "#{sprintf('%02d', hour)}:00"],
-                                        ["#{sprintf('%02d', hour)}:30", "#{sprintf('%02d', hour)}:30"]
+                                    ["#{sprintf('%02d', hour)}:00", "#{sprintf('%02d', hour)}:00"],
+                                    ["#{sprintf('%02d', hour)}:30", "#{sprintf('%02d', hour)}:30"]
                                     ]
-                                }, 
-                                {},
-                                {data: { reservations_target: "startTimer"}, class:"border border-gray-300 text-gray-600 text-xl font-medium rounded-lg block w-full p-3"}
+                                },
+                                { prompt: "Select Start Time" },
+                                {
+                                    data: { action: "change->reservations#updateEndTimeOptions", reservations_target: "startTimer" },
+                                    class: "border border-gray-300 text-gray-600 text-xl font-medium rounded-lg block w-full p-3"
+                                }
                             %>
-                        </div>
-                        <div class="text-gray-500">To</div>
-                        <div class="flex flex-col w-full">
+                            </div>
+
+                            <div class="text-gray-500">To</div>
+
+                            <div class="flex flex-col w-full">
                             <div class="block mb-2">End Time</div>
                             <%= form.select :end_timer,
                                 ReservesController::AVAILABLE_TIME.flat_map { |hour|
                                     [
-                                        ["#{sprintf('%02d', hour)}:30", "#{sprintf('%02d', hour)}:30"],
-                                        ["#{sprintf('%02d', (hour + 1))}:00", "#{sprintf('%02d', (hour + 1))}:00"]
+                                    ["#{sprintf('%02d', hour)}:30", "#{sprintf('%02d', hour)}:30"],
+                                    ["#{sprintf('%02d', (hour + 1))}:00", "#{sprintf('%02d', (hour + 1))}:00"]
                                     ]
-                                }, 
-                                {},
-                                {data: { reservations_target: "endTimer" }, class:"border border-gray-300 text-gray-600 text-xl font-medium rounded-lg block w-full p-3"}
+                                },
+                                { prompt: "Select End Time" },
+                                {
+                                    data: { reservations_target: "endTimer" },
+                                    class: "border border-gray-300 text-gray-600 text-xl font-medium rounded-lg block w-full p-3"
+                                }
                             %>
-                        </div>
+                            </div>
+
                     </div>
                     <div class="my-5">
                         <div class="block mb-2 text-normal font-medium text-gray-500">Reservation Note</div>
