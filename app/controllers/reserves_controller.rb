@@ -100,8 +100,9 @@ class ReservesController < ApplicationController
 
   # POST /reserves or /reserves.json
   def create
-    user_id = Reserve.get_userId_form_session(session)
-    @reserve = Reserve.new(reserve_params.merge(userId: user_id))
+    getEmail = Reserve.get_email_form_session(session)
+    # user_id = Reserve.get_userId_form_session(session)
+    @reserve = Reserve.new(reserve_params.merge(userId: getEmail))
 
     respond_to do |format|
       if @reserve.save
