@@ -13,7 +13,7 @@
     </div>
 <% end %>
 <% @reserves.each do |reserve|%>
-        <div data-note=<%="#{reserve.note}"%> data-room-id=<%="#{reserve.roomId}"%> data-start-time=<%="#{reserve.start_timer}"%> data-end-time=<%="#{reserve.end_timer}"%> data-booked-by=<%="#{reserve.userId}"%> data-date=<%="#{reserve.date}"%>
+        <div data-room-id=<%="#{reserve.roomId}"%> data-start-time=<%="#{reserve.start_timer}"%> data-end-time=<%="#{reserve.end_timer}"%> data-booked-by=<%="#{reserve.userId}"%> data-date=<%="#{reserve.date}"%>
         data-action="click->reservations#reservationDetailModal click->reservation-detail-modal#openModal" data-show-reservations-target="reservationBar" class="absolute bg-blue-300 cursor-pointer"></div>
 <%end%>
 <div class="reservation absolute bg-blue-300" data-reservations-target="newBooking"></div>

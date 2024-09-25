@@ -2,7 +2,8 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="reservations"
 export default class extends Controller {
-  static targets = ["newBooking", "table", "startTimer" ,"endTimer" ,"roomId"]
+  static targets = ["newBooking", "table", "startTimer", "endTimer", "roomId"]
+  
   connect() {
     console.log("hello world")
     this.isTracking = false
@@ -43,40 +44,63 @@ export default class extends Controller {
   }
 
   mouseDown(e) {
-
+    // Get the table and time cell dimensions
     const tableRect = this.tableTarget.getBoundingClientRect();
     const rect = e.target.getBoundingClientRect();
+
+    // Set initial values for the new booking position
     this.newBookingTarget.style.left = `${rect.left - tableRect.left}px`
-    this.newBookingTarget.style.top = `${rect.top - tableRect.top}px`    
+    this.newBookingTarget.style.top = `${rect.top - tableRect.top}px`
     this.newBookingTarget.style.width = `${rect.width}px`
     this.newBookingTarget.style.height = `${rect.height}px`
 
+    // Store initial start time, room, and position for tracking
     this.startLeft = rect.left - tableRect.left
-    this.newBookingTarget.classList.add('pointer-events-none')
+    this.startTop = rect.top - tableRect.top
     this.isTracking = true
-    console.log("Dataset:",e.target.dataset)
+
+    // Store start timer and end timer
     this.startTimer = e.target.dataset.startTime
     this.endTimer = e.target.dataset.endTime
     this.roomId = e.target.dataset.roomId
-  }
 
-  mouseUp() {
-    console.log("mouseUp")
-    this.isTracking = false
-    this.startTimerTarget.value = this.startTimer
-    this.endTimerTarget.value = this.endTimer
-    this.roomIdTarget.value = this.roomId
+    // Hide pointer events during drag
+    this.newBookingTarget.classList.add('pointer-events-none')
+
+    console.log("Start Dragging:", this.startTimer, this.endTimer, this.roomId)
   }
 
   mouseMove(e) {
-    console.log("mouseMove")
     if (this.isTracking) {
       const tableRect = this.tableTarget.getBoundingClientRect();
       const rect = e.target.getBoundingClientRect();
-      this.newBookingTarget.style.width = `${rect.right - tableRect.left - this.startLeft}px`
-      console.log(rect.right - tableRect.left - this.startLeft)
-      this.endTimer = e.target.dataset.endTime
+
+      // Adjust width dynamically based on mouse move
+      const currentWidth = rect.right - tableRect.left - this.startLeft
+      this.newBookingTarget.style.width = `${currentWidth}px`
+
+      // Update end time based on the mouse position
+      const newEndTime = e.target.dataset.endTime
+      this.endTimer = newEndTime
+
+      console.log("Dragging - Start:", this.startTimer, "End:", this.endTimer)
+    }
+  }
+
+  mouseUp() {
+    if (this.isTracking) {
+      console.log("Drag Ended")
+
+      // Stop tracking the drag
+      this.isTracking = false
+      this.newBookingTarget.classList.remove('pointer-events-none')
+
+      // Assign the final start, end, and room values to the hidden form inputs
+      this.startTimerTarget.value = this.startTimer
       this.endTimerTarget.value = this.endTimer
+      this.roomIdTarget.value = this.roomId
+
+      console.log("Final Selection - Start:", this.startTimer, "End:", this.endTimer)
     }
   }
 }
