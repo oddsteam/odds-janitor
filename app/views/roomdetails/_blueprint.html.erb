@@ -3,7 +3,7 @@
   <div class="relative w-auto h-auto">
     <%= image_tag "blueprint.svg", alt: "Blueprint", width: 2500, height: 1500, class: "cursor-zoom-in relative top-0 left-0 w-full h-full object-cover z-10", onclick: "handleImageClick()" %>
     <svg viewBox="0 0 2500 1500" class="absolute top-0 left-0 w-full h-full object-cover z-0" onclick="handleImageClick()">
-      <% @mock_data_room.each do |room| %>
+      <% @rooms.each do |room| %>
         <rect
           name="<%= room[:name] %>"
           x="<%= room[:x] %>"
@@ -28,10 +28,10 @@
   </div>
 
   <div id="modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 hidden">
-    <div class="relative bg-white p-16 items-center rounded-3xl transition-transform duration-300" id="modal-content">
+    <div class="relative bg-white p-16 items-center rounded-3xl transition-transform duration-300" data-testid="modal-content">
       <%= image_tag "blueprint.svg", width: 1000, height: 500, alt: "Blueprint", class: "relative object-contain z-10" %>
       <svg viewBox="0 0 2500 1500" class="p-16 absolute top-0 left-0 w-full h-full object-contain z-0">
-        <% @mock_data_room.each do |room| %>
+        <% @rooms.each do |room| %>
           <rect
             name="<%= room[:name] %>"
             x="<%= room[:x] %>"

@@ -9,8 +9,6 @@ class Booking
   @@tomorrow_input_formatted = @@tomorrow.strftime("%a %-d %B %Y")
   @@room_name_for_test = ('Global')
   @@room_index = 1
-  @@room_name_uppercase = @@room_name_for_test.upcase
-  @@room_name_capitalize = @@room_name_for_test.capitalize
 
   def click_blueprint
     find('img[alt="Blueprint"]', wait:7).click
@@ -22,16 +20,16 @@ class Booking
   end
 
   def click_room
-    find("[data-testid='room-#{@@room_name_uppercase}']").click
+    find("[data-testid='room-#{@@room_name_for_test}']").click
   end
 
   def saw_highlight_color
-    expect(find("[data-testid='room-#{@@room_name_uppercase}']")['class']).to include('bg-blue-400')
+    expect(find("[data-testid='room-#{@@room_name_for_test}']")['class']).to include('bg-blue-400')
   end
 
   def saw_room_detail
-    expect(page).to have_selector("img[alt='#{@@room_name_uppercase}']")
-    expect(page).to have_selector("h1[data-testid='room-name-desktop']", text: @@room_name_uppercase)
+    expect(page).to have_selector("img[alt='#{@@room_name_for_test}']")
+    expect(page).to have_selector("h1[data-testid='room-name-desktop']", text: @@room_name_for_test)
   end
 
   def click_tomorrow
@@ -71,19 +69,19 @@ class Booking
 
   def saw_booking_bar
     # ตรวจสอบว่ามีรายการที่ได้ทำการจองไว้หรือไม่
-    expect(page).to have_selector(:xpath, "//tr[td[contains(text(), '#{@@room_name_capitalize}')]]/td[@data-hour='8' and @data-half='0']/following-sibling::td[@colspan='4']", wait:7)
+    expect(page).to have_selector(:xpath, "//tr[td[contains(text(), '#{@@room_name_for_test}')]]/td[@data-hour='8' and @data-half='0']/following-sibling::td[@colspan='4']", wait:7)
   end
 
-  def dont_saw_booking_bar
-    expect(page).not_to have_selector(:xpath, "//tr[td[contains(text(), '#{@@room_name_capitalize}')]]/td[@data-hour='8' and @data-half='0']/following-sibling::td[@colspan='4']")
+  def dont_saw_booking_list
+    expect(page).not_to have_selector(:xpath, "//tr[td[contains(text(), '#{@@room_name_for_test}')]]/td[@data-hour='8' and @data-half='0']/following-sibling::td[@colspan='4']")
   end
 
   def click_my_booking
-    find(:xpath, "//tr[td[contains(text(), '#{@@room_name_capitalize}')]]/td[@data-hour='8' and @data-half='0']/following-sibling::td[@colspan='4']", wait:7).click
+    find(:xpath, "//tr[td[contains(text(), '#{@@room_name_for_test}')]]/td[@data-hour='8' and @data-half='0']/following-sibling::td[@colspan='4']", wait:7).click
   end
 
   def saw_booking_detail
-    expect(page).to have_selector(:xpath, "//h3[text()='#{@@room_name_capitalize} · 08:30 - 10:30']", wait:7)
+    expect(page).to have_selector(:xpath, "//h3[text()='#{@@room_name_for_test} · 08:30 - 10:30']", wait:7)
     expect(page).to have_xpath('//h3[text()="Date:"]/span', text: @@tomorrow_booking_formatted)
     expect(page).to have_xpath('//h3[text()="Booked by:"]/span', text: 'test user')
     expect(page).to have_xpath('//p[text()="Note:"]/span', text: 'Meeting with team')

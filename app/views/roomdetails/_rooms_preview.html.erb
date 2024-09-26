@@ -1,0 +1,34 @@
+<div class="max-[319px]:hidden min-[320px]:bg-neutral-100 xl:bg-neutral-100 flex rounded-xl flex-row w-full p-5">
+  <!-- LEFT -->
+  <div class="min-[320px]:hidden sm:flex xl:flex flex-col gap-4 w-2/3 rounded-lg justify-between">
+    <div class="flex flex-row gap-4">
+        <%= image_tag "#{@selected_room.downcase.gsub(' ', '')}-1.jpg", alt: @selected_room, class: "w-2/3 h-full object-cover rounded-lg" %>
+        <div class="flex flex-col gap-2 w-1/3 h-full">
+          <%= image_tag "#{@selected_room.downcase.gsub(' ', '')}-2.jpg", alt: @selected_room, class: "h-full object-cover rounded-lg sm:hidden lg:flex flex-col" %>
+          <%= image_tag "#{@selected_room.downcase.gsub(' ', '')}-3.jpg", alt: @selected_room, class: "h-full object-cover rounded-lg sm:hidden lg:flex flex-col" %>
+        </div>
+    </div>
+
+    <div class="flex flex-col gap-2 bg-white p-5 rounded-lg">
+      <h1 data-testid="room-name-desktop" class="text-gray-800 text-3xl font-bold">
+        <%= @rooms[@selected_index][:name] %>
+      </h1>
+      <p class="text-gray-400 text-lg">
+        Max capacity: <%= @rooms[@selected_index][:seat] %>
+      </p>
+    </div>
+  </div>
+
+  <div class="min-[320px]:hidden sm:flex xl:flex flex-col w-1/3 justify-between items-start ps-5">
+    <div class="w-full">
+      <% @rooms.each_with_index do |room, index| %>
+        <div data-testid="room-<%= room[:name] %>"   class="p-2 mb-1 flex w-full rounded-lg cursor-pointer transition duration-200 <%= @selected_room == room[:name] ? 'bg-blue-400 text-white' : 'bg-white hover:scale-[.95] hover:bg-blue-200' %>" onclick="location.href='<%= reserves_path(selected_room: room[:name]) %>'">
+          <%= room[:name] %>
+        </div>
+      <% end %>
+    </div>
+    <div class=" xl:w-full bg-white p-3 mt-6 rounded-lg overflow-hidden">
+      <%= render partial: "roomdetails/blueprint", locals: { selected_room_id: @selected_room_id } %>
+    </div>
+  </div>
+</div>

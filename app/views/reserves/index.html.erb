@@ -14,6 +14,9 @@
       </div>
     </div>
   </div>
+  <div class="mb-10">
+    <%= render 'roomdetails/rooms_preview' %>
+  </div>
     <div class="flex max-w-[1300px] h-[256px] m-auto w-full bg-slate-100 border border-slate-300 overflow-hidden mb-5 rounded-lg">
       <turbo-frame id="calendar">
         <%= render partial: 'calendar', locals: { selected_date: @selected_date, days_in_month: @days_in_month, rooms: @rooms, alert: @alert_message } %>
@@ -60,3 +63,5 @@
 </div>
 <div id="roomsData" style="display: none;"><%= @rooms.to_json %></div>
 <%= render partial: "reservation_detail_modal" %>
+
+
