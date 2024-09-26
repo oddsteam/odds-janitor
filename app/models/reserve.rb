@@ -22,13 +22,15 @@ class Reserve < ApplicationRecord
   end
 
   def overlapping_time
-    testing = Reserve.where("date = ?", self.date)
+    overlap = Reserve.where("date = ?", self.date)
                      .where("room_id = ?",self.room_id)
-                     .where(
-                        "(start_timer < ? AND end_timer > ?) OR (start_timer < ? AND end_timer > ?) OR (start_timer > ? AND end_timer < ?)", 
-                        self.start_timer, self.start_timer, self.end_timer, self.end_timer, self.start_timer, self.end_timer
-                      )             
-    if testing.size > 0
+                     .where(<<-SQL, t1: self.start_timer, t2: self.end_timer)
+                      (start_timer < :t1 AND end_timer > :t1) 
+                      OR (start_timer < :t2 AND end_timer > :t2) 
+                      OR (start_timer > :t1 AND end_timer < :t2)
+                     SQL
+                            
+    if overlap.size > 0
         errors.add(:start_timer,"cannot be in between or cover any reservation")
         errors.add(:end_timer,"cannot be in between or cover any reservation")
     end
