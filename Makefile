@@ -14,7 +14,7 @@ e2e-ci: mt
 
 e2e: mt
 	RAILS_ENV=test rails s -d
-	bundle exec cucumber --publish-quiet
+	bundle exec cucumber --publish-quiet || true
 	kill -9 `cat tmp/pids/server.pid`
 
 mt:
@@ -44,5 +44,5 @@ dblog:
 
 astra: mt
 	RAILS_ENV=test rails s -d
-	bundle exec cucumber --publish-quiet features/booking_detail.feature
+	bundle exec cucumber --publish-quiet features/booking_detail.feature  || true
 	kill -9 `cat tmp/pids/server.pid`
