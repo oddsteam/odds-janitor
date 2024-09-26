@@ -54,7 +54,11 @@ class Booking
 
   def choose_room_for_booking
     # เลือก <td> ที่มี data-hour="9" และ data-half="0"
-    find(:xpath, "//div[@data-room-id='#{@@room_index}' and @data-start-time='08:00']", wait: 7).click
+    find(:xpath, "//div[@data-room-id='#{@@room_index}' and @data-start-time='08:00' and @class='timeCell border-[0.5px] border-slate-100 w-14 h-14']", wait: 7).click
+    select '08:00', from: 'reserve_start_timer'
+    select '12:00', from: 'reserve_end_timer'
+    sleep 3
+
     # ตรวจสอบว่าหน้า modal ของห้อง Global แสดงขึ้นมา
     expect(page).to have_content("Reserve Time")
   end
@@ -68,8 +72,7 @@ class Booking
   end
 
   def saw_booking_bar
-    # ตรวจสอบว่ามีรายการที่ได้ทำการจองไว้หรือไม่
-    expect(page).to have_selector(:xpath, "//tr[td[contains(text(), '#{@@room_name_for_test}')]]/td[@data-hour='8' and @data-half='0']/following-sibling::td[@colspan='4']", wait:7)
+    expect(page).to have_selector(:xpath, "//div[@data-room-id='1' and @data-start-time='08:00' and @data-end-time='12:00']", wait:7)
   end
 
   def dont_saw_booking_list
