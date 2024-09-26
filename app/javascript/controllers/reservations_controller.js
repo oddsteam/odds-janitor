@@ -12,18 +12,9 @@ export default class extends Controller {
   reservationDetailModal(e) {
     const reservationDetail = JSON.parse(e.target.dataset.reservationDetail);
     const roomId = parseInt(reservationDetail.roomId);
-  
-    const rooms = [
-      { id: 1, name: "Meeting 1", address: "Binary Base", seat: 3 },
-      { id: 2, name: "Meeting 2", address: "Binary Base", seat: 6 },
-      { id: 3, name: "Territory 1", address: "Binary Base", seat: 5 },
-      { id: 4, name: "Territory 2", address: "Binary Base", seat: 5 },
-      { id: 5, name: "Territory 3", address: "Binary Base", seat: 5 },
-      { id: 6, name: "Global", address: "Binary Base", seat: 30 },
-      { id: 7, name: "All Nighter 1", address: "Binary Base", seat: 36 },
-      { id: 8, name: "All Nighter 2", address: "Binary Base", seat: 32 },
-    ];
-  
+    const roomsData = document.getElementById('roomsData').textContent;
+    const rooms = JSON.parse(roomsData);
+
     const room = rooms.find(r => r.id === roomId);
     const roomName = room ? room.name : "Unknown Room";
     const roomAddress = room ? room.address : "Unknown Address";
