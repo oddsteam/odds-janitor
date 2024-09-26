@@ -11,7 +11,7 @@ export default class extends Controller {
 
   reservationDetailModal(e) {
     const reservationDetail = JSON.parse(e.target.dataset.reservationDetail);
-    const roomId = parseInt(reservationDetail.roomId);
+    const roomId = parseInt(reservationDetail.room_id);
     const roomsData = document.getElementById('roomsData').textContent;
     const rooms = JSON.parse(roomsData);
 
