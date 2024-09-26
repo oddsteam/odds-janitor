@@ -70,16 +70,20 @@ export default class extends Controller {
     if (this.isTracking) {
       const tableRect = this.tableTarget.getBoundingClientRect();
       const rect = e.target.getBoundingClientRect();
-
-      // Adjust width dynamically based on mouse move
-      const currentWidth = rect.right - tableRect.left - this.startLeft
-      this.newBookingTarget.style.width = `${currentWidth}px`
-
-      // Update end time based on the mouse position
-      const newEndTime = e.target.dataset.endTime
-      this.endTimer = newEndTime
-
-      console.log("Dragging - Start:", this.startTimer, "End:", this.endTimer)
+      
+      // Check if the end time is after the start time
+      const selectedEndTime = e.target.dataset.endTime;
+      if (this.endTimer >= selectedEndTime) {
+        // Prevent dragging backwards
+        return;
+      }
+  
+      // Continue as normal if end time is valid
+      this.newBookingTarget.style.width = `${rect.right - tableRect.left - this.startLeft}px`;
+      console.log(rect.right - tableRect.left - this.startLeft);
+  
+      this.endTimer = selectedEndTime;
+      this.endTimerTarget.value = this.endTimer;
     }
   }
 

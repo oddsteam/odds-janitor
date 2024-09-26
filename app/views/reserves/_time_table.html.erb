@@ -1,11 +1,11 @@
 <% @rooms.each do |room| %>
     <div class="flex flex-row">
         <% ReservesController::AVAILABLE_TIME.each do |hour|%>
-        <div class="timeCell border border-slate-300 w-14 h-14" data-action="mousedown->reservations#mouseDown mousemove->reservations#mouseMove mouseup@window->reservations#mouseUp
+        <div class="timeCell border-[0.5px] border-slate-100 w-14 h-14" data-action="mousedown->reservations#mouseDown mousemove->reservations#mouseMove mouseup@window->reservations#mouseUp
         mouseup->time-table-modal#openModal" data-start-time=<%="#{hour.to_s.rjust(2,"0")}:00"%> data-end-time=<%="#{hour.to_s.rjust(2,"0")}:30"%>
         data-room-id=<%="#{room[:id]}"%>>
         </div>
-        <div class="timeCell border border-slate-300 w-14 h-14" data-action="mousedown->reservations#mouseDown mousemove->reservations#mouseMove mouseup@window->reservations#mouseUp
+        <div class="timeCell border-[0.5px] border-slate-100 w-14 h-14" data-action="mousedown->reservations#mouseDown mousemove->reservations#mouseMove mouseup@window->reservations#mouseUp
         mouseup->time-table-modal#openModal" data-start-time=<%="#{hour.to_s.rjust(2,"0")}:30"%> data-end-time=<%="#{(hour + 1).to_s.rjust(2,"0")}:00"%>
         data-room-id=<%="#{room[:id]}"%>>
         </div>
@@ -14,6 +14,6 @@
 <% end %>
 <% @reserves.each do |reserve|%>
         <div data-room-id=<%="#{reserve.roomId}"%> data-start-time=<%="#{reserve.start_timer}"%> data-end-time=<%="#{reserve.end_timer}"%> data-reservation-detail=<%= reserve.to_json %>
-        data-action="click->reservations#reservationDetailModal click->reservation-detail-modal#openModal" data-show-reservations-target="reservationBar" class="absolute bg-blue-300 cursor-pointer"></div>
+        data-action="click->reservations#reservationDetailModal click->reservation-detail-modal#openModal" data-show-reservations-target="reservationBar" class="absolute bg-blue-300 cursor-pointer hover:bg-blue-400 transition border border-spacing-96 rounded-md"></div>
 <%end%>
-<div class="reservation absolute bg-blue-300" data-reservations-target="newBooking"></div>
+<div class="reservation absolute bg-blue-300 cursor-pointer transition border border-spacing-96 rounded-md" data-reservations-target="newBooking"></div>

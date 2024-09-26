@@ -1,6 +1,8 @@
 class Reserve < ApplicationRecord
+  
   validates :date, :start_timer, :end_timer, :roomId, presence: true
   validate :end_time_after_start_time
+
 
   def self.get_email_form_session(session)
     session[:user_email]
