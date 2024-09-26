@@ -13,10 +13,13 @@ e2e-ci: mt
 	bundle exec cucumber --publish-quiet --tags "not @doing"
 
 e2e: mt
+	RAILS_ENV=test rails s -d
 	bundle exec cucumber --publish-quiet
+	kill -9 `cat tmp/pids/server.pid`
 
 mt:
-	RAILS_ENV=test bundle exec rake db:drop db:create db:migrate
+	RAILS_ENV=test bundle exec rails db:drop db:create
+	RAILS_ENV=test bundle exec rails db:migrate
 
 migrate: bundle
 	rails db:migrate
@@ -38,3 +41,8 @@ lint:
 
 dblog:
 	docker-compose -f docker-compose.yml logs -f db
+
+astra: mt
+	RAILS_ENV=test rails s -d
+	bundle exec cucumber --publish-quiet features/booking_detail.feature
+	kill -9 `cat tmp/pids/server.pid`
