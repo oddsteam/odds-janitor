@@ -4,7 +4,6 @@ class Reserve < ApplicationRecord
   validate :end_time_after_start_time
   validate :overlapping_time
 
-
   def self.get_email_form_session(session)
     session[:user_email]
   end

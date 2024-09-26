@@ -13,10 +13,10 @@
   <% @reserves_with_rooms.each do |reserve| %>
     <div class="bg-white shadow-md rounded-lg p-4 mb-4">
       <div class="text-lg font-semibold text-gray-800">
-        <%= reserve['start_timer'] %> - <%= reserve['end_timer'] %>
+        <%= reserve['start_timer'].strftime("%H:%M") %> - <%= reserve['end_timer'].strftime("%H:%M") %>
       </div>
       <div class="text-sm text-gray-600">
-        Room: <%= room_mapping[reserve['room_id']] %>
+        Room: <%= room_mapping[reserve['room_id'].to_s] %>
       </div>
     </div>
   <% end %>
