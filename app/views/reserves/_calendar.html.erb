@@ -1,11 +1,16 @@
 <div class="reservation max-w-md min-w-[290px] h-full bg-white border-r border-slate-300 overflow-hidden p-2">
   <div class="reservation-header flex justify-between items-center">
-    <%= button_to update_selected_date_reserves_path(date: (@selected_date - 1.month).strftime("%Y-%m-%d")), method: :patch, form: { data: { turbo_frame: "calendar" } }, class: "p-3 text-gray-600 hover:bg-gray-100 rounded" do %>
+    <% can_go_back = @selected_date.beginning_of_month > Date.today.beginning_of_month %>
+    <%= button_to update_selected_date_reserves_path(date: (@selected_date - 1.month).strftime("%Y-%m-%d")), 
+                  method: :patch, 
+                  form: { data: { turbo_frame: "calendar" } }, 
+                  class: "p-3 text-gray-600 #{can_go_back ? 'hover:bg-gray-100' : 'opacity-50 cursor-not-allowed'} rounded",
+                  disabled: !can_go_back do %>
       <i class="fa-solid fa-angle-left"></i>
     <% end %>
 
     <h2 class="text-md font-semibold text-gray-600">
-      <%= @selected_date.strftime("%B %d, %Y") %>
+      <%= @selected_date.strftime("%B %Y") %>
     </h2>
 
     <%= button_to update_selected_date_reserves_path(date: (@selected_date + 1.month).strftime("%Y-%m-%d")), method: :patch, form: { data: { turbo_frame: "calendar" } }, class: "p-3 text-gray-600 hover:bg-gray-100 rounded" do %>
@@ -15,9 +20,17 @@
 
   <div class="reservation-grid grid grid-cols-7 gap-1">
     <% (1..days_in_month).each do |day| %>
+      <% current_date = @selected_date.change(day: day) %>
       <%= form_with url: update_selected_date_reserves_path, method: :patch, local: false, data: { turbo_frame: "calendar" } do %>
-        <input type="hidden" name="date" value="<%= @selected_date.change(day: day).to_s %>">
-        <button type="submit" data-date="<%= @selected_date.change(day: day).to_s %>" class="reservation-day text-center w-9 h-8 cursor-pointer rounded transition-all hover:bg-blue-100 <%= day == @selected_date.day ? 'border bg-blue-400 text-white hover:bg-blue-400' : 'text-gray-600' %> <%= Date.today == @selected_date.change(day: day) && 'border'%>">
+        <input type="hidden" name="date" value="<%= current_date.to_s %>">
+        <button type="submit" 
+                data-date="<%= current_date.to_s %>" 
+                class="reservation-day text-center w-9 h-8 cursor-pointer rounded transition-all
+                      <%= 'hover:bg-blue-100' if current_date >= Date.today %>
+                      <%= day == @selected_date.day ? 'border bg-blue-400 text-white hover:bg-blue-400' : 'text-gray-600' %>
+                      <%= 'border' if current_date == Date.today %>
+                      <%= 'opacity-50 cursor-not-allowed' if current_date < Date.today %>"
+                <%= 'disabled' if current_date < Date.today %>>
           <%= day %>
         </button>
       <% end %>
