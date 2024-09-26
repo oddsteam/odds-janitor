@@ -6,7 +6,7 @@ export default class extends Controller {
   connect() {
     console.log("showreservations")
     this.reservationBarTargets.forEach((element, index) => {
-      console.log(element)
+      console.log(element.dataset)
       const roomId = element.dataset.roomId
       const startTime = element.dataset.startTime
       const endTime = element.dataset.endTime

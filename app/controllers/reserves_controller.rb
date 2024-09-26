@@ -35,6 +35,7 @@ class ReservesController < ApplicationController
     @days_in_month = Date.new(@selected_date.year, @selected_date.month, -1).day
     @start_of_month = @selected_date.beginning_of_month.wday
 
+
     @rooms = [
       { id: 1, name: "Meeting 1", address: "Binary Base", seat: 3, description: "Small meeting room" },
       { id: 2, name: "Meeting 2", address: "Binary Base", seat: 6, description: "Medium meeting room" },
@@ -49,14 +50,14 @@ class ReservesController < ApplicationController
     @room_map = @rooms.each_with_object({}) { |room, hash| hash[room[:id].to_s] = room }
 
     @reserves_with_rooms = @reserves.map do |reserve|
-      room = @room_map[reserve.roomId.to_s] || { name: "Unknown Room" }
+      room = @room_map[reserve.room_id.to_s] || { name: "Unknown Room" }
       reserve.attributes.merge(room_name: room[:name])
     end
 
     @room_map = @rooms.each_with_object({}) { |room, hash| hash[room[:id].to_s] = room }
 
     @reserves_with_rooms = @reserves.map do |reserve|
-      room = @room_map[reserve.roomId.to_s] || { name: "Unknown Room" }
+      room = @room_map[reserve.room_id.to_s] || { name: "Unknown Room" }
       reserve.attributes.merge(room_name: room[:name])
     end
 
@@ -104,15 +105,26 @@ class ReservesController < ApplicationController
     # user_id = Reserve.get_userId_form_session(session)
     @reserve = Reserve.new(reserve_params.merge(userId: getEmail))
 
-    respond_to do |format|
+    p "START_TIME"
+    p @reserve.start_timer
+    # Reserve.where("start_timer < ?", @reserve.start_timer)
+    # testing = Reserve.where("(start_timer < ? and end_timer > ?) OR (start_timer < ? and end_timer > ?) OR (start_timer > ? and end_timer < ?)", @reserve.start_timer, @reserve.start_timer, @reserve.end_timer, @reserve.end_timer, @reserve.start_timer, @reserve.end_timer)
+    
+
       if @reserve.save
-        format.html { redirect_to reserves_path, notice: "Reserve was successfully created." }
-        format.json { render json: { status: 'success', notice: "Reserve was successfully created." }, status: :created }
+        redirect_to reserves_path, notice: "Reserve was successfully created"
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: { status: 'error', errors: @reserve.errors }, status: :unprocessable_entity }
+        render :new, status: :unprocessable_entity
       end
-    end
+    # respond_to do |format|
+    #   if @reserve.save
+    #     format.html { redirect_to reserves_path, notice: "Reserve was successfully created." }
+    #     format.json { render json: { status: 'success', notice: "Reserve was successfully created." }, status: :created }
+    #   else
+    #     format.html { render :new, status: :unprocessable_entity }
+    #     format.json { render json: { status: 'error', errors: @reserve.errors }, status: :unprocessable_entity }
+    #   end
+    # end
   end
 
   # PATCH/PUT /reserves/1 or /reserves/1.json
@@ -150,7 +162,10 @@ class ReservesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def reserve_params
-    params.require(:reserve).permit(:date, :start_timer, :end_timer, :note, :roomId)
+    permitted_params = params.require(:reserve).permit(:date, :start_timer, :end_timer, :note, :room_id)
+    permitted_params[:start_timer] = Time.zone.parse(params[:reserve][:start_timer])
+    permitted_params[:end_timer] = Time.zone.parse(params[:reserve][:end_timer])
+    permitted_params
   end
 
   def set_default_room
