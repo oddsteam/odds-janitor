@@ -20,15 +20,32 @@ export default class extends Controller {
     const roomAddress = room ? room.address : "Unknown Address";
     const roomSeat = room ? room.seat : "Unknown Seat";
 
+    const formattedDate = this.formatDate(reservationDetail.date);
+    const formattedStartTime = this.formatTime(reservationDetail.start_timer);
+    const formattedEndTime = this.formatTime(reservationDetail.end_timer);
+
+
     document.getElementById("modalRoomName").textContent = roomName;
-    document.getElementById("modalStartTime").textContent = reservationDetail.start_timer;
-    document.getElementById("modalEndTime").textContent = reservationDetail.end_timer;
+    document.getElementById("modalStartTime").textContent = formattedStartTime;
+    document.getElementById("modalEndTime").textContent = formattedEndTime;
     document.getElementById("modalBookedBy").textContent = reservationDetail.userId;
-    document.getElementById("modalDate").textContent = reservationDetail.date;
+    document.getElementById("modalDate").textContent = formattedDate;
     document.getElementById("modalLocation").textContent = roomAddress;
     document.getElementById("modalSeats").textContent = roomSeat;
     document.getElementById("modalNote").textContent = reservationDetail.note;
   }
+  formatDate(dateString) {
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const month = date.toLocaleString('default', { month: 'long' });
+    const year = date.getFullYear();
+    return `${day} ${month} ${year}`;
+  }
+  formatTime(timeString) {
+    const date = new Date(timeString);
+    return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+  }
+
 
   mouseDown(e) {
     // Get the table and time cell dimensions

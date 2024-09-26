@@ -20,7 +20,7 @@
       </turbo-frame>
       <div class="w-full p-4 overflow-auto">
         <turbo-frame id="user_bookings">
-          <h2 class="font-medium">Your booking on <span class="text-gray-500 font-normal"> <%= @selected_date.strftime("%B %d, %Y") %> </span></h2>
+          <h2 class="font-medium">Your booking on <span class="text-gray-500 font-normal"> <%= @selected_date.strftime("%d %B %Y") %> </span></h2>
             <%= render partial: 'booking', locals: { rooms: @rooms } %>
         </turbo-frame>
       </div>
