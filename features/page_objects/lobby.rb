@@ -3,7 +3,7 @@ class Lobby
   include RSpec::Matchers
 
   def visit_homepage
-    visit "https://sso-dev.odd.works/realms/janitor-dev/protocol/openid-connect/auth?client_id=janitor-dev&redirect_uri=http://localhost:3000/callback&response_type=code&scope=openid"
+    visit "/"
   end
 
   def fill_email(email)

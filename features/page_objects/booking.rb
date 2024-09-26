@@ -8,7 +8,7 @@ class Booking
   @@day_tomorrow = (Date.today + 1).strftime("%B %d, %Y")
   @@tomorrow_input_formatted = @@tomorrow.strftime("%a %-d %B %Y")
   @@room_name_for_test = ('Global')
-  @@room_index = 5
+  @@room_index = 1
   @@room_name_uppercase = @@room_name_for_test.upcase
   @@room_name_capitalize = @@room_name_for_test.capitalize
 
@@ -56,27 +56,17 @@ class Booking
 
   def choose_room_for_booking
     # เลือก <td> ที่มี data-hour="9" และ data-half="0"
-    find(:xpath, "//tr/td[@data-room='#{@@room_index}' and @data-hour='09:00']", wait: 7).click
+    find(:xpath, "//div[@data-room-id='#{@@room_index}' and @data-start-time='08:00']", wait: 7).click
     # ตรวจสอบว่าหน้า modal ของห้อง Global แสดงขึ้นมา
-    expect(page).to have_content("Reservation for #{@@room_name_capitalize}")
+    expect(page).to have_content("Reserve Time")
   end
 
   def fill_booking_detail
-    # กดปุ่มที่มีคำว่า "9:00"
-    find('button', text: '9:00').click
-    # เลือกเวลาเริ่มต้น คือ 8:30
-    find(:xpath, '//button[text()="9:00"]/following-sibling::div/div[text()="8:30"]').click
-    # กดปุ่มที่มีคำว่า "9:30"
-    find('button', text: '9:30').click
-    # เลือกเวลาสิ้นสุดคือ คือ 8:30
-    find(:xpath, '//button[text()="9:30"]/following-sibling::div/div[text()="10:30"]').click
-    # กรอกคำอธิบายเพิ่มเติม
-    find('textarea#reservation').set('Meeting with team')
+    fill_in 'reserve_note', with: 'This is a test reservation note'
   end
 
   def confirm_booking
-    # กดปุ่มยืนยันการจอง
-    find('button[data-testid="confirm-button"]').click
+    click_button name: 'commit'
   end
 
   def saw_booking_list
