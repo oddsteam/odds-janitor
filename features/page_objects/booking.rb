@@ -69,12 +69,12 @@ class Booking
     click_button name: 'commit'
   end
 
-  def saw_booking_list
+  def saw_booking_bar
     # ตรวจสอบว่ามีรายการที่ได้ทำการจองไว้หรือไม่
     expect(page).to have_selector(:xpath, "//tr[td[contains(text(), '#{@@room_name_capitalize}')]]/td[@data-hour='8' and @data-half='0']/following-sibling::td[@colspan='4']", wait:7)
   end
 
-  def dont_saw_booking_list
+  def dont_saw_booking_bar
     expect(page).not_to have_selector(:xpath, "//tr[td[contains(text(), '#{@@room_name_capitalize}')]]/td[@data-hour='8' and @data-half='0']/following-sibling::td[@colspan='4']")
   end
 

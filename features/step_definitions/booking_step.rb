@@ -16,7 +16,7 @@ And('ฉันกดยืนยันการจอง') do
 end
 
 Then('รายการจองของฉันจะแสดงขึ้นมา') do
-  @booking.saw_booking_list
+  @booking.saw_booking_bar
 
   # รีเซ็ตค่าการจอง
   @booking.reset_booking

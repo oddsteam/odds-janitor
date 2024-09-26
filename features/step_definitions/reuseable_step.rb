@@ -5,11 +5,10 @@ end
 
 And('ฉันทำการจองแล้ว') do
   sleep 1
-  # @booking.choose_date_for_booking
   @booking.choose_room_for_booking
   @booking.fill_booking_detail
   @booking.confirm_booking
-  # @booking.saw_booking_list
+  @booking.saw_booking_bar
 end
 
 When('ฉันกดดูรายการจองของฉัน') do
