@@ -9,8 +9,9 @@ export default class extends Controller {
     this.isTracking = false
   }
 
-  reservationDetailModal(e) {
-    const reservationDetail = JSON.parse(e.target.dataset.reservationDetail);
+  reservationDetailModal() {
+    const reservation = document.getElementById('reservesData').textContent;
+    const reservationDetail = JSON.parse(reservation);
     const roomId = parseInt(reservationDetail.room_id);
     const roomsData = document.getElementById('roomsData').textContent;
     const rooms = JSON.parse(roomsData);
