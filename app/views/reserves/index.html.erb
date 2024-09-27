@@ -32,10 +32,11 @@
     <table>
       <tr>
           <th class= "top-0 left-0 z-3 bg-neutral-100 border border-slate-300 text-center h-[60px] min-w-[120px]"> 
-          <i class="fa-solid fa-door-open mr-2"></i>Room</th>
+            <i class="fa-solid fa-door-open mr-2"></i>Room
+          </th>
         <% ReservesController::AVAILABLE_TIME.each do |hour| %>
           <th colspan="2" class= "border h-14 w-28 p-2 text-left"> 
-          <%= "#{hour.to_s.rjust(2,"0")}:00"%> 
+            <%= "#{hour.to_s.rjust(2,"0")}:00"%> 
           </th>
         <%end%>
       </tr>
@@ -58,7 +59,7 @@
         <% end %>
       <% end %>
       <%= render partial: "time_table_modal",locals: { reserve: @reserve } %>
-    </div>
+    </table>
   </div>
 </div>
 <div id="roomsData" style="display: none;"><%= @rooms.to_json %></div>
