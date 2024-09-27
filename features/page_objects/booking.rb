@@ -3,10 +3,9 @@ class Booking
   include RSpec::Matchers
 
   @@tomorrow = Date.today + 1
-  @@tomorrow_booking_formatted = @@tomorrow.strftime('%Y-%m-%d')
-  @@tomorrow_calendar_formatted = @@tomorrow.strftime("%A, %B #{@@tomorrow.day.ordinalize}, %Y")
-  @@day_tomorrow = (Date.today + 1).strftime("%B %d, %Y")
-  @@tomorrow_input_formatted = @@tomorrow.strftime("%a %-d %B %Y")
+  @@today = Date.today.strftime("%d %B %Y")
+  @@yesterday = (Date.today - 1).strftime("%Y-%m-%d")
+  @@day_tomorrow = @@tomorrow.strftime("%d %B %Y")
   @@room_name_for_test = ('Global')
   @@room_index = 1
 
@@ -41,11 +40,11 @@ class Booking
   end
 
   def saw_selected_date
-    expect(page).to have_content("Your booking on #{@@day_tomorrow}")
+    expect(find('#bookingSchedule', wait:7)).to have_content(@@day_tomorrow)
   end
 
   def don_saw_selected_date
-    expect(page).not_to have_content("Your booking on #{@@day_tomorrow}")
+    expect(page).to have_selector("button[disabled][data-date='#{@@yesterday}']")
   end
 
   def choose_date_for_booking
@@ -57,7 +56,6 @@ class Booking
     find(:xpath, "//div[@data-room-id='#{@@room_index}' and @data-start-time='08:00' and @class='timeCell border-[0.5px] border-slate-100 w-14 h-14']", wait: 7).click
     select '08:00', from: 'reserve_start_timer'
     select '12:00', from: 'reserve_end_timer'
-    sleep 3
 
     # ตรวจสอบว่าหน้า modal ของห้อง Global แสดงขึ้นมา
     expect(page).to have_content("Reserve Time")
@@ -80,14 +78,14 @@ class Booking
   end
 
   def click_my_booking
-    find(:xpath, "//tr[td[contains(text(), '#{@@room_name_for_test}')]]/td[@data-hour='8' and @data-half='0']/following-sibling::td[@colspan='4']", wait:7).click
+    find(:xpath, "//div[@data-room-id='1' and @data-start-time='08:00' and @data-end-time='12:00']", wait:7).click
   end
 
   def saw_booking_detail
-    expect(page).to have_selector(:xpath, "//h3[text()='#{@@room_name_for_test} · 08:30 - 10:30']", wait:7)
-    expect(page).to have_xpath('//h3[text()="Date:"]/span', text: @@tomorrow_booking_formatted)
-    expect(page).to have_xpath('//h3[text()="Booked by:"]/span', text: 'test user')
-    expect(page).to have_xpath('//p[text()="Note:"]/span', text: 'Meeting with team')
+    expect(find('#modalBookedBy', wait:7)).to have_content('test@gmail.com')
+    expect(find('#modalDate', wait:7)).to have_content(@@today)
+    expect(find('#modalLocation', wait:7)).to have_content('Binary Base')
+    expect(find('#modalSeats', wait:7)).to have_content("3")
   end
 
   def cancel_booking

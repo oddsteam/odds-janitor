@@ -41,8 +41,3 @@ lint:
 
 dblog:
 	docker-compose -f docker-compose.yml logs -f db
-
-astra: mt
-	RAILS_ENV=test rails s -d
-	bundle exec cucumber --publish-quiet features/booking_detail.feature  || true
-	kill -9 `cat tmp/pids/server.pid`

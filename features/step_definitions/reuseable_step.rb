@@ -12,6 +12,5 @@ And('ฉันทำการจองแล้ว') do
 end
 
 When('ฉันกดดูรายการจองของฉัน') do
-  pending
-  # @booking.click_my_booking
+  @booking.click_my_booking
 end
